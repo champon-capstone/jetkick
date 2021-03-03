@@ -2,31 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Used by CarCamera to setup up different styled camera views.
-/// </summary>
+
+// Used by CarCamera to setup up different styled camera views.
 [System.Serializable]
 public class CarCameraSettings
 {
-    /// <summary>
-    /// How far the camera is behind the car.
-    /// </summary>
+    // How far the camera is behind the car.
     public float distance = 6.0f;
 
-    /// <summary>
-    /// How far the camera is above the car.
-    /// </summary>
+    // How far the camera is above the car.
     public float height = 3.0f;
 
-    /// <summary>
-    /// Smoothing transition time of the Camera.
-    /// </summary>
+    // Smoothing transition time of the Camera.
     public float smoothTime = 0.3F;
 
 
-    /// <summary>
-    /// A default settings of a camera.
-    /// </summary>
+    // A default settings of a camera.
     /// <returns></returns>
     public static CarCameraSettings GetDefaultSettings0() {
         CarCameraSettings carCameraSettings = new CarCameraSettings();
@@ -37,9 +28,7 @@ public class CarCameraSettings
         return carCameraSettings;
     }
 
-    /// <summary>
     /// A default settings of a camera.
-    /// </summary>
     /// <returns></returns>
     public static CarCameraSettings GetDefaultSettings1()
     {
@@ -51,9 +40,7 @@ public class CarCameraSettings
         return carCameraSettings;
     }
 
-    /// <summary>
     /// A default settings of a camera.
-    /// </summary>
     /// <returns></returns>
     public static CarCameraSettings GetDefaultSettings2()
     {
