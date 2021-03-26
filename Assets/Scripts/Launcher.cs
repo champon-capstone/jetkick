@@ -15,6 +15,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     #region Pirvate Fields
 
     string gameVersion = "1";
+    bool isConnecting;
 
     #endregion
 
@@ -48,6 +49,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
+        isConnecting = true;
         if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.JoinRandomRoom();
@@ -65,7 +67,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-        PhotonNetwork.JoinRandomRoom();
+        if (isConnecting)
+        {
+            PhotonNetwork.JoinRandomRoom();
+        }
     }
 
 
@@ -87,6 +92,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+
+        PhotonNetwork.LoadLevel("Room for 1");
     }
 
     #endregion
