@@ -8,6 +8,8 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public static GameManager instance;
+
     #region Photon Callbacks
 
 
@@ -50,6 +52,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    private void Start()
+    {
+        instance = this;
+    }
 
     #region Public Methods
 
