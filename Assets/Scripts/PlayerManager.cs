@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 using Photon.Pun;
@@ -8,6 +9,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public bool IsFiring;
     public float Health = 1f;
+    public static GameObject LocalPlayerInstance;
 
     #region Private Fields
 
@@ -15,6 +17,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region MonoBehaviour CallBacks
 
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            PlayerManager.LocalPlayerInstance = this.gameObject;
+        }
+        DontDestroyOnLoad(this.gameObject);
+    }
 
     private void Start()
     {
@@ -29,6 +39,30 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
+        }
+#if UNITY_5_4_OR_NEWER
+        // Unity 5.4 has a new scene management. register a method to call CalledOnLevelWasLoaded.
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += (scene, loadingMode) =>
+        {
+            this.CalledOnLevelWasLoaded(scene.buildIndex);
+        };
+#endif
+    }
+#if !UNITY_5_4_OR_NEWER
+/// <summary>See CalledOnLevelWasLoaded. Outdated in Unity 5.4.</summary>
+void OnLevelWasLoaded(int level)
+{
+    this.CalledOnLevelWasLoaded(level);
+}
+#endif
+
+
+    void CalledOnLevelWasLoaded(int level)
+    {
+        // check if we are outside the Arena and if it's the case, spawn around the center of the arena in a safe zone
+        if (!Physics.Raycast(transform.position, -Vector3.up, 5f))
+        {
+            transform.position = new Vector3(0f, 5f, 0f);
         }
     }
 

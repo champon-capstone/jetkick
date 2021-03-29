@@ -8,8 +8,13 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    #region Public Fields
+
     public static GameManager instance;
 
+    public GameObject playerPrefab;
+
+    #endregion
     #region Photon Callbacks
 
 
@@ -55,6 +60,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         instance = this;
+        if (PlayerManager.LocalPlayerInstance == null)
+        {
+            Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+        }
+        else
+        {
+            Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+        }
     }
 
     #region Public Methods
