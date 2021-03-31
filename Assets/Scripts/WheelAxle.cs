@@ -2,26 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Settings of visuals and physics of a left and right wheel.
+/// <summary>
+/// Settings of visuals and physics of a left and right wheel.
+/// </summary>
 [System.Serializable]
 public class WheelAxle
 {
-    // Left WheelCollider
+    /// <summary>
+    /// Left WheelCollider
+    /// </summary>
     public WheelCollider wheelColliderLeft;
 
-    // Right WheelCollider
+    /// <summary>
+    /// Right WheelCollider
+    /// </summary>
     public WheelCollider wheelColliderRight;
 
-    //Left Wheel Mesh
+    /// <summary>
+    /// Left Wheel Mesh
+    /// </summary>
     public GameObject wheelMeshLeft;
 
-    // Right Wheel Mesh
+    /// <summary>
+    /// Right Wheel Mesh
+    /// </summary>
     public GameObject wheelMeshRight;
 
-    // Is motor torque applyed to this axle
+    /// <summary>
+    /// Is motor torque applyed to this axle
+    /// </summary>
     public bool motor;
 
-    // Is this is a stearing axle
+    /// <summary>
+    /// Is this is a stearing axle
+    /// </summary>
     public bool steering;
 }
 
