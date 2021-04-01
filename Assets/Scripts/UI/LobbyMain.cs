@@ -1,0 +1,89 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
+
+public class LobbyMain : MonoBehaviourPunCallbacks
+{
+
+    #region Public Fields
+
+    public GameObject roomListObject;
+    public GameObject roomList;
+
+    #endregion
+
+    #region Private Fields
+
+    private Dictionary<string, RoomInfo> cachedRoomList;
+    private Dictionary<string, GameObject> roomListEntries;
+    private Dictionary<string, GameObject> playerListEntries;
+
+    #endregion
+
+    private void Awake()
+    {
+        cachedRoomList = new Dictionary<string, RoomInfo>();
+        roomListEntries = new Dictionary<string, GameObject>();
+    }
+
+
+    #region Pun CallBacks
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        ClearRoomListView();
+
+        UpdateCachedRoomList(roomList);
+        UpdateRoomListView();
+    }
+
+
+    #endregion
+
+    private void ClearRoomListView()
+    {
+        foreach(GameObject room in roomListEntries.Values)
+        {
+            Destroy(room);
+        }
+
+        roomListEntries.Clear();
+    }
+
+    private void UpdateCachedRoomList(List<RoomInfo> roominfos)
+    {
+        foreach(RoomInfo info in roominfos)
+        {
+            if(!info.IsOpen || !info.IsVisible || info.RemovedFromList)
+            {
+                if (cachedRoomList.ContainsKey(info.Name))
+                {
+                    cachedRoomList.Remove(info.Name);
+                }
+                continue;
+            }
+            if (cachedRoomList.ContainsKey(info.Name))
+            {
+                cachedRoomList[info.Name] = info;
+            }
+            else
+            {
+                cachedRoomList.Add(info.Name, info);
+            }
+        }
+    }
+
+    private void UpdateRoomListView()
+    {
+        foreach(RoomInfo info in cachedRoomList.Values)
+        {
+            var room = Instantiate(roomListObject);
+            room.transform.SetParent(roomList.transform);
+            room.transform.localScale = Vector3.one;
+           
+        }
+    }
+}
