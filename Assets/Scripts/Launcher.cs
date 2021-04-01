@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -28,6 +30,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject progressLabel;
 
+    public Button playButton;
+    public Button connectButton;
+
     #endregion
 
     #region MonoBehaviour CallBacks
@@ -41,6 +46,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
+        playButton.interactable = false;
     }
 
     #endregion
@@ -50,15 +56,15 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void Connect()
     {
         isConnecting = true;
-        if (PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.JoinRandomRoom();
-        }
-        else
-        {
-            PhotonNetwork.GameVersion = gameVersion;
-            PhotonNetwork.ConnectUsingSettings();
-        }
+        connectButton.interactable = false;
+        playButton.interactable = true;
+        PhotonNetwork.GameVersion = gameVersion;
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public void Play()
+    {
+        PhotonNetwork.JoinRandomRoom();
     }
 
     #endregion
@@ -66,34 +72,36 @@ public class Launcher : MonoBehaviourPunCallbacks
     #region MonoBehaviourPunCallBacks Callbacks
     public override void OnConnectedToMaster()
     {
-        Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-        if (isConnecting)
-        {
-            PhotonNetwork.JoinRandomRoom();
-        }
+        Debug.Log("Connect to Server");
+        playButton.interactable = true;
+        //if (isConnecting)
+        //{
+        //    PhotonNetwork.JoinRandomRoom();
+        //}
     }
 
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
+        Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
+        playButton.interactable = false;
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
-        Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+        Debug.Log("OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
-        PhotonNetwork.CreateRoom(null, new RoomOptions {MaxPlayers = maxPlayersPerRoom });
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+        Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-        PhotonNetwork.LoadLevel("Room for 1");
+       PhotonNetwork.LoadLevel("Room for 4");
     }
 
     #endregion

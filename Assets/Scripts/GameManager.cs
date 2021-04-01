@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+
+
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName); // not seen if you're the player connecting
 
 
@@ -73,7 +75,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     #region Public Methods
-
 
     public void LeaveRoom()
     {

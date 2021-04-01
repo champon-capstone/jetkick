@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: -7758651909721803721}
   - component: {fileID: -5397846520976914880}
   m_Layer: 0
-  m_Name: My robot Kyle
+  m_Name: TestModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +536,7 @@ MonoBehaviour:
   height: 3
   heightSmoothLag: 0.3
   centerOffset: {x: 0, y: 4, z: 0}
-  followOnStart: 0
+  followOnStart: 1
 --- !u!114 &1844877768266733858
 MonoBehaviour:
   m_ObjectHideFlags: 0
