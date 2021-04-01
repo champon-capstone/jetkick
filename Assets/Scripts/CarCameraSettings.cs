@@ -21,47 +21,34 @@ public class CarCameraSettings
     /// <summary>
     /// Smoothing transition time of the Camera.
     /// </summary>
-    public float smoothTime = 0.3F;
+    public float smoothTime = 0.3f;
 
-
-    /// <summary>
-    /// A default settings of a camera.
-    /// </summary>
-    /// <returns></returns>
-    public static CarCameraSettings GetDefaultSettings0() {
-        CarCameraSettings carCameraSettings = new CarCameraSettings();
-        carCameraSettings.distance = 13.0f;
-        carCameraSettings.height = 8.0f;
-        carCameraSettings.smoothTime = 0.3f;
-
-        return carCameraSettings;
-    }
-
-    /// <summary>
-    /// A default settings of a camera.
-    /// </summary>
-    /// <returns></returns>
-    public static CarCameraSettings GetDefaultSettings1()
+    public CarCameraSettings()
     {
-        CarCameraSettings carCameraSettings = new CarCameraSettings();
-        carCameraSettings.distance = 20.0f;
-        carCameraSettings.height = 15.0f;
-        carCameraSettings.smoothTime = 0.3f;
+    }
 
-        return carCameraSettings;
+    public CarCameraSettings(float distance, float height, float smoothTime)
+    {
+        this.distance = distance;
+        this.height = height;
+        this.smoothTime = smoothTime;
     }
 
     /// <summary>
     /// A default settings of a camera.
     /// </summary>
     /// <returns></returns>
-    public static CarCameraSettings GetDefaultSettings2()
-    {
-        CarCameraSettings carCameraSettings = new CarCameraSettings();
-        carCameraSettings.distance = 6.0f;
-        carCameraSettings.height = 3.0f;
-        carCameraSettings.smoothTime = 0.3f;
+    public static CarCameraSettings GetDefaultSettings0() => new CarCameraSettings();
 
-        return carCameraSettings;
-    }
+    /// <summary>
+    /// A default settings of a camera.
+    /// </summary>
+    /// <returns></returns>
+    public static CarCameraSettings GetDefaultSettings1() => new CarCameraSettings(20.0f, 15.0f, 0.3f);
+
+    /// <summary>
+    /// A default settings of a camera.
+    /// </summary>
+    /// <returns></returns>
+    public static CarCameraSettings GetDefaultSettings2() => new CarCameraSettings(6.0f, 3.0f, 0.3f);
 }
