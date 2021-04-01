@@ -2,22 +2,29 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-// Camera script to follow car while driving
+/// <summary>
+/// Camera script to follow car while driving
+/// </summary>
 public class CarCamera : MonoBehaviour
 { 
-
-    // target of the camera to follow
+    /// <summary>
+    /// target of the camera to follow
+    /// </summary>
     public Transform target;
 
+    /// <summary>
     /// SmoothDamp velocity
+    /// </summary>
     private Vector3 velocity = Vector3.zero;
 
+    /// <summary>
     /// all camera settings
+    /// </summary>
     public List<CarCameraSettings> carCameraSettingsList;
 
-  
+    /// <summary>
     /// current index of camera settings used
+    /// </summary>
     public int cameraSettingsIndex = 0;
 
     private void Start()
@@ -31,14 +38,14 @@ public class CarCamera : MonoBehaviour
     void LateUpdate()
     {
 
-        //return if there is no camera settings
+        ///return if there is no camera settings
         if (carCameraSettingsList == null)
             return;
         if (carCameraSettingsList.Count == 0)
             return;
 
 
-        //switch camera settings to F1 button press
+        ///switch camera settings to F1 button press
         if (Input.GetKeyDown(KeyCode.F1))
         {
             cameraSettingsIndex++;
@@ -48,13 +55,13 @@ public class CarCamera : MonoBehaviour
         }
 
 
-        //calculate new position of the camera
+        ///calculate new position of the camera
         Vector3 newPosition = target.position + new Vector3(0, carCameraSettingsList[cameraSettingsIndex].height, 0) + target.forward * -carCameraSettingsList[cameraSettingsIndex].distance;
 
-        //transition smoothly to new position from old position
+        ///transition smoothly to new position from old position
         this.transform.position = Vector3.SmoothDamp(this.transform.position, newPosition, ref velocity, carCameraSettingsList[cameraSettingsIndex].smoothTime);
       
-        //look towards the target
+        ///look towards the target
         this.transform.LookAt(target);
     }
 }

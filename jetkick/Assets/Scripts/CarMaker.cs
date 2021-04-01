@@ -3,48 +3,94 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-
-// wasd 이동, F1로 시점 변환
+/*! \mainpage Car Maker documentation
+ * 
+* <b>Thank you for purchasing Car Maker.</b><br>
+* <br>For any question don't hesitate to contact me at : asoliddev@gmail.com
+* <br>AssetStore Profile : https://assetstore.unity.com/publishers/38620 
+* <br>ArtStation Profile : https://asoliddev.artstation.com/
+* 
+*  \subsection Basics
+* Car maker is a easy and simple tool to create physics based veicles with a few steps. <br>
+* Video how to : https://www.youtube.com/watch?v=maPDrjUBH8o&feature=youtu.be <br>
+* How to use : <br>
+* 1. Go to top menu and open Car Maker. <br>
+* 2. Drag and drop a Car GameObject you wan't to use Car Maker on. <br>
+* 3. Drag and drop Car Body mesh (GameObject with the car mesh on it). <br>
+* 4. Click Auto Detect wheels or Select them manually. <br>
+* 5. Adjust the corrent Car Body mesh rotation, to align with Unity's default Forward direction. <br>
+* 6. Click Make Car button. <br>
+* 7. Done. <br>
+* 
+* Car Controlls :  Arrows or W,S,A,D <br>
+* Camera view : F1
+* 
+*/
 
 
 [ExecuteInEditMode]
 public class CarMaker : EditorWindow
 {
-    // Car Object to make
+    /// <summary>
+    /// Car Object to make
+    /// </summary>
     private GameObject carObject;
 
-    // Car settings of the car
+    /// <summary>
+    /// Car settings of the car
+    /// </summary>
     private CarSettings carSettings;
 
-    // Gameobject that contains the body mesh of the car
+    /// <summary>
+    /// Gameobject that contains the body mesh of the car
+    /// </summary>
     private GameObject carBodyMesh;
 
-    // Front left Wheel mesh gameobject
+    /// <summary>
+    /// Front left Wheel mesh gameobject
+    /// </summary>
     private GameObject wheelFrontLeft;
 
-    // Front right Wheel mesh gameobject
+    /// <summary>
+    /// Front right Wheel mesh gameobject
+    /// </summary>
     private GameObject wheelFrontRight;
 
-    // back left Wheel mesh gameobject
+    /// <summary>
+    /// back left Wheel mesh gameobject
+    /// </summary>
     private GameObject wheelBackLeft;
 
-    // back right Wheel mesh gameobject
+    /// <summary>
+    /// back right Wheel mesh gameobject
+    /// </summary>
     private GameObject wheelBackRight;
 
 
-    // show advanced settings of the menu
+   
+    /// <summary>
+    /// show advanced settings of the menu
+    /// </summary>
     private bool showAdvancedSettings = false;
 
-    // Create a camera as well if true
+    /// <summary>
+    /// Create a camera as well if true
+    /// </summary>
     private bool makeCamera = true;
 
-    // Base rotation of car body mesh to match the default wheel forward direction
+    /// <summary>
+    /// Base rotation of car body mesh to match the default wheel forward direction
+    /// </summary>
     public float meshRotationY = 0;
 
-    // how slippery the car should be, higher value = more slippery
+    /// <summary>
+    /// how slippery the car should be, higher value = more slippery
+    /// </summary>
     public float slipperiness = 1;
 
-    // Currently disabled because it throws errors
+    /// <summary>
+    /// Currently disabled because it throws errors
+    /// </summary>
     Editor gameObjectEditor;
     GameObject lastGameObject;
 
@@ -94,7 +140,7 @@ public class CarMaker : EditorWindow
 
         */
 
-        //display car object preview texture
+        ///display car object preview texture
         if (carObject != null) {
             Texture2D tex2d = AssetPreview.GetAssetPreview(carObject);
 
@@ -105,7 +151,7 @@ public class CarMaker : EditorWindow
             GUILayout.EndHorizontal();
         }
 
-        //display settings and buttons
+        ///display settings and buttons
         if (carObject != null)
         {
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
@@ -208,7 +254,9 @@ public class CarMaker : EditorWindow
 
     }
 
-    // Create car prefab with the current car maker settings
+    /// <summary>
+    /// Create car prefab with the current car maker settings
+    /// </summary>
     /// <returns></returns>
     private GameObject MakeCar()
     {
@@ -222,31 +270,31 @@ public class CarMaker : EditorWindow
         GameObject newCar = null;
 
 
-        //if car is null
+        ///if car is null
         if (carObject == null) {
             Debug.LogError("Please Assign Car GameObject!");
         }
         else {
-            //init car maker Prefab GameObject
+            ///init car maker Prefab GameObject
             newCar = new GameObject();
             newCar.transform.position = Vector3.zero;
 
-            //add rigidbody to root
+            ///add rigidbody to root
             Rigidbody rb = newCar.AddComponent<Rigidbody>();
             rb.interpolation = RigidbodyInterpolation.Interpolate;
            
-            //calculate body mesh rotation
+            ///calculate body mesh rotation
             Quaternion meshRot = Quaternion.Euler(Vector3.zero);
             meshRot = Quaternion.Euler(0, meshRotationY, 0);
 
 
-            //add car container
+            ///add car container
             GameObject carContainer = GameObject.Instantiate(carObject, Vector3.zero, meshRot, newCar.transform) as GameObject;
            
-            //get car body mesh
+            ///get car body mesh
             GameObject carMesh = GetChildByName(carContainer, carBodyMesh.name);
 
-            //add collider to car body mesh
+            ///add collider to car body mesh
             Collider collider = carMesh.GetComponent<Collider>();
             if (collider !=null)
             {
@@ -260,36 +308,36 @@ public class CarMaker : EditorWindow
 
 
 
-            //create container for wheels
+            ///create container for wheels
             GameObject wheelsContainer = new GameObject();
             wheelsContainer.name = "wheelsContainer";
             wheelsContainer.transform.parent = newCar.transform;
             wheelsContainer.transform.localPosition = Vector3.zero;
             wheelsContainer.transform.localRotation = meshRot;
 
-            //create wheels 
+            ///create wheels 
             WheelCollider wheelColliderFrontLeft = AddWheelCollider(wheelsContainer, wheelFrontLeft, "Front Left", true);
             WheelCollider wheelColliderFrontRight = AddWheelCollider(wheelsContainer, wheelFrontRight, "Front Right", true);
             WheelCollider wheelColliderBackLeft = AddWheelCollider(wheelsContainer, wheelBackLeft, "Back Left", false);
             WheelCollider wheelColliderBackRight = AddWheelCollider(wheelsContainer, wheelBackRight, "Back Right", false);
 
 
-            //Create the new car Prefab.
+            ///Create the new car Prefab.
             GameObject newPrefab = PrefabUtility.SaveAsPrefabAssetAndConnect(newCar, path, InteractionMode.UserAction);
             
-            //set car root name
+            ///set car root name
             newCar.name = newPrefab.name;
 
-            //add car CarControler
+            ///add car CarControler
             CarControler carController = newCar.AddComponent<CarControler>();
             
-            //asign car settings
+            ///asign car settings
             carController.carSettings = carSettings;
 
-            //init axleInfos List
+            ///init axleInfos List
             carController.wheelAxleList = new List<WheelAxle>();
 
-            //create Front Wheels
+            ///create Front Wheels
             WheelAxle axelInfoFront = new WheelAxle();
             axelInfoFront.wheelColliderRight = wheelColliderFrontRight;
             axelInfoFront.wheelColliderLeft = wheelColliderFrontLeft;
@@ -299,7 +347,7 @@ public class CarMaker : EditorWindow
             axelInfoFront.steering = true;
             carController.wheelAxleList.Add(axelInfoFront);
 
-            //create Back Wheels
+            ///create Back Wheels
             WheelAxle axelInfoBack = new WheelAxle();
             axelInfoBack.wheelColliderRight = wheelColliderBackRight;
             axelInfoBack.wheelColliderLeft = wheelColliderBackLeft;
@@ -315,11 +363,13 @@ public class CarMaker : EditorWindow
         return newCar;
     }
 
+    /// <summary>
     /// Create Camera
+    /// </summary>
     /// <param name="car"></param>
     private void MakeCamera(GameObject car)
     {
-        // Remove Existing cameras
+        /// Remove Existing cameras
         if (Camera.allCameras.Length > 0)
         {
             for (int i = 0; i < Camera.allCameras.Length; i++)
@@ -328,53 +378,55 @@ public class CarMaker : EditorWindow
             }
         }
 
-        //create camera GameObject
+        ///create camera GameObject
         GameObject newCamera = new GameObject();
         newCamera.name = "CarMakerCamera";
 
-        //add scripts to GameObject
+        ///add scripts to GameObject
         newCamera.AddComponent<Camera>();
         newCamera.AddComponent<AudioListener>();
         
-        //add CarCamera script
+        ///add CarCamera script
         CarCamera carCamera = newCamera.AddComponent<CarCamera>();
 
-        //asign default camera settings
+        ///asign default camera settings
         carCamera.carCameraSettingsList = new List<CarCameraSettings>();
         carCamera.carCameraSettingsList.Add(CarCameraSettings.GetDefaultSettings0());
         carCamera.carCameraSettingsList.Add(CarCameraSettings.GetDefaultSettings1());
         carCamera.carCameraSettingsList.Add(CarCameraSettings.GetDefaultSettings2());
 
-        //set camera target to follow
+        ///set camera target to follow
         carCamera.target = car.transform;
 
     }
 
-    // Automaticly try to detect wheels of the car GameObject
+    /// <summary>
+    /// Automaticly try to detect wheels of the car GameObject
+    /// </summary>
     private void AutoDetectWheels() {
-        //get all childtren transforms
+        ///get all childtren transforms
         Transform[] allChildren = carObject.GetComponentsInChildren<Transform>(true);
 
-        //iterate all children
+        ///iterate all children
         for (int i = 0; i < allChildren.Length; i++)
         {
-            //ignore parent object
+            ///ignore parent object
             if (allChildren[i] == carObject.transform)
                 continue;
 
-            //front left
+            ///front left
             if (FindChildrenWithMatch(allChildren[i], searchWheelFrontLeft))
                 wheelFrontLeft = allChildren[i].gameObject;
 
-            //front right
+            ///front right
             if (FindChildrenWithMatch(allChildren[i], searchWheelFrontRight))
                 wheelFrontRight = allChildren[i].gameObject;
 
-            //back left
+            ///back left
             if (FindChildrenWithMatch(allChildren[i], searchWheelBackLeft))
                 wheelBackLeft = allChildren[i].gameObject;
 
-            //back right
+            ///back right
             if (FindChildrenWithMatch(allChildren[i], searchWheelBackRight))
                 wheelBackRight = allChildren[i].gameObject;
         }
@@ -403,8 +455,9 @@ public class CarMaker : EditorWindow
         new string[] { "br"}
     };
 
-
-    // Try to match transform name string with multiple strings
+    /// <summary>
+    /// Try to match transform name string with multiple strings
+    /// </summary>
     /// <param name="childTransform"></param>
     /// <param name="criteria"></param>
     /// <returns></returns>
@@ -412,16 +465,16 @@ public class CarMaker : EditorWindow
     {
         bool b = false;
 
-        //iterate all possible string matches
+        ///iterate all possible string matches
         for (int i = 0; i < criteria.Length; i++)
         {
-            //create bool array for the matches
+            ///create bool array for the matches
             bool[] matchAaray = new bool[criteria[i].Length];
 
-            //iterate all strings
+            ///iterate all strings
             for (int i1 = 0; i1 < criteria[i].Length; i1++)
             {
-                //set match array to true if there is string match
+                ///set match array to true if there is string match
                 if (childTransform.name.ToLower().Contains(criteria[i][i1]) == true)
                     matchAaray[i1] = true;
 
@@ -430,7 +483,7 @@ public class CarMaker : EditorWindow
 
             bool allMatch = true;
 
-            //check if all matches are true
+            ///check if all matches are true
             foreach (bool match in matchAaray)
             {
                 if (match == false)
@@ -444,8 +497,9 @@ public class CarMaker : EditorWindow
         return b;
     }
 
-
-    // Create and add WheelCollider to given parent GameObject
+    /// <summary>
+    /// Create and add WheelCollider to given parent GameObject
+    /// </summary>
     /// <param name="parent"></param>
     /// <param name="wheelMeshGO"></param>
     /// <param name="name"></param>
@@ -453,18 +507,18 @@ public class CarMaker : EditorWindow
     /// <returns></returns>
     private WheelCollider AddWheelCollider(GameObject parent, GameObject wheelMeshGO, string name, bool isFrontWheel)
     {
-        //create wheel GameObject and set position and rotation
+        ///create wheel GameObject and set position and rotation
         GameObject wheel = new GameObject();
         wheel.transform.parent = parent.transform;
         wheel.transform.localPosition = wheelMeshGO.transform.localPosition;
         wheel.transform.localRotation = Quaternion.identity;
         wheel.name = name;
 
-        //add wheel collider GameObject
+        ///add wheel collider GameObject
         WheelCollider wheelCollider = wheel.AddComponent<WheelCollider>();
         wheelCollider.mass = 40.0f;
 
-        //adjust wheel collider forward friction settings
+        ///adjust wheel collider forward friction settings
         WheelFrictionCurve wfcForward = wheelCollider.forwardFriction;
         wfcForward.extremumSlip = 0.05f;
         wfcForward.extremumValue = 1.0f;
@@ -472,12 +526,12 @@ public class CarMaker : EditorWindow
         wfcForward.asymptoteValue = 2.0f;
         wheelCollider.forwardFriction = wfcForward;
 
-        //adjust wheel collider sideways friction settings
+        ///adjust wheel collider sideways friction settings
         WheelFrictionCurve wfcSideways = wheelCollider.forwardFriction;
         wfcSideways.extremumSlip = 0.05f;
         wfcSideways.extremumValue = 1.0f;
 
-        //if this is back wheel
+        ///if this is back wheel
         if (isFrontWheel == false)
         {    
             wfcSideways.extremumSlip = 0.1f;
@@ -487,7 +541,7 @@ public class CarMaker : EditorWindow
 
         wheelCollider.sidewaysFriction = wfcSideways;
 
-        //try to get mesh render of the wheel
+        ///try to get mesh render of the wheel
         Renderer wheelRenderer = wheelMeshGO.GetComponent<Renderer>();
 
         if (wheelRenderer) {
@@ -499,7 +553,9 @@ public class CarMaker : EditorWindow
         return wheelCollider;
     }
 
-    // returns child GameObject if there is a name match
+    /// <summary>
+    /// returns child GameObject if there is a name match
+    /// </summary>
     /// <param name="parent"></param>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -508,13 +564,13 @@ public class CarMaker : EditorWindow
         GameObject childGO = null;
         Transform[] transformArray = parent.GetComponentsInChildren<Transform>();
 
-        //iterate all child transform
+        ///iterate all child transform
         foreach (Transform t in transformArray)
         {
-            //fix name if it was a copy
+            ///fix name if it was a copy
             t.name = t.name.Replace("(Clone)", "");
 
-            //check for match
+            ///check for match
             if (t.name == name)
                 childGO = t.gameObject;
         }
