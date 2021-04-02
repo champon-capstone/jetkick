@@ -12,6 +12,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public GameObject roomListObject;
     public GameObject roomList;
+    public Button StartButton;
 
     #endregion
 
@@ -85,5 +86,36 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             room.transform.localScale = Vector3.one;
            
         }
+    }
+
+    public void LocalPlayerPropertiesUpdated()
+    {
+        StartButton.gameObject.SetActive(CheckPlayersReady());
+    }
+
+    private bool CheckPlayersReady()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return false;
+        }
+
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            object isPlayerReady;
+            if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
+            {
+                if (!(bool)isPlayerReady)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

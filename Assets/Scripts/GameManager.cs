@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
+    public const string PLAYER_LIVES = "PlayerLives";
+    public const string PLAYER_READY = "IsPlayerReady";
+    public const int PLAYER_MAX_LIVES = 3;
+
     public static GameManager instance;
 
     public GameObject playerPrefab;
