@@ -84,7 +84,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             var room = Instantiate(roomListObject);
             room.transform.SetParent(roomList.transform);
             room.transform.localScale = Vector3.one;
-           
+            room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
         }
     }
 

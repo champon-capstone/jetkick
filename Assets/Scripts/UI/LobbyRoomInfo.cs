@@ -9,50 +9,30 @@ using Photon.Realtime;
 
 public class LobbyRoomInfo : MonoBehaviour
 {
-    private string playerName;
+    public Text RoomNameText;
+    public Text RoomPlayersText;
+    public Button JoinRoomButton;
 
-    public Image playerReadyImage;
-    public Button playerReadyButton;
+    private string roomName;
 
-    private int ownerID;
-    private bool isPlayerReady;
-
-    private void Start()
+    public void Start()
     {
-        if(PhotonNetwork.LocalPlayer.ActorNumber != ownerID)
+        JoinRoomButton.onClick.AddListener(() =>
         {
-            playerReadyButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            Hashtable initialProps = new Hashtable() { { GameManager.PLAYER_READY, isPlayerReady }, { GameManager.PLAYER_LIVES, GameManager.PLAYER_MAX_LIVES } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
-
-            playerReadyButton.onClick.AddListener(() =>
+            if (PhotonNetwork.InLobby)
             {
-                isPlayerReady = !isPlayerReady;
-                SetPlayerReady(isPlayerReady);
+                PhotonNetwork.LeaveLobby();
+            }
 
-                Hashtable props = new Hashtable() { { GameManager.PLAYER_READY, isPlayerReady } };
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    FindObjectOfType<LobbyMain>().LocalPlayerPropertiesUpdated();
-                }
-            });
-        }
+            PhotonNetwork.JoinRoom(roomName);
+        });
     }
 
-    public void Initialize(int playerID, string playerName)
+    public void Initialize(string name, byte currentPlayers, byte maxPlayers)
     {
-        ownerID = playerID;
-        this.playerName = playerName; 
-    }
+        roomName = name;
 
-    public void SetPlayerReady(bool playerReady)
-    {
-        playerReadyButton.GetComponentInChildren<Text>().text = playerReady ? "Ready!" : "Ready?";
-        playerReadyImage.enabled = playerReady;
+        RoomNameText.text = name;
+        RoomPlayersText.text = currentPlayers + " / " + maxPlayers;
     }
 }
