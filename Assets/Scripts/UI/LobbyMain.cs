@@ -14,7 +14,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public GameObject roomList;
     public Button StartButton;
     public GameObject roomPanel;
+    [Header("Create Room")]
     public GameObject createPanel;
+    public InputField roonNameInput;
+    public InputField playerNumberInput;
+
 
     #endregion
 
@@ -137,13 +141,19 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         return true;
     }
 
-    public void ActivePanel(string panelName)
-    {
-        panelList[panelName].SetActive(true);
-    }
+    public void ActivePanel(string panelName) => panelList[panelName].SetActive(true);
+    
 
     public void OnCreateRoomButtonClicked()
     {
+        string roomName = roonNameInput.text;
 
+        byte maxPlayer;
+        byte.TryParse(playerNumberInput.text,out maxPlayer);
+        maxPlayer = (byte)Mathf.Clamp(maxPlayer, 1, 4);
+
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000 };
+
+        PhotonNetwork.CreateRoom(roomName, options, null);
     }
 }
