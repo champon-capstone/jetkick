@@ -1754,7 +1754,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: createPanel
+          m_StringArgument: CreatePanel
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1387144603
@@ -1993,6 +1993,7 @@ MonoBehaviour:
   listPanel: {fileID: 1910722430}
   roomListObject: {fileID: 114706, guid: 03c5e15309335324fba99d68e38cb08b, type: 3}
   roomPanel: {fileID: 1449878146}
+  playerListObject: {fileID: 2785741002756074839, guid: c557f7208571e8947af93c8b4895fc79, type: 3}
   createPanel: {fileID: 206522821}
   roonNameInput: {fileID: 1998329557}
   playerNumberInput: {fileID: 567060729}
