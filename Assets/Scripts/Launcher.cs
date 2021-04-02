@@ -64,7 +64,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void Play()
     {
-        //PhotonNetwork.JoinRandomRoom();
         PhotonNetwork.LoadLevel("Lobby");
         PhotonNetwork.JoinLobby();
     }
