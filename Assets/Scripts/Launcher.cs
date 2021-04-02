@@ -64,7 +64,9 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void Play()
     {
-        PhotonNetwork.JoinRandomRoom();
+        //PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.JoinLobby();
     }
 
     #endregion
@@ -79,7 +81,6 @@ public class Launcher : MonoBehaviourPunCallbacks
         //    PhotonNetwork.JoinRandomRoom();
         //}
     }
-
 
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -97,11 +98,13 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
     }
 
+
+
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-       PhotonNetwork.LoadLevel("Lobby");
+       //PhotonNetwork.LoadLevel("Lobby");
     }
 
     #endregion

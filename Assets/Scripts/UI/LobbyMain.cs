@@ -10,9 +10,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #region Public Fields
 
-    public GameObject roomListObject;
-    public GameObject roomList;
     public Button StartButton;
+    [Header("List Panel")]
+    public GameObject listPanel;
+    public GameObject roomListObject;
+    [Header("Room Panel")]
     public GameObject roomPanel;
     [Header("Create Room")]
     public GameObject createPanel;
@@ -29,6 +31,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> playerListEntries;
     private Dictionary<string, GameObject> panelList;
 
+    private string currentPanel;
+    private string beforePanel;
+
+    private const string roomPanelName = "roomPanel";
+    private const string createPanelName = "createPanel";
+    private const string listPanelName = "listPanel";
+
     #endregion
 
 
@@ -41,12 +50,16 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         roomListEntries = new Dictionary<string, GameObject>();
         panelList = new Dictionary<string, GameObject>();
         roomPanel.SetActive(false);
+        createPanel.SetActive(false);
+        currentPanel = listPanelName;
+        beforePanel = listPanelName;
     }
 
     private void Start()
     {
-        panelList.Add("roomPanel", roomPanel);
-        panelList.Add("createPanel", createPanel);
+        panelList.Add(roomPanelName, roomPanel);
+        panelList.Add(createPanelName, createPanel);
+        panelList.Add(listPanelName, listPanel);
     }
 
     #endregion
@@ -102,7 +115,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         foreach(RoomInfo info in cachedRoomList.Values)
         {
             var room = Instantiate(roomListObject);
-            room.transform.SetParent(roomList.transform);
+            room.transform.SetParent(listPanel.transform);
             room.transform.localScale = Vector3.one;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
 
@@ -141,11 +154,17 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         return true;
     }
 
-    public void ActivePanel(string panelName) => panelList[panelName].SetActive(true);
-    
-
-    public void OnCreateRoomButtonClicked()
+    public void ActivePanel(string panelName)
     {
+        panelList[beforePanel].SetActive(false);
+        beforePanel = currentPanel;
+        panelList[panelName].SetActive(true);
+        currentPanel = panelName;
+    }
+
+    private void OnCreateRoomButtonClicked()
+    {
+        Debug.Log("Request Create Room");
         string roomName = roonNameInput.text;
 
         byte maxPlayer;
@@ -155,5 +174,21 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000 };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
+    }
+
+    public void OnOkButtonClicked()
+    {
+        if(currentPanel == null)
+        {
+            return;
+        }
+
+        if (currentPanel.Equals(createPanelName))
+        {
+            OnCreateRoomButtonClicked();
+            panelList[currentPanel].SetActive(false);
+            currentPanel = roomPanelName;
+            ActivePanel(currentPanel);
+        }
     }
 }
