@@ -101,7 +101,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-       PhotonNetwork.LoadLevel("Room for 4");
+       PhotonNetwork.LoadLevel("Lobby");
     }
 
     #endregion

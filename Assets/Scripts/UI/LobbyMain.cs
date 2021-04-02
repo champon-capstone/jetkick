@@ -13,6 +13,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public GameObject roomListObject;
     public GameObject roomList;
     public Button StartButton;
+    public GameObject roomPanel;
+    public GameObject createPanel;
 
     #endregion
 
@@ -21,15 +23,29 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
     private Dictionary<string, GameObject> playerListEntries;
+    private Dictionary<string, GameObject> panelList;
 
     #endregion
+
+
+
+    #region Unity
 
     private void Awake()
     {
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
+        panelList = new Dictionary<string, GameObject>();
+        roomPanel.SetActive(false);
     }
 
+    private void Start()
+    {
+        panelList.Add("roomPanel", roomPanel);
+        panelList.Add("createPanel", createPanel);
+    }
+
+    #endregion
 
     #region Pun CallBacks
 
@@ -85,6 +101,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             room.transform.SetParent(roomList.transform);
             room.transform.localScale = Vector3.one;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
+
+            roomListEntries.Add(info.Name, room);
         }
     }
 
@@ -117,5 +135,15 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
 
         return true;
+    }
+
+    public void ActivePanel(string panelName)
+    {
+        panelList[panelName].SetActive(true);
+    }
+
+    public void OnCreateRoomButtonClicked()
+    {
+
     }
 }
