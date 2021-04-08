@@ -34,9 +34,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> panelList;
 
     private string currentPanel;
-    private string beforePanel;
 
     private int listDelta = 0;
+    private Vector3 defaultRoomPosition;
 
     #endregion
 
@@ -52,7 +52,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
         createPanel.SetActive(false);
         currentPanel = listPanel.name;
-        beforePanel = listPanel.name;
     }
 
     private void Start()
@@ -60,6 +59,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(roomPanel.name, roomPanel);
         panelList.Add(createPanel.name, createPanel);
         panelList.Add(listPanel.name, listPanel);
+        defaultRoomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y + 80, listPanel.transform.position.z);
     }
 
     #endregion
@@ -68,8 +68,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-
-
+        Debug.Log("OnRoomListUpdate roomlist size");
+        foreach(RoomInfo info in roomList)
+        {
+            Debug.Log("Room Info " + info.Name);
+        }
         ClearRoomListView();
 
         UpdateCachedRoomList(roomList);
@@ -107,6 +110,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         cachedRoomList.Clear();
 
         ActivePanel(roomPanel.name);
+        panelList[createPanel.name].SetActive(false);
+        panelList[listPanel.name].SetActive(false);
 
         if(playerListEntries == null)
         {
@@ -205,6 +210,16 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #endregion
 
+    public void OnLeaveRoomButtonClickec()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        panelList[roomPanel.name].SetActive(false);
+        StartButton.gameObject.SetActive(true);
+    }
+
     private void ClearRoomListView()
     {
         listDelta = 0;
@@ -239,7 +254,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateRoomListView()
+    public void UpdateRoomListView()
     {
         foreach(RoomInfo info in cachedRoomList.Values)
         {
@@ -247,7 +262,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             var room = Instantiate(roomListPrefab);
             room.transform.SetParent(listPanel.transform);
             room.transform.localScale = Vector3.one;
-            var roomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y - listDelta, listPanel.transform.position.z);
+            var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
             room.transform.position = roomPosition;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
 
@@ -288,8 +303,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void ActivePanel(string panelName)
     {
-        panelList[beforePanel].SetActive(false);
-        beforePanel = currentPanel;
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }
