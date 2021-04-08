@@ -68,7 +68,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("OnRoomListUpdate roomlist size");
+        Debug.Log("OnRoomListUpdate roomlist size"+roomList.Count);
         foreach(RoomInfo info in roomList)
         {
             Debug.Log("Room Info " + info.Name);
@@ -83,6 +83,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         cachedRoomList.Clear();
         ClearRoomListView();
+        Debug.Log("Joined Lobby");
     }
 
     public override void OnLeftLobby()
@@ -135,7 +136,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
 
 
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
@@ -169,7 +170,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -177,14 +178,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
         playerListEntries.Remove(otherPlayer.ActorNumber);
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
-            StartButton.gameObject.SetActive(CheckPlayersReady());
+            //StartButton.gameObject.SetActive(CheckPlayersReady());
         }
     }
 
@@ -205,7 +206,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             }
         }
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     #endregion
@@ -272,7 +273,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void LocalPlayerPropertiesUpdated()
     {
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     private bool CheckPlayersReady()
@@ -316,7 +317,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         byte.TryParse(playerNumberInput.text,out maxPlayer);
         maxPlayer = (byte)Mathf.Clamp(maxPlayer, 1, 4);
 
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000 };
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -326,6 +327,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if(currentPanel == null)
         {
             return;
+        }
+
+        if (currentPanel.Equals(roomPanel.name))
+        {
+            PhotonNetwork.LoadLevel("CityMap");
         }
 
         if (currentPanel.Equals(createPanel.name))
