@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public Transform target;
+    Transform camera;
 
     public float distance = 13.0f;
     public float height = 8.0f;
@@ -33,8 +34,9 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
-        transform.LookAt(target);
+        camera = transform;
+        camera.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
+        camera.LookAt(target);
     }
 
     // Update is called once per frame
@@ -57,7 +59,7 @@ public class PlayerCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0) + target.forward * -distance, ref velocity, smoothTime);
-        transform.LookAt(target);
+        camera.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0) + target.forward * -distance, ref velocity, smoothTime);
+        camera.LookAt(target);
     }
 }
