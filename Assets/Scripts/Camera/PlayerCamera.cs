@@ -17,19 +17,22 @@ public class PlayerCamera : MonoBehaviour
         public float height;
     }
 
-    Preset[] presets = new Preset[3];
+    static Preset makePreset(float distance, float height)
+    {
+        Preset preset;
+        preset.distance = distance;
+        preset.height = height;
+        return preset;
+    }
+
+    Preset[] presets = new Preset[] {
+        makePreset(13.0f, 8.0f), makePreset(20.0f, 15.0f), makePreset(6.0f, 3.0f)
+    };
     int presetIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        presets[0].distance = 13.0f;
-        presets[0].height = 8.0f;
-        presets[1].distance = 20.0f;
-        presets[1].height = 15.0f;
-        presets[2].distance = 6.0f;
-        presets[2].height = 3.0f;
-
         transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
         transform.LookAt(target);
     }
