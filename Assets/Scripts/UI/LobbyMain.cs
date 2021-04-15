@@ -14,7 +14,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public Button StartButton;
     [Header("List Panel")]
     public GameObject listPanel;
-    public GameObject roomListObject;
+    public GameObject roomListPrefab;
     [Header("Room Panel")]
     public GameObject roomPanel;
     public GameObject playerListObject;
@@ -34,7 +34,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> panelList;
 
     private string currentPanel;
-    private string beforePanel;
+
+    private int listDelta = 0;
+    private Vector3 defaultRoomPosition;
 
     #endregion
 
@@ -50,7 +52,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
         createPanel.SetActive(false);
         currentPanel = listPanel.name;
-        beforePanel = listPanel.name;
     }
 
     private void Start()
@@ -58,6 +59,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(roomPanel.name, roomPanel);
         panelList.Add(createPanel.name, createPanel);
         panelList.Add(listPanel.name, listPanel);
+        defaultRoomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y + 80, listPanel.transform.position.z);
     }
 
     #endregion
@@ -66,8 +68,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-
-
+        Debug.Log("OnRoomListUpdate roomlist size"+roomList.Count);
+        foreach(RoomInfo info in roomList)
+        {
+            Debug.Log("Room Info " + info.Name);
+        }
         ClearRoomListView();
 
         UpdateCachedRoomList(roomList);
@@ -78,6 +83,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         cachedRoomList.Clear();
         ClearRoomListView();
+        Debug.Log("Joined Lobby");
     }
 
     public override void OnLeftLobby()
@@ -105,6 +111,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         cachedRoomList.Clear();
 
         ActivePanel(roomPanel.name);
+        panelList[createPanel.name].SetActive(false);
+        panelList[listPanel.name].SetActive(false);
 
         if(playerListEntries == null)
         {
@@ -128,7 +136,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
 
 
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
@@ -162,7 +170,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -170,14 +178,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
         playerListEntries.Remove(otherPlayer.ActorNumber);
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
-            StartButton.gameObject.SetActive(CheckPlayersReady());
+            //StartButton.gameObject.SetActive(CheckPlayersReady());
         }
     }
 
@@ -198,13 +206,24 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             }
         }
 
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     #endregion
 
+    public void OnLeaveRoomButtonClickec()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        panelList[roomPanel.name].SetActive(false);
+        StartButton.gameObject.SetActive(true);
+    }
+
     private void ClearRoomListView()
     {
+        listDelta = 0;
         foreach(GameObject room in roomListEntries.Values)
         {
             Destroy(room);
@@ -236,13 +255,16 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateRoomListView()
+    public void UpdateRoomListView()
     {
         foreach(RoomInfo info in cachedRoomList.Values)
         {
-            var room = Instantiate(roomListObject);
+            listDelta -= 20;
+            var room = Instantiate(roomListPrefab);
             room.transform.SetParent(listPanel.transform);
             room.transform.localScale = Vector3.one;
+            var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
+            room.transform.position = roomPosition;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
 
             roomListEntries.Add(info.Name, room);
@@ -251,7 +273,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void LocalPlayerPropertiesUpdated()
     {
-        StartButton.gameObject.SetActive(CheckPlayersReady());
+        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     private bool CheckPlayersReady()
@@ -282,8 +304,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void ActivePanel(string panelName)
     {
-        panelList[beforePanel].SetActive(false);
-        beforePanel = currentPanel;
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }
@@ -297,7 +317,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         byte.TryParse(playerNumberInput.text,out maxPlayer);
         maxPlayer = (byte)Mathf.Clamp(maxPlayer, 1, 4);
 
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000 };
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -307,6 +327,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if(currentPanel == null)
         {
             return;
+        }
+
+        if (currentPanel.Equals(roomPanel.name))
+        {
+            PhotonNetwork.LoadLevel("CityMap");
         }
 
         if (currentPanel.Equals(createPanel.name))
