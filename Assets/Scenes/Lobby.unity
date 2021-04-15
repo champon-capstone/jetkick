@@ -747,7 +747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &206522822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,7 +972,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 543379975}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1460546182}
+        m_TargetAssemblyTypeName: LobbyMain, Assembly-CSharp
+        m_MethodName: UpdateRoomListView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &543379975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1623,7 +1635,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1300834480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1460546182}
+        m_TargetAssemblyTypeName: LobbyMain, Assembly-CSharp
+        m_MethodName: OnLeaveRoomButtonClickec
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1300834480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1812,7 +1836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1449878147
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1991,7 +2015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartButton: {fileID: 44935023}
   listPanel: {fileID: 1910722430}
-  roomListObject: {fileID: 114706, guid: 03c5e15309335324fba99d68e38cb08b, type: 3}
+  roomListPrefab: {fileID: 8275817807505067661, guid: 0b28dd6412d14d244b25bf22eccf8b42, type: 3}
   roomPanel: {fileID: 1449878146}
   playerListObject: {fileID: 2785741002756074839, guid: c557f7208571e8947af93c8b4895fc79, type: 3}
   createPanel: {fileID: 206522821}
