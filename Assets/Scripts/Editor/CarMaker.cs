@@ -67,16 +67,11 @@ public class CarMaker : EditorWindow
     private GameObject wheelBackRight;
 
 
-   
+
     /// <summary>
     /// show advanced settings of the menu
     /// </summary>
     private bool showAdvancedSettings = false;
-
-    /// <summary>
-    /// Create a camera as well if true
-    /// </summary>
-    private bool makeCamera = true;
 
     /// <summary>
     /// Base rotation of car body mesh to match the default wheel forward direction
@@ -105,7 +100,8 @@ public class CarMaker : EditorWindow
     void OnGUI()
     {
         ///if no car object selected
-        if (carObject == null) {
+        if (carObject == null)
+        {
 
             ///init car settings
             carSettings = new CarSettings();
@@ -141,13 +137,14 @@ public class CarMaker : EditorWindow
         */
 
         ///display car object preview texture
-        if (carObject != null) {
+        if (carObject != null)
+        {
             Texture2D tex2d = AssetPreview.GetAssetPreview(carObject);
 
             GUILayout.BeginHorizontal();
-                GUILayout.FlexibleSpace();
-                   GUILayout.Label(tex2d);
-                GUILayout.FlexibleSpace();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label(tex2d);
+            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
         }
 
@@ -198,14 +195,14 @@ public class CarMaker : EditorWindow
             EditorGUILayout.Space();
 
             meshRotationY = EditorGUILayout.FloatField("MeshRotation", meshRotationY);
-            makeCamera = EditorGUILayout.Toggle("Make Camera", makeCamera);
 
             EditorGUILayout.Space();
-            EditorGUILayout.Space(); 
+            EditorGUILayout.Space();
             EditorGUILayout.Space();
 
             showAdvancedSettings = EditorGUILayout.Toggle("Advanced Settings", showAdvancedSettings);
-            if (showAdvancedSettings) {
+            if (showAdvancedSettings)
+            {
                 EditorGUILayout.Space();
 
                 EditorGUI.indentLevel++;
@@ -232,7 +229,7 @@ public class CarMaker : EditorWindow
                 carMeshBodyError = "Wrong Car Body Mesh : Please Select the gameobject with car body Meshrenderer!";
 
 
-            if(carMeshBodyError != "ok")
+            if (carMeshBodyError != "ok")
             {
                 GUIStyle style = new GUIStyle();
                 style.normal.textColor = Color.red;
@@ -243,15 +240,8 @@ public class CarMaker : EditorWindow
             else if (GUILayout.Button("Make Car"))
             {
                 GameObject car = MakeCar();
-
-                if (car != null)
-                    if (makeCamera)
-                        MakeCamera(car);
             }
-
         }
-
-
     }
 
     /// <summary>
@@ -271,10 +261,12 @@ public class CarMaker : EditorWindow
 
 
         ///if car is null
-        if (carObject == null) {
+        if (carObject == null)
+        {
             Debug.LogError("Please Assign Car GameObject!");
         }
-        else {
+        else
+        {
             ///init car maker Prefab GameObject
             newCar = new GameObject();
             newCar.transform.position = Vector3.zero;
@@ -282,7 +274,7 @@ public class CarMaker : EditorWindow
             ///add rigidbody to root
             Rigidbody rb = newCar.AddComponent<Rigidbody>();
             rb.interpolation = RigidbodyInterpolation.Interpolate;
-           
+
             ///calculate body mesh rotation
             Quaternion meshRot = Quaternion.Euler(Vector3.zero);
             meshRot = Quaternion.Euler(0, meshRotationY, 0);
@@ -290,13 +282,13 @@ public class CarMaker : EditorWindow
 
             ///add car container
             GameObject carContainer = GameObject.Instantiate(carObject, Vector3.zero, meshRot, newCar.transform) as GameObject;
-           
+
             ///get car body mesh
             GameObject carMesh = GetChildByName(carContainer, carBodyMesh.name);
 
             ///add collider to car body mesh
             Collider collider = carMesh.GetComponent<Collider>();
-            if (collider !=null)
+            if (collider != null)
             {
                 MeshCollider meshCollider = carMesh.GetComponent<MeshCollider>();
                 if (meshCollider != null)
@@ -324,13 +316,13 @@ public class CarMaker : EditorWindow
 
             ///Create the new car Prefab.
             GameObject newPrefab = PrefabUtility.SaveAsPrefabAssetAndConnect(newCar, path, InteractionMode.UserAction);
-            
+
             ///set car root name
             newCar.name = newPrefab.name;
 
             ///add car CarControler
             CarControler carController = newCar.AddComponent<CarControler>();
-            
+
             ///asign car settings
             carController.carSettings = carSettings;
 
@@ -341,7 +333,7 @@ public class CarMaker : EditorWindow
             WheelAxle axelInfoFront = new WheelAxle();
             axelInfoFront.wheelColliderRight = wheelColliderFrontRight;
             axelInfoFront.wheelColliderLeft = wheelColliderFrontLeft;
-            axelInfoFront.wheelMeshLeft = GetChildByName(carContainer,  wheelFrontLeft.name);
+            axelInfoFront.wheelMeshLeft = GetChildByName(carContainer, wheelFrontLeft.name);
             axelInfoFront.wheelMeshRight = GetChildByName(carContainer, wheelFrontRight.name);
             axelInfoFront.motor = true;
             axelInfoFront.steering = true;
@@ -364,46 +356,10 @@ public class CarMaker : EditorWindow
     }
 
     /// <summary>
-    /// Create Camera
-    /// </summary>
-    /// <param name="car"></param>
-    private void MakeCamera(GameObject car)
-    {
-        /// Remove Existing cameras
-        if (Camera.allCameras.Length > 0)
-        {
-            for (int i = 0; i < Camera.allCameras.Length; i++)
-            {
-                DestroyImmediate(Camera.allCameras[i].gameObject);
-            }
-        }
-
-        ///create camera GameObject
-        GameObject newCamera = new GameObject();
-        newCamera.name = "CarMakerCamera";
-
-        ///add scripts to GameObject
-        newCamera.AddComponent<Camera>();
-        newCamera.AddComponent<AudioListener>();
-        
-        ///add CarCamera script
-        CarCamera carCamera = newCamera.AddComponent<CarCamera>();
-
-        ///asign default camera settings
-        carCamera.carCameraSettingsList = new List<CarCameraSettings>();
-        carCamera.carCameraSettingsList.Add(CarCameraSettings.GetDefaultSettings0());
-        carCamera.carCameraSettingsList.Add(CarCameraSettings.GetDefaultSettings1());
-        carCamera.carCameraSettingsList.Add(CarCameraSettings.GetDefaultSettings2());
-
-        ///set camera target to follow
-        carCamera.target = car.transform;
-
-    }
-
-    /// <summary>
     /// Automaticly try to detect wheels of the car GameObject
     /// </summary>
-    private void AutoDetectWheels() {
+    private void AutoDetectWheels()
+    {
         ///get all childtren transforms
         Transform[] allChildren = carObject.GetComponentsInChildren<Transform>(true);
 
@@ -478,7 +434,7 @@ public class CarMaker : EditorWindow
                 if (childTransform.name.ToLower().Contains(criteria[i][i1]) == true)
                     matchAaray[i1] = true;
 
-               
+
             }
 
             bool allMatch = true;
@@ -533,7 +489,7 @@ public class CarMaker : EditorWindow
 
         ///if this is back wheel
         if (isFrontWheel == false)
-        {    
+        {
             wfcSideways.extremumSlip = 0.1f;
             wfcSideways.extremumValue = 1.2f / slipperiness;
         }
@@ -544,7 +500,8 @@ public class CarMaker : EditorWindow
         ///try to get mesh render of the wheel
         Renderer wheelRenderer = wheelMeshGO.GetComponent<Renderer>();
 
-        if (wheelRenderer) {
+        if (wheelRenderer)
+        {
             ///calculate size of the wheelcollider based on the renderer size
             wheelCollider.radius = wheelRenderer.bounds.size.y / 2;
         }
