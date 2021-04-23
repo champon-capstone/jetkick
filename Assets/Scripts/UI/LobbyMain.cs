@@ -43,7 +43,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #endregion
 
-
+    private Vector3 testPosition1 = new Vector3(-132.4f, 40f, -160f);
+    private Vector3 testPosition2 = new Vector3(-132.4f, 40f, -130f);
+    
+    
 
     #region Unity
 
@@ -225,7 +228,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         var startFlag = propertiesThatChanged["Start"];
         if (startFlag != null)
         {
-            PhotonNetwork.LoadLevel("CityMap");
+            PhotonNetwork.LoadLevel("TestMap");
         }
     }
     
@@ -256,6 +259,16 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             
             Debug.Log("Player "+p.NickName+" Position "+playerObject.transform.position);
 
+            //TODO Change Player Position
+            if (p.NickName.Equals("kbh"))
+            {
+                p.CustomProperties.Add("position", testPosition1);
+            }
+            else
+            {
+                p.CustomProperties.Add("position", testPosition2);
+            }
+            
             // object isPlayerReady;
             // if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
             // {

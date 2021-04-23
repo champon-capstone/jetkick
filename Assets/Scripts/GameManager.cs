@@ -15,14 +15,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
     public const int PLAYER_MAX_LIVES = 3;
 
+    public GameObject camera;
+    
     public static GameManager instance;
-
-    public GameObject playerPrefab;
-
+    
     #endregion
 
     private GameObject testCar;
-
+    private string playerPrefab = "TestCar2";
 
     #region Photon Callbacks
 
@@ -55,8 +55,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
             // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            testCar = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 100f, 0f), Quaternion.identity, 0);
-            testCar.transform.position = new Vector3(-160f, 50f, -110f);
+            object playerPosition;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("position", out playerPosition);
+            Vector3 test = (Vector3) playerPosition;
+            testCar = PhotonNetwork.Instantiate(playerPrefab, test, Quaternion.identity, 0);
+            
+            camera.GetComponent<PlayerCamera>().target = testCar.transform;
         }
         else
         {
