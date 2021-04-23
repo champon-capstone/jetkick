@@ -1638,7 +1638,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1460546182}
         m_TargetAssemblyTypeName: LobbyMain, Assembly-CSharp
-        m_MethodName: OnLeaveRoomButtonClickec
+        m_MethodName: OnCancelButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

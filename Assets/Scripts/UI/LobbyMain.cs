@@ -404,6 +404,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             ActivePanel(currentPanel);
         }
     }
-    
+
+    public void OnCancelButtonClicked()
+    {
+        if (currentPanel.Equals(roomPanel.name))
+        {
+            OnLeaveRoomButtonClicked();
+        }
+    }
 
 }
