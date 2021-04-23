@@ -112,6 +112,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("OnJoinedRoom");
         cachedRoomList.Clear();
 
         ActivePanel(roomPanel.name);
@@ -128,7 +129,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         //StartButton.gameObject.SetActive(CheckPlayersReady());
 
 
-        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
+        Hashtable props = new Hashtable
             {
                 {GameManager.PLAYER_LOADED_LEVEL, false}
             };
@@ -152,6 +153,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("OnPlayerEneteredRoom");
         listDelta += 20;
 
         GameObject entry = Instantiate(playerListObject);
@@ -206,14 +208,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
 
         GameObject entry;
-        if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
-        {
-            object isPlayerReady;
-            if (changedProps.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
-            {
-                entry.GetComponent<PlayerListObject>().SetPlayerReady((bool)isPlayerReady);
-            }
-        }
+        // if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
+        // {
+        //     object isPlayerReady;
+        //     if (changedProps.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
+        //     {
+        //         entry.GetComponent<PlayerListObject>().SetPlayerReady((bool)isPlayerReady);
+        //     }
+        // }
 
         //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
@@ -251,13 +253,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerObject.transform.position = playerPosition;
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
             listDelta += 20;
+            
+            Debug.Log("Player "+p.NickName+" Position "+playerObject.transform.position);
 
-
-            object isPlayerReady;
-            if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
-            {
-                playerObject.GetComponent<PlayerListObject>().SetPlayerReady((bool) isPlayerReady);
-            }
+            // object isPlayerReady;
+            // if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
+            // {
+            //     playerObject.GetComponent<PlayerListObject>().SetPlayerReady((bool) isPlayerReady);
+            // }
 
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
@@ -301,11 +304,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach(RoomInfo info in cachedRoomList.Values)
         {
-            listDelta -= 20;
+            roomDelta -= 20;
             var room = Instantiate(roomListPrefab);
             room.transform.SetParent(listPanel.transform);
             room.transform.localScale = Vector3.one;
-            var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
+            var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - roomDelta, defaultRoomPosition.z);
             room.transform.position = roomPosition;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
 
@@ -352,7 +355,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private void OnCreateRoomButtonClicked()
     {
-        Debug.Log("Request Create Room");
         string roomName = roonNameInput.text;
 
         byte maxPlayer;
