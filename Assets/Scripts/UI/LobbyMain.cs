@@ -234,16 +234,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     
     #endregion
 
-    public void OnLeaveRoomButtonClicked()
-    {
-        if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-        panelList[roomPanel.name].SetActive(false);
-        StartButton.gameObject.SetActive(true);
-    }
-
     private void UpdatePlayerList()
     {
         foreach (Player p in PhotonNetwork.PlayerList)
@@ -313,6 +303,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
     }
 
+    
+    
     public void UpdateRoomListView()
     {
         foreach(RoomInfo info in cachedRoomList.Values)
@@ -332,32 +324,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public void LocalPlayerPropertiesUpdated()
     {
         //StartButton.gameObject.SetActive(CheckPlayersReady());
-    }
-
-    private bool CheckPlayersReady()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return false;
-        }
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            object isPlayerReady;
-            if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
-            {
-                if (!(bool)isPlayerReady)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public void ActivePanel(string panelName)
@@ -382,6 +348,27 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private void StartGame()
     {
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
+    }
+    
+    private void LeaveRoom()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        panelList[roomPanel.name].SetActive(false);
+        StartButton.gameObject.SetActive(true);
+    }
+
+    private void LeaveLobby()
+    {
+        if (PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.LeaveLobby();
+            PhotonNetwork.Disconnect();
+        }
+        PhotonNetwork.LoadLevel("Launcher");
     }
     
     public void OnOkButtonClicked()
@@ -409,8 +396,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         if (currentPanel.Equals(roomPanel.name))
         {
-            OnLeaveRoomButtonClicked();
+            LeaveRoom();
+        }
+
+        if (currentPanel.Equals(listPanel.name))
+        {
+            LeaveLobby();
         }
     }
 
+   
 }
