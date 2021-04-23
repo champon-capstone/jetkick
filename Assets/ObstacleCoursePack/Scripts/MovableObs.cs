@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class MovableObs : MonoBehaviour
 {
-	public float distance; //Distance that moves the object
+	public float distance = 5f; //Distance that moves the object
 	public bool horizontal = true; //If the movement is horizontal or vertical
-	public bool elevator=true;
-	public bool boost = true;
 	public float speed = 3f;
 	public float offset = 0f; //If yo want to modify the position at the start 
 
@@ -17,9 +15,7 @@ public class MovableObs : MonoBehaviour
     void Awake()
     {
 		startPos = transform.position;
-		if (elevator)
-			transform.position += Vector3.up * offset;
-		else if (horizontal)
+		if (horizontal)
 			transform.position += Vector3.right * offset;
 		else
 			transform.position += Vector3.forward * offset;
@@ -28,88 +24,47 @@ public class MovableObs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(boost)
-        {
-			if (elevator)
+		if (horizontal)
+		{
+			if (isForward)
 			{
-				if (isForward)
+				if (transform.position.x < startPos.x + distance)
 				{
-					if (transform.position.y < startPos.y + distance)
-					{
-						transform.position += Vector3.up * Time.deltaTime * speed;
-					}
-					else
-					{
-						isForward = false;
-						boost = false;
-						Invoke("WaitForIt", 3);
-					}
-
+					transform.position += Vector3.right * Time.deltaTime * speed;
 				}
 				else
-				{
-					if (transform.position.y > startPos.y)
-					{
-						transform.position -= Vector3.up * Time.deltaTime * speed;
-					}
-					else
-					{
-						isForward = true;
-						boost = false;
-						Invoke("WaitForIt", 3);
-					}
-
-				}
-			}
-			else if (horizontal)
-			{
-				if (isForward)
-				{
-					if (transform.position.x < startPos.x + distance)
-					{
-						transform.position += Vector3.right * Time.deltaTime * speed;
-					}
-					else
-						isForward = false;
-				}
-				else
-				{
-					if (transform.position.x > startPos.x)
-					{
-						transform.position -= Vector3.right * Time.deltaTime * speed;
-					}
-					else
-						isForward = true;
-				}
+					isForward = false;
 			}
 			else
 			{
-				if (isForward)
+				if (transform.position.x > startPos.x)
 				{
-					if (transform.position.z < startPos.z + distance)
-					{
-						transform.position += Vector3.forward * Time.deltaTime * speed;
-					}
-					else
-						isForward = false;
+					transform.position -= Vector3.right * Time.deltaTime * speed;
 				}
 				else
-				{
-					if (transform.position.z > startPos.z)
-					{
-						transform.position -= Vector3.forward * Time.deltaTime * speed;
-					}
-					else
-						isForward = true;
-				}
+					isForward = true;
 			}
 		}
-		
+		else
+		{
+			if (isForward)
+			{
+				if (transform.position.z < startPos.z + distance)
+				{
+					transform.position += Vector3.forward * Time.deltaTime * speed;
+				}
+				else
+					isForward = false;
+			}
+			else
+			{
+				if (transform.position.z > startPos.z)
+				{
+					transform.position -= Vector3.forward * Time.deltaTime * speed;
+				}
+				else
+					isForward = true;
+			}
+		}
     }
-
-	void WaitForIt()
-	{
-		//Debug.Log("5초지남");
-		boost = true;
-	}
 }
