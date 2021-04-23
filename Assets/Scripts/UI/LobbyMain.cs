@@ -34,6 +34,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private Dictionary<int, GameObject> playerListEntries;
     private Dictionary<string, GameObject> panelList;
 
+    private GameObject localPlayer;
+    
     private string currentPanel;
 
     private int listDelta = 0;
@@ -237,6 +239,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
+
             GameObject playerObject = Instantiate(playerListObject);
             playerObject.transform.SetParent(roomPanel.transform);
             playerObject.transform.localScale = Vector3.one;
@@ -245,6 +248,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerObject.transform.position = playerPosition;
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
             listDelta += 20;
+            
+            if (localPlayer == null)
+            {
+                if (PhotonNetwork.LocalPlayer.NickName.Equals(p.NickName))
+                {
+                    localPlayer = playerObject;
+                }   
+            }
             
             Debug.Log("Player "+p.NickName+" Position "+playerObject.transform.position);
 
@@ -346,6 +357,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private void StartGame()
     {
+        PhotonNetwork.LocalPlayer.CustomProperties.Add("Color", localPlayer.GetComponent<PlayerListObject>().PlayerColor.color);
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
     }
     
