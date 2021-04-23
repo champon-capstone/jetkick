@@ -30,7 +30,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject progressLabel;
 
-    public Button playButton;
     public Button connectButton;
 
     #endregion
@@ -46,39 +45,27 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
-        playButton.interactable = false;
     }
 
     #endregion
 
-    #region Pulbic Methods
+    #region Public Methods
 
     public void Connect()
     {
         isConnecting = true;
         connectButton.interactable = false;
-        playButton.interactable = true;
         PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
     }
-
-    public void Play()
-    {
-        PhotonNetwork.LoadLevel("Lobby");
-        PhotonNetwork.JoinLobby();
-    }
-
+    
     #endregion
 
     #region MonoBehaviourPunCallBacks Callbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connect to Server");
-        playButton.interactable = true;
-        //if (isConnecting)
-        //{
-        //    PhotonNetwork.JoinRandomRoom();
-        //}
+        Play();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -86,25 +73,13 @@ public class Launcher : MonoBehaviourPunCallbacks
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
-        playButton.interactable = false;
-    }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        base.OnJoinRandomFailed(returnCode, message);
-        Debug.Log("OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
-
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
-    }
-
-
-
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room.");
-
-       //PhotonNetwork.LoadLevel("Lobby");
     }
 
     #endregion
+    
+    private void Play()
+    {
+        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.JoinLobby();
+    }
 }
