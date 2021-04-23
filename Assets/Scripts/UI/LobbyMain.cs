@@ -141,7 +141,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        roomDelta = 0;
+        roomDelta += 20;
         listDelta = 0;
         ActivePanel(listPanel.name);
 
@@ -187,7 +187,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         
         UpdatePlayerList();
         
-        roomDelta += 20;
         //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
