@@ -7,7 +7,7 @@ public class MapInfo
 {
     private string mapName;
     private string mapDescription;
-    private Image mapImage;
+    private Sprite mapImage;
     
     public string MapName
     {
@@ -21,7 +21,7 @@ public class MapInfo
         set => mapDescription = value;
     }
 
-    public Image MapImage
+    public Sprite MapImage
     {
         get => mapImage;
         set => mapImage = value;
