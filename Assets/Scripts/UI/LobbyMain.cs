@@ -23,8 +23,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public GameObject createPanel;
     public InputField roonNameInput;
     public InputField playerNumberInput;
-
-
+    public Dropdown mapDropdown;
+    public Dropdown modeDropdown;
+    
     #endregion
 
     #region Private Fields
@@ -42,6 +43,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private int roomDelta = 0;
     private Vector3 defaultRoomPosition;
     private Vector3 defaultPlayerPosition;
+
+   
 
     #endregion
 
@@ -69,6 +72,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(listPanel.name, listPanel);
         defaultRoomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y + 80, listPanel.transform.position.z);
         defaultPlayerPosition = new Vector3(roomPanel.transform.position.x, roomPanel.transform.position.y + 80, roomPanel.transform.position.z);
+        
     }
 
     #endregion
@@ -229,7 +233,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         var startFlag = propertiesThatChanged["Start"];
         if (startFlag != null)
         {
-            PhotonNetwork.LoadLevel("TestMap");
+            
+            PhotonNetwork.LoadLevel(mapDropdown.options[mapDropdown.value].text);
         }
     }
     
