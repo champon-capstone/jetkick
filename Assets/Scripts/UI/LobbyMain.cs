@@ -129,7 +129,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         Debug.Log("OnJoinedRoom");
         cachedRoomList.Clear();
-
+        
+        roomName.gameObject.SetActive(true);
+        
+        
+        
         ActivePanel(roomPanel.name);
         panelList[createPanel.name].SetActive(false);
         panelList[listPanel.name].SetActive(false);
@@ -328,7 +332,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private void OnCreateRoomButtonClicked()
     {
-        string roomName = roonNameInput.text;
+        string roomNameText = roonNameInput.text;
 
         byte maxPlayer;
         byte.TryParse(playerNumberInput.text, out maxPlayer);
@@ -336,7 +340,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
-        PhotonNetwork.CreateRoom(roomName, options, null);
+        PhotonNetwork.CreateRoom(roomNameText, options, null);
 
         mapImage.gameObject.SetActive(true);
         mapName.gameObject.SetActive(true);
@@ -344,6 +348,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         mapName.text = "Default Map Name";
         mapDescription.text = "Default Map Description";
+
+        roomName.text = roomNameText;
     }
 
     private void StartGame()
