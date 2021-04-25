@@ -25,6 +25,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public InputField playerNumberInput;
     public Dropdown mapDropdown;
     public Dropdown modeDropdown;
+
+    [Header("Commom UI")] 
+    public Text roomName;
+    public Image mapImage;
+    public Text mapName;
+    public Text mapDescription;
+    
     
     #endregion
 
@@ -34,6 +41,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> roomListEntries;
     private Dictionary<int, GameObject> playerListEntries;
     private Dictionary<string, GameObject> panelList;
+    private Dictionary<string, string> mapDescriptionDic;
 
     private GameObject localPlayer;
     
@@ -72,7 +80,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(listPanel.name, listPanel);
         defaultRoomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y + 80, listPanel.transform.position.z);
         defaultPlayerPosition = new Vector3(roomPanel.transform.position.x, roomPanel.transform.position.y + 80, roomPanel.transform.position.z);
+        mapDescriptionDic = new Dictionary<string, string>();
         
+        
+        roomName.gameObject.SetActive(false);
+        mapImage.gameObject.SetActive(false);
+        mapName.gameObject.SetActive(false);
+        mapDescription.gameObject.SetActive(false);
     }
 
     #endregion
@@ -358,8 +372,22 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
+        
+        mapImage.gameObject.SetActive(true);
+        mapName.gameObject.SetActive(true);
+        mapDescription.gameObject.SetActive(true);
+
+        mapName.text = "Default Map Name";
+        mapDescription.text = "Default Map Description";
     }
 
+    private void OnMapDropdownValueChanged()
+    {
+        var selectedMapName = mapDropdown.options[mapDropdown.value].text;
+        mapName.text = selectedMapName;
+        mapDescription.text = mapDescriptionDic[selectedMapName];
+    }
+    
     private void StartGame()
     {
         PhotonNetwork.LocalPlayer.CustomProperties.Add("Color", localPlayer.GetComponent<PlayerListObject>().PlayerColor.color);
