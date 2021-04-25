@@ -86,7 +86,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("OnRoomListUpdate roomlist size" + roomList.Count);
         foreach (RoomInfo info in roomList)
         {
             Debug.Log("Room Info " + info.Name);
@@ -102,7 +101,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         cachedRoomList.Clear();
         ClearRoomListView();
-        Debug.Log("Joined Lobby");
     }
 
     public override void OnLeftLobby()

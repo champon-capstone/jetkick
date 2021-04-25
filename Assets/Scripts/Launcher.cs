@@ -60,7 +60,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     #region MonoBehaviourPunCallBacks Callbacks
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connect to Server");
         Play();
     }
 

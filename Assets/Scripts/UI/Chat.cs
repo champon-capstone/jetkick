@@ -37,6 +37,7 @@ public class Chat : MonoBehaviour, IChatClientListener
 
     private void ConnectToChatServer()
     {
+        Debug.Log("Request Connecting chat server");
         var settings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
         chatClient = new ChatClient(this);
         chatClient.UseBackgroundWorkerForSending = true;
@@ -60,6 +61,7 @@ public class Chat : MonoBehaviour, IChatClientListener
 
     public void OnConnected()
     {
+        Debug.Log("Connected to Chat Server");
         chatClient.Subscribe(new string[] {lobbyChanel});
     }
 
