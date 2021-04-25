@@ -14,8 +14,10 @@ public class Chat : MonoBehaviour, IChatClientListener
     private string lobbyChanel = "Lobby";
     private string currentChannel;
     
-    public InputField textInputField;
+    public InputField chatInputField;
     public Text outputText;
+
+    #region Unity
 
     private void Start()
     {
@@ -33,11 +35,24 @@ public class Chat : MonoBehaviour, IChatClientListener
         }
     }
 
+    #endregion
+   
+
+    #region Public Methods
+
+    public void OnSendMessage()
+    {
+        var message = chatInputField.text;
+        chatInputField.text = "";
+        chatClient.PublishMessage(currentChannel, message);
+    }
+
+    #endregion
+    
     #region Private Methods
 
     private void ConnectToChatServer()
     {
-        Debug.Log("Request Connecting chat server");
         var settings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
         chatClient = new ChatClient(this);
         chatClient.UseBackgroundWorkerForSending = true;
@@ -45,6 +60,12 @@ public class Chat : MonoBehaviour, IChatClientListener
         chatClient.ConnectUsingSettings(settings);
     }
 
+    private void AddMessage(string message)
+    {
+        Debug.Log(message);
+        outputText.text += message + "\r\n";
+    }
+    
     #endregion
     
     #region Chat Callbacks
@@ -61,7 +82,6 @@ public class Chat : MonoBehaviour, IChatClientListener
 
     public void OnConnected()
     {
-        Debug.Log("Connected to Chat Server");
         chatClient.Subscribe(new string[] {lobbyChanel});
     }
 
@@ -74,7 +94,7 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         if (channelName.Equals(currentChannel))
         {
-            //Update TextField
+            AddMessage(senders[0]+" : "+messages[0]);
         }
     }
 
