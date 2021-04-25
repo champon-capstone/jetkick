@@ -63,7 +63,7 @@ public class Chat : MonoBehaviour, IChatClientListener
     private void AddMessage(string message)
     {
         Debug.Log(message);
-        outputText.text += message + "\r\n";
+        outputText.text += "  "+message + "\r\n";
     }
     
     #endregion
