@@ -14,10 +14,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     private byte maxPlayersPerRoom = 4;
     #endregion
 
-    #region Pirvate Fields
+    #region Private Fields
 
-    string gameVersion = "1";
-    bool isConnecting;
+    private string gameVersion = "1";
+    private bool isConnecting;
 
     #endregion
 
@@ -26,9 +26,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     [Tooltip("The Ui Panel to let the user enter name, connect and play")]
     [SerializeField]
     private GameObject controlPanel;
-    [Tooltip("The UI Label to inform the user that the connection is in progress")]
-    [SerializeField]
-    private GameObject progressLabel;
 
     public Button connectButton;
 
@@ -43,7 +40,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        progressLabel.SetActive(false);
         controlPanel.SetActive(true);
     }
 
@@ -71,7 +67,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
-        progressLabel.SetActive(false);
         controlPanel.SetActive(true);
     }
 
