@@ -29,6 +29,8 @@ public class PlayerCamera : MonoBehaviour
     public float lookAngle;
     public float tiltAngle;
 
+    public float turnSpeed = 5.0f;
+
     struct View
     {
         public float distance;
@@ -44,7 +46,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     View[] views = new View[] {
-        makeView(13.0f, 8.0f), makeView(20.0f, 15.0f), makeView(6.0f, 3.0f)
+        makeView(13.0f, 8.0f), makeView(20.0f, 15.0f), makeView(6.0f, 3.0f), makeView(-0.8f, 0.8f)
     };
     int viewIndex = 0;
 
@@ -82,13 +84,13 @@ public class PlayerCamera : MonoBehaviour
             automatic = !automatic;
             if (automatic)
             {
-                camera.localPosition = new Vector3(0, 0, 0);
+                camera.localPosition = Vector3.zero;
                 transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
                 camera.LookAt(target);
             }
             else
             {
-                camera.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                camera.localRotation = Quaternion.identity;
             }
         }
     }
@@ -109,8 +111,17 @@ public class PlayerCamera : MonoBehaviour
     {
         if (automatic)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0) + target.forward * -distance, ref velocity, smoothTime);
-            camera.LookAt(target);
+            if (distance > 0) // third person
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0) + target.forward * -distance, ref velocity, smoothTime);
+                camera.LookAt(target);
+            }
+            else // first person
+            {
+                transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
+                transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, Time.deltaTime * turnSpeed);
+                camera.localRotation = Quaternion.identity;
+            }
         }
         else
         {
