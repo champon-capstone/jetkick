@@ -90,6 +90,7 @@ public class PlayerCamera : MonoBehaviour
             }
             else
             {
+                camera.localPosition = new Vector3(0, 0, -(distance + 1.0f));
                 camera.localRotation = Quaternion.identity;
             }
         }
@@ -143,7 +144,7 @@ public class PlayerCamera : MonoBehaviour
             {
                 dist = distance;
             }
-            camera.localPosition = new Vector3(0, 0, -dist);
+            camera.localPosition = Vector3.SmoothDamp(camera.localPosition, new Vector3(0, 0, -dist), ref velocity, smoothTime);
         }
     }
 
