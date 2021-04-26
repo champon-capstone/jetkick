@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public Transform target;
-    public Transform camera;
-    public Transform pivot;
+    Transform pivot;
+    Transform camera;
 
     public float distance = 13.0f;
     public float height = 8.0f;
@@ -51,6 +51,9 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pivot = transform.GetChild(0);
+        camera = pivot.GetChild(0);
+
         if (automatic)
         {
             transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
