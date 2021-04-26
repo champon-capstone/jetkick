@@ -29,24 +29,24 @@ public class PlayerCamera : MonoBehaviour
     public float lookAngle;
     public float tiltAngle;
 
-    struct Preset
+    struct View
     {
         public float distance;
         public float height;
     }
 
-    static Preset makePreset(float distance, float height)
+    static View makeView(float distance, float height)
     {
-        Preset preset;
-        preset.distance = distance;
-        preset.height = height;
-        return preset;
+        View view;
+        view.distance = distance;
+        view.height = height;
+        return view;
     }
 
-    Preset[] presets = new Preset[] {
-        makePreset(13.0f, 8.0f), makePreset(20.0f, 15.0f), makePreset(6.0f, 3.0f)
+    View[] views = new View[] {
+        makeView(13.0f, 8.0f), makeView(20.0f, 15.0f), makeView(6.0f, 3.0f)
     };
-    int presetIndex = 0;
+    int viewIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -70,11 +70,11 @@ public class PlayerCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            presetIndex++;
-            presetIndex %= presets.Length;
+            viewIndex++;
+            viewIndex %= views.Length;
 
-            distance = presets[presetIndex].distance;
-            height = presets[presetIndex].height;
+            distance = views[viewIndex].distance;
+            height = views[viewIndex].height;
         }
 
         if (Input.GetKeyDown(KeyCode.B))
