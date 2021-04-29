@@ -1,63 +1,41 @@
-
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-using ExitGames.Client.Photon;
-using Photon.Realtime;
-using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-
 public class PlayerListObject : MonoBehaviour
 {
-
-    [Header("UI References")]
+    [Header("UI References")] 
     public Text PlayerNameText;
-
-    public Button PlayerReadyButton;
-    public Image PlayerReadyImage;
+    public Image PlayerColor;
+    public Dropdown ColorDropdown;
 
     private int ownerId;
-    private bool isPlayerReady;
-
-
+    private Dictionary<string, Color> colorMap;
+    
     public void Start()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
-        {
-            PlayerReadyButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            Hashtable initialProps = new Hashtable() { { GameManager.PLAYER_READY, isPlayerReady }, { GameManager.PLAYER_LIVES, GameManager.PLAYER_MAX_LIVES } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
-            PhotonNetwork.LocalPlayer.SetScore(0);
-
-            PlayerReadyButton.onClick.AddListener(() =>
-            {
-                isPlayerReady = !isPlayerReady;
-                SetPlayerReady(isPlayerReady);
-
-                Hashtable props = new Hashtable() { { GameManager.PLAYER_READY, isPlayerReady } };
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    FindObjectOfType<LobbyMain>().LocalPlayerPropertiesUpdated();
-                }
-            });
-        }
+        Hashtable initialProps = new Hashtable() {{GameManager.PLAYER_LIVES, GameManager.PLAYER_MAX_LIVES}};
+        PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
+        PhotonNetwork.LocalPlayer.SetScore(0);
+        colorMap = new Dictionary<string, Color>();
+        colorMap.Add("Black", Color.black);
+        colorMap.Add("Blue", Color.blue);
+        colorMap.Add("Red", Color.red);
+        colorMap.Add("Green", Color.green);
     }
 
     public void Initialize(int playerId, string playerName)
     {
         ownerId = playerId;
         PlayerNameText.text = playerName;
+        PlayerColor.gameObject.SetActive(true);
     }
 
-    public void SetPlayerReady(bool playerReady)
+    public void ChangeColor()
     {
-        PlayerReadyButton.GetComponentInChildren<Text>().text = playerReady ? "Ready!" : "Ready?";
-        PlayerReadyImage.enabled = playerReady;
+        PlayerColor.color = colorMap[ColorDropdown.options[ColorDropdown.value].text];
     }
 }
