@@ -14,6 +14,7 @@ public class Deadline : MonoBehaviour
             GameObject BigExplosion;
             BigExplosion = Resources.Load("BigExplosion") as GameObject;
             Instantiate(BigExplosion, col.gameObject.transform.position, Quaternion.identity);
+            Destroy(col.gameObject);
         }
     }
 }

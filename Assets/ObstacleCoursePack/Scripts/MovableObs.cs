@@ -8,8 +8,8 @@ public class MovableObs : MonoBehaviour
 	public bool horizontal = true; //If the movement is horizontal or vertical
 	public float speed = 3f;
 	public float offset = 0f; //If yo want to modify the position at the start 
+	public bool isForward; //If the movement is out
 
-	private bool isForward = true; //If the movement is out
 	private Vector3 startPos;
    
     void Awake()
