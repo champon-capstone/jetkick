@@ -11,7 +11,9 @@ public class Deadline : MonoBehaviour
         {
             Debug.Log("자동차 사망");
             //폭발시키는 이벤트 필요
-            
+            GameObject BigExplosion;
+            BigExplosion = Resources.Load("BigExplosion") as GameObject;
+            Instantiate(BigExplosion, col.gameObject.transform.position, Quaternion.identity);
         }
     }
 }
