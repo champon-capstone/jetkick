@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public Transform target;
-    public Transform camera;
-    public Transform pivot;
+    Transform pivot;
+    Transform camera;
 
     public float distance = 13.0f;
     public float height = 8.0f;
@@ -29,28 +29,33 @@ public class PlayerCamera : MonoBehaviour
     public float lookAngle;
     public float tiltAngle;
 
-    struct Preset
+    public float turnSpeed = 5.0f;
+
+    struct View
     {
         public float distance;
         public float height;
     }
 
-    static Preset makePreset(float distance, float height)
+    static View makeView(float distance, float height)
     {
-        Preset preset;
-        preset.distance = distance;
-        preset.height = height;
-        return preset;
+        View view;
+        view.distance = distance;
+        view.height = height;
+        return view;
     }
 
-    Preset[] presets = new Preset[] {
-        makePreset(13.0f, 8.0f), makePreset(20.0f, 15.0f), makePreset(6.0f, 3.0f)
+    View[] views = new View[] {
+        makeView(13.0f, 8.0f), makeView(20.0f, 15.0f), makeView(6.0f, 3.0f), makeView(-0.8f, 0.8f)
     };
-    int presetIndex = 0;
+    int viewIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        pivot = transform.GetChild(0);
+        camera = pivot.GetChild(0);
+
         if (automatic)
         {
             transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
@@ -67,11 +72,11 @@ public class PlayerCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            presetIndex++;
-            presetIndex %= presets.Length;
+            viewIndex++;
+            viewIndex %= views.Length;
 
-            distance = presets[presetIndex].distance;
-            height = presets[presetIndex].height;
+            distance = views[viewIndex].distance;
+            height = views[viewIndex].height;
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -79,13 +84,14 @@ public class PlayerCamera : MonoBehaviour
             automatic = !automatic;
             if (automatic)
             {
-                camera.localPosition = new Vector3(0, 0, 0);
+                camera.localPosition = Vector3.zero;
                 transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
                 camera.LookAt(target);
             }
             else
             {
-                camera.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                camera.localPosition = new Vector3(0, 0, -(distance + 1.0f));
+                camera.localRotation = Quaternion.identity;
             }
         }
     }
@@ -106,8 +112,17 @@ public class PlayerCamera : MonoBehaviour
     {
         if (automatic)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0) + target.forward * -distance, ref velocity, smoothTime);
-            camera.LookAt(target);
+            if (distance > 0) // third person
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0) + target.forward * -distance, ref velocity, smoothTime);
+                camera.LookAt(target);
+            }
+            else // first person
+            {
+                transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
+                transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, Time.deltaTime * turnSpeed);
+                camera.localRotation = Quaternion.identity;
+            }
         }
         else
         {
@@ -129,7 +144,7 @@ public class PlayerCamera : MonoBehaviour
             {
                 dist = distance;
             }
-            camera.localPosition = new Vector3(0, 0, -dist);
+            camera.localPosition = Vector3.SmoothDamp(camera.localPosition, new Vector3(0, 0, -dist), ref velocity, smoothTime);
         }
     }
 
