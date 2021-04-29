@@ -85,6 +85,30 @@ public class Chat : MonoBehaviour, IChatClientListener
         chatClient.Subscribe(new string[] {lobbyChanel});
     }
 
+    public void ConnectToRoomChat(string chatRoom)
+    {
+        chatClient.Unsubscribe(new string[]{lobbyChanel});
+        chatClient.Subscribe(new string[] {chatRoom});
+        outputText.text = "";
+        currentChannel = chatRoom;
+    }
+
+    public void ConnectToLobby()
+    {
+        string[] channels = new string[chatClient.PublicChannels.Count];
+        Debug.Log("Channel count "+chatClient.PublicChannels.Count);
+        var index = 0;
+        foreach (var channel in chatClient.PublicChannels.Values)
+        {
+            channels[index++] = channel.Name;
+        }
+
+        currentChannel = lobbyChanel;
+        chatClient.Unsubscribe(channels);
+        chatClient.Subscribe(new string[] {lobbyChanel});
+        outputText.text = "";
+    }
+    
     public void OnChatStateChange(ChatState state)
     {
         Debug.Log("ChatStateChanged "+state);
