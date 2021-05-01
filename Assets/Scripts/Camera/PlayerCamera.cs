@@ -87,6 +87,8 @@ public class PlayerCamera : MonoBehaviour
                 camera.localPosition = Vector3.zero;
                 transform.position = target.position + new Vector3(0, height, 0) + target.forward * -distance;
                 camera.LookAt(target);
+                pivot.localPosition = Vector3.zero;
+                pivot.localRotation = Quaternion.identity;
             }
             else
             {
