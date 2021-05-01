@@ -54,7 +54,7 @@ public class Elevator : MonoBehaviour
 
     void WaitForIt()
     {
-        //Debug.Log("5ÃÊÁö³²");
+        //Debug.Log("5ì´ˆì§€ë‚¨");
         boost = true;
     }
 }
