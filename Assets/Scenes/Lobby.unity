@@ -4329,6 +4329,7 @@ MonoBehaviour:
   mapImage: {fileID: 1366977311}
   mapName: {fileID: 967511951}
   mapDescription: {fileID: 1916822174}
+  chat: {fileID: 2075288393}
 --- !u!1 &1509351541
 GameObject:
   m_ObjectHideFlags: 0

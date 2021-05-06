@@ -24,7 +24,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public Image mapImage;
     public Text mapName;
     public Text mapDescription;
-
+    public Chat chat;
+    
     #endregion
 
     #region Private Fields
@@ -126,6 +127,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
+        
+        chat.ConnectToRoomChat(roomName.text);
+        
         cachedRoomList.Clear();
         
         roomName.gameObject.SetActive(true);
@@ -447,6 +451,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (currentPanel.Equals(roomPanel.name))
         {
             LeaveRoom();
+            chat.ConnectToLobby();
         }
 
         if (currentPanel.Equals(listPanel.name))

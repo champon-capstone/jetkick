@@ -47,7 +47,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     #region Public Methods
 
-    public void Connect()
+    public void Connect()   
     {
         isConnecting = true;
         connectButton.interactable = false;
