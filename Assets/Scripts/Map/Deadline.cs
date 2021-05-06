@@ -9,12 +9,13 @@ public class Deadline : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Debug.Log("ÀÚµ¿Â÷ »ç¸Á");
-            //Æø¹ß½ÃÅ°´Â ÀÌº¥Æ® ÇÊ¿ä
+            Debug.Log("ìë™ì°¨ ì‚¬ë§");
+            //í­ë°œì‹œí‚¤ëŠ” ì´ë²¤íŠ¸ í•„ìš”
             GameObject BigExplosion;
             BigExplosion = Resources.Load("BigExplosion") as GameObject;
             Instantiate(BigExplosion, col.gameObject.transform.position, Quaternion.identity);
-            Destroy(col.gameObject);
+            Destroy(col.gameObject.transform.parent.gameObject);
+            
         }
     }
 }
