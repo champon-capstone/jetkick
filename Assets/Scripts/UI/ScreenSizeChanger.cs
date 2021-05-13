@@ -32,6 +32,11 @@ public class ScreenSizeChanger : MonoBehaviour
         }
     }
 
+    public void UnActiveSettingWindow()
+    {
+        settingWindow.gameObject.SetActive(false);
+    }
+    
     public void OnFullScreenToggled()
     {
         isFullScreen = !isFullScreen;
