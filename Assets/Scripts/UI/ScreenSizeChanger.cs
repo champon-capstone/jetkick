@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ScreenSizeChanger : MonoBehaviour
 {
+    public GameObject settingWindow;
     public Dropdown sizeDropdown;
     public Toggle sixToggle;
     public Toggle oneToggle;
@@ -38,7 +39,12 @@ public class ScreenSizeChanger : MonoBehaviour
         fps = 60;
     }
 
-    public void OnOneToggled()
+    public void OnNineToggled()
+    {
+        fps = 90;
+    }
+    
+    public void OnOneFourFourToggled()
     {
         fps = 144;
     }
