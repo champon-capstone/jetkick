@@ -23,6 +23,7 @@ public class CameraTest : MonoBehaviour
 
     public void Cardead()
     {
+        Debug.Log("cardead call");
         Carcamera.enabled = false;
         Mapcamera.enabled = true;
     }
