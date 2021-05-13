@@ -433,6 +433,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294402713}
   m_CullTransparentMesh: 1
+--- !u!114 &436940585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1009523285897716683, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+  m_PrefabInstance: {fileID: 633621363}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &620704196
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,6 +655,62 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -45
       objectReference: {fileID: 0}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1093673511}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnOneFourFourToggled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScreenSizeChanger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284118732202, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1093673511}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSixToggled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScreenSizeChanger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284179720412, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1009523284179720415, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -699,6 +766,34 @@ PrefabInstance:
     - target: {fileID: 1009523284581017272, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -115
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1093673511}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnNineToggled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScreenSizeChanger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523284732801730, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1009523284732801757, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchorMax.y
@@ -806,27 +901,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1009523285671122447, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1009523285972849889, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1009523285972849889, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1009523285972849889, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 630
       objectReference: {fileID: 0}
     - target: {fileID: 1009523285972849889, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 315
       objectReference: {fileID: 0}
     - target: {fileID: 1009523285972849889, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1093673511}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnFullScreenToggled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScreenSizeChanger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009523286072118009, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1093673511}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeSize
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScreenSizeChanger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928040842914666811, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b9b4bb8a105daa4a847533f07408576, type: 3}
@@ -1106,10 +1257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingWindow: {fileID: 1093673509}
-  sizeDropdown: {fileID: 0}
-  sixToggle: {fileID: 0}
-  oneToggle: {fileID: 0}
-  fullSizeToggle: {fileID: 0}
+  sizeDropdown: {fileID: 436940585}
 --- !u!1 &1399984326
 GameObject:
   m_ObjectHideFlags: 0

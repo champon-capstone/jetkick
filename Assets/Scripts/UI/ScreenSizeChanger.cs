@@ -8,12 +8,10 @@ public class ScreenSizeChanger : MonoBehaviour
 {
     public GameObject settingWindow;
     public Dropdown sizeDropdown;
-    public Toggle sixToggle;
-    public Toggle oneToggle;
-    public Toggle fullSizeToggle;
-    
+
     private int fps = 144;
     private Dictionary<string, int[]> sizeMap;
+    private bool isFullScreen = false;
 
     private void Start()
     {
@@ -30,10 +28,15 @@ public class ScreenSizeChanger : MonoBehaviour
         if (sizeMap.ContainsKey(selectedValue))
         {
             var size = sizeMap[selectedValue];
-            Screen.SetResolution(size[0], size[1], fullSizeToggle.isOn, fps);
+            Screen.SetResolution(size[0], size[1], isFullScreen, fps);
         }
     }
 
+    public void OnFullScreenToggled()
+    {
+        isFullScreen = !isFullScreen;
+    }
+    
     public void OnSixToggled()
     {
         fps = 60;
