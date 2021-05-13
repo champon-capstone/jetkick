@@ -30,55 +30,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-2356730601664504841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513504700572430323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logLevel: 3
-  ignoreGlobalLogLevel: 0
-  voiceDetection: 1
-  voiceDetectionThreshold: 0.01
-  voiceDetectionDelayMs: 500
-  unityMicrophoneDevice: 
-  photonMicrophoneDeviceId: 1
-  interestGroup: 0
-  debugEchoMode: 0
-  reliableMode: 0
-  encrypt: 0
-  transmitEnabled: 1
-  samplingRate: 24000
-  frameDuration: 20000
-  bitrate: 30000
-  sourceType: 0
-  microphoneType: 1
-  audioClip: {fileID: 0}
-  loopAudioClip: 1
-  reactOnSystemChanges: 0
-  autoStart: 1
-  audioSessionParameters:
-    Category: 4
-    Mode: 0
-    CategoryOptions: 0800000004000000
-  useCustomAudioSessionParameters: 0
-  audioSessionPresetIndex: 0
-  nativeAndroidMicrophoneSettings:
-    AcousticEchoCancellation: 0
-    AutomaticGainControl: 0
-    NoiseSuppression: 0
-  recordOnlyWhenEnabled: 0
-  skipDeviceChangeChecks: 0
-  stopRecordingWhenPaused: 0
-  useOnAudioFilterRead: 0
-  trySamplingRateMatch: 0
-  useMicrophoneTypeFallback: 1
 --- !u!114 &1886966527315963021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,57 +85,6 @@ MonoBehaviour:
     motorTorque: 1200
     steeringAngle: 50
   speed: 0
---- !u!114 &6007163286574139145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513504700572430323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d9debcbaf99472bb70ffc2f99cb23f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeepAliveInBackground: 60000
-  ApplyDontDestroyOnLoad: 1
-  logLevel: 3
-  enableSupportLogger: 0
-  updateInterval: 50
-  runInBackground: 1
-  statsResetInterval: 1000
-  speakerPrefab: {fileID: 0}
-  primaryRecorder: {fileID: -2356730601664504841}
-  globalRecordersLogLevel: 3
-  globalSpeakersLogLevel: 3
-  globalPlaybackDelay: -1
-  globalPlaybackDelaySettings:
-    MinDelaySoft: 200
-    MaxDelaySoft: 400
-    MaxDelayHard: 1000
-  Settings:
-    AppIdRealtime: 
-    AppIdChat: 
-    AppIdVoice: 
-    AppVersion: 
-    UseNameServer: 1
-    FixedRegion: 
-    Server: 
-    Port: 0
-    ProxyServer: 
-    Protocol: 0
-    EnableProtocolFallback: 1
-    AuthMode: 0
-    EnableLobbyStatistics: 0
-    NetworkLogging: 1
-  ShowSettings: 1
-  MinimalTimeScaleToDispatchInFixedUpdate: -1
-  AutoCreateSpeakerIfNotFound: 1
-  AutoConnectAndJoin: 1
-  AutoLeaveAndDisconnect: 1
-  WorkInOfflineMode: 1
-  usePunAppSettings: 1
-  usePunAuthValues: 1
 --- !u!114 &6660910060037123755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,14 +624,9 @@ PrefabInstance:
       objectReference: {fileID: 4300022, guid: c003cab7f5803b648aca7b7510fe4edf, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
---- !u!1 &1513504700572430325 stripped
+--- !u!1 &1513504700572430323 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
-  m_PrefabInstance: {fileID: 1513504700572461395}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1513504700572430321 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1513504700572857299 stripped
@@ -739,14 +634,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1513504700572430331 stripped
+--- !u!1 &1513504700572430321 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100008, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100002, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1513504700572430327 stripped
+--- !u!1 &1513504700572430325 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100004, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1513504700572430329 stripped
@@ -754,8 +649,13 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100010, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1513504700572430323 stripped
+--- !u!1 &1513504700572430327 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 100004, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+  m_PrefabInstance: {fileID: 1513504700572461395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1513504700572430331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100008, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
