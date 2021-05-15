@@ -13,9 +13,13 @@ public class Chat : MonoBehaviour, IChatClientListener
     private string userName;
     private string lobbyChanel = "Lobby";
     private string currentChannel;
+    private float yValue = 0;
+    
+    public GameObject content;
+    public GameObject conversation;
     
     public InputField chatInputField;
-    public Text outputText;
+    private Text outputText;
 
     #region Unity
 
@@ -63,7 +67,10 @@ public class Chat : MonoBehaviour, IChatClientListener
     private void AddMessage(string message)
     {
         Debug.Log(message);
-        outputText.text += "  "+message + "\r\n";
+        // outputText.text += "  "+message + "\r\n";
+        var conversationObject = Instantiate(conversation, new Vector3(0, yValue, 0), Quaternion.identity);
+        conversationObject.transform.SetParent(content.transform);
+        yValue -= conversation.GetComponent<RectTransform>().rect.y;
     }
     
     #endregion
