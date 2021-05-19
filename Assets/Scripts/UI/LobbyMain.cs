@@ -14,6 +14,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public Button StartButton;
     [Header("List Panel")] public GameObject listPanel;
+    public GameObject roomListPanel;
     public GameObject roomListPrefab;
     [Header("Room Panel")] public GameObject roomPanel;
     public GameObject playerListPanel;
@@ -399,13 +400,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in cachedRoomList.Values)
         {
-            roomDelta -= 20;
-            var room = Instantiate(roomListPrefab);
-            room.transform.SetParent(listPanel.transform);
-            room.transform.localScale = Vector3.one;
-            var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - roomDelta,
-                defaultRoomPosition.z);
-            room.transform.position = roomPosition;
+            // roomDelta -= 20;
+            var room = Instantiate(roomListPrefab, roomListPanel.transform);
+            // room.transform.SetParent(listPanel.transform);
+            // room.transform.localScale = Vector3.one;
+            // var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - roomDelta,
+                // defaultRoomPosition.z);
+            // room.transform.position = roomPosition;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
 
             roomListEntries.Add(info.Name, room);
