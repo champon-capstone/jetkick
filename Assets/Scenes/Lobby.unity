@@ -4729,6 +4729,7 @@ MonoBehaviour:
   mapName: {fileID: 967511951}
   mapDescription: {fileID: 1916822174}
   chat: {fileID: 1972652297}
+  uitlButtonPanel: {fileID: 1143699794}
 --- !u!1 &1509351541
 GameObject:
   m_ObjectHideFlags: 0

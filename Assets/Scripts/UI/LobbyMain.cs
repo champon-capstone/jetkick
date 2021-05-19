@@ -30,6 +30,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public Text mapName;
     public Text mapDescription;
     public Chat chat;
+    public GameObject uitlButtonPanel;
     
     #endregion
 
@@ -420,6 +421,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void ActivePanel(string panelName)
     {
+        if (panelName.Equals(listPanel.name))
+        {
+            uitlButtonPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            uitlButtonPanel.gameObject.SetActive(false);
+        }
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }
