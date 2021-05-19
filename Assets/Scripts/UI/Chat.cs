@@ -38,6 +38,11 @@ public class Chat : MonoBehaviour, IChatClientListener
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        chatClient.Disconnect();
+    }
+
     #endregion
    
 
