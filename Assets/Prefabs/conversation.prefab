@@ -241,6 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6798602001485894309}
   - component: {fileID: 6798602001485894308}
+  - component: {fileID: 1806381080499794197}
   m_Layer: 5
   m_Name: conversation
   m_TagString: Untagged
@@ -276,3 +277,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6798602001485894306}
   m_CullTransparentMesh: 1
+--- !u!114 &1806381080499794197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798602001485894306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62956ef95758fef45b46a4de7cf5184e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  who: {fileID: 6798601999981874544}
+  message: {fileID: 6798602001434613199}

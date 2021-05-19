@@ -11,11 +11,11 @@ public class ScreenSizeChanger : MonoBehaviour
 
     private int fps = 144;
     private Dictionary<string, int[]> sizeMap;
-    private bool isFullScreen = false;
+    private bool isFullScreen = true;
 
     private void Start()
     {
-        Screen.SetResolution(1280, 720, false, fps);
+        Screen.SetResolution(1980, 1080, true, fps);
         sizeMap = new Dictionary<string, int[]>();
         sizeMap.Add("1280X720", new[] {1280, 720});
         sizeMap.Add("1920X1080", new[] {1920, 1080});
