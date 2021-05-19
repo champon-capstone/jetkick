@@ -453,8 +453,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             LeaveRoom();
             chat.ConnectToLobby();
         }
-
-        if (currentPanel.Equals(listPanel.name))
+        else if (currentPanel.Equals(createPanel.name))
+        {
+            panelList[currentPanel].SetActive(false);
+            currentPanel = listPanel.name;
+            ActivePanel(currentPanel);
+        }
+        else if (currentPanel.Equals(listPanel.name))
         {
             LeaveLobby();
         }
