@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Voice.PUN;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LobbyMain : MonoBehaviourPunCallbacks
 {
@@ -79,6 +82,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         mapImage.gameObject.SetActive(false);
         mapName.gameObject.SetActive(false);
         mapDescription.gameObject.SetActive(false);
+    }
+
+    private void OnApplicationQuit()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     #endregion
