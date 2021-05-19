@@ -66,7 +66,6 @@ public class Chat : MonoBehaviour, IChatClientListener
     private void AddMessage(string who,string message)
     {
         Debug.Log(message);
-        // outputText.text += "  "+message + "\r\n";
         var conversationObject = Instantiate(conversation, new Vector3(0, yValue, 0), Quaternion.identity);
         conversationObject.transform.SetParent(content.transform);
         conversationObject.GetComponent<ConversationInit>().initConversation(who, message);
@@ -139,7 +138,6 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         foreach (var channel in channels)
         {
-            Debug.Log("Channel "+channel);
             var hi = userName + " is connected to chat channel : "+channel;
             chatClient.PublishMessage(channel, hi);
         }

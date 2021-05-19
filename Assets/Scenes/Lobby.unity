@@ -5107,6 +5107,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7179376442510106901, guid: 998f42eba43177f46960098308b299ed, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7179376442510106901, guid: 998f42eba43177f46960098308b299ed, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7463652428729948528, guid: 998f42eba43177f46960098308b299ed, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5190,6 +5198,20 @@ MonoBehaviour:
   content: {fileID: 1972652295}
   conversation: {fileID: 6798602001485894306, guid: 07c1610ff9f49c44fbff7fa9c2c992d0, type: 3}
   chatInputField: {fileID: 1972652294}
+--- !u!114 &1972652298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972652295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &1998329555
 GameObject:
   m_ObjectHideFlags: 0
