@@ -16,6 +16,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     [Header("List Panel")] public GameObject listPanel;
     public GameObject roomListPrefab;
     [Header("Room Panel")] public GameObject roomPanel;
+    public GameObject playerListPanel;
     public GameObject playerListObject;
     [Header("Create Room")] public GameObject createPanel;
     public InputField roonNameInput;
@@ -265,12 +266,12 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            GameObject playerObject = Instantiate(playerListObject);
-            playerObject.transform.SetParent(roomPanel.transform);
-            playerObject.transform.localScale = Vector3.one;
-            var playerPosition =
-                new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
-            playerObject.transform.position = playerPosition;
+            GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
+            // playerObject.transform.SetParent(roomPanel.transform);
+            // playerObject.transform.localScale = Vector3.one;
+            // var playerPosition =
+            //     new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
+            // playerObject.transform.position = playerPosition;
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
             listDelta += 20;
 
