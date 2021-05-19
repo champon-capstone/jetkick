@@ -9,8 +9,8 @@ public class PlayerListObject : MonoBehaviour
 {
     [Header("UI References")] 
     public Text PlayerNameText;
-    public Image PlayerColor;
-    public Dropdown ColorDropdown;
+    public Dropdown teamSelector;
+    public Dropdown colorDropdown;
 
     private int ownerId;
     private Dictionary<string, Color> colorMap;
@@ -23,7 +23,6 @@ public class PlayerListObject : MonoBehaviour
         colorMap = new Dictionary<string, Color>();
         colorMap.Add("Black", Color.black);
         colorMap.Add("Blue", Color.blue);
-        colorMap.Add("Red", Color.red);
         colorMap.Add("Green", Color.green);
     }
 
@@ -31,11 +30,10 @@ public class PlayerListObject : MonoBehaviour
     {
         ownerId = playerId;
         PlayerNameText.text = playerName;
-        PlayerColor.gameObject.SetActive(true);
     }
 
-    public void ChangeColor()
+    public Color getPlayerColor()
     {
-        PlayerColor.color = colorMap[ColorDropdown.options[ColorDropdown.value].text];
+        return colorMap[colorDropdown.options[colorDropdown.value].text];
     }
 }

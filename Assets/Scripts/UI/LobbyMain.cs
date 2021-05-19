@@ -365,7 +365,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private void StartGame()
     {
         PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
-            localPlayer.GetComponent<PlayerListObject>().PlayerColor.color);
+            localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
     }
 
