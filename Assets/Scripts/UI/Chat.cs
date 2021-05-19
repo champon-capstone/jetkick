@@ -19,7 +19,6 @@ public class Chat : MonoBehaviour, IChatClientListener
     public GameObject conversation;
     
     public InputField chatInputField;
-    private Text outputText;
 
     #region Unity
 
@@ -97,7 +96,6 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         chatClient.Unsubscribe(new string[]{lobbyChanel});
         chatClient.Subscribe(new string[] {chatRoom});
-        outputText.text = "";
         currentChannel = chatRoom;
     }
 
@@ -114,7 +112,6 @@ public class Chat : MonoBehaviour, IChatClientListener
         currentChannel = lobbyChanel;
         chatClient.Unsubscribe(channels);
         chatClient.Subscribe(new string[] {lobbyChanel});
-        outputText.text = "";
     }
     
     public void OnChatStateChange(ChatState state)
@@ -142,6 +139,7 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         foreach (var channel in channels)
         {
+            Debug.Log("Channel "+channel);
             var hi = userName + " is connected to chat channel : "+channel;
             chatClient.PublishMessage(channel, hi);
         }
