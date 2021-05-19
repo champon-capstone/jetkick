@@ -64,12 +64,13 @@ public class Chat : MonoBehaviour, IChatClientListener
         chatClient.ConnectUsingSettings(settings);
     }
 
-    private void AddMessage(string message)
+    private void AddMessage(string who,string message)
     {
         Debug.Log(message);
         // outputText.text += "  "+message + "\r\n";
         var conversationObject = Instantiate(conversation, new Vector3(0, yValue, 0), Quaternion.identity);
         conversationObject.transform.SetParent(content.transform);
+        conversationObject.GetComponent<ConversationInit>().initConversation(who, message);
         yValue -= conversation.GetComponent<RectTransform>().rect.y;
     }
     
@@ -125,7 +126,7 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         if (channelName.Equals(currentChannel))
         {
-            AddMessage(senders[0]+" : "+messages[0]);
+            AddMessage(senders[0], messages[0]+"");
         }
     }
 
