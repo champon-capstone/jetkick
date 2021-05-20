@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
+    [Header("Position")] 
+    public GameObject position1;
+    public GameObject position2;
+    public GameObject position3;
+    public GameObject position4;
+    
     public const string PLAYER_LIVES = "PlayerLives";
     public const string PLAYER_READY = "IsPlayerReady";
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
@@ -24,10 +31,45 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private GameObject testCar;
     private string playerPrefab = "TestCar2";
+    private Dictionary<int, GameObject> positionMap;
 
+
+    #region Unity
+
+    private void Awake()
+    {
+        positionMap = new Dictionary<int, GameObject>();
+        positionMap.Add(0, position1);
+        positionMap.Add(1, position2);
+        positionMap.Add(2, position3);
+        positionMap.Add(3, position4);
+    }
+    private void Start()
+    {
+        instance = this;
+        if (PlayerManager.LocalPlayerInstance == null)
+        {
+            Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+            object playerPosition;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("position", out playerPosition);
+            int index = (int) playerPosition;
+            testCar = PhotonNetwork.Instantiate(playerPrefab, positionMap[index].transform.position, Quaternion.identity, 0);
+            
+            camera.GetComponent<PlayerCamera>().target = testCar.transform;
+            Destroy(defaultCamera);
+        }
+        else
+        {
+            Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+        }
+    }
+    
+    #endregion
+    
+    
     #region Photon Callbacks
-
-
+    
     /// <summary>
     /// Called when the local player left the room. We need to load the launcher scene.
     /// </summary>
@@ -49,26 +91,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    private void Start()
-    {
-        instance = this;
-        if (PlayerManager.LocalPlayerInstance == null)
-        {
-            Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            object playerPosition;
-            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("position", out playerPosition);
-            Vector3 test = (Vector3) playerPosition;
-            testCar = PhotonNetwork.Instantiate(playerPrefab, test, Quaternion.identity, 0);
-            
-            camera.GetComponent<PlayerCamera>().target = testCar.transform;
-            Destroy(defaultCamera);
-        }
-        else
-        {
-            Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
-        }
-    }
+   
 
     #region Public Methods
 
