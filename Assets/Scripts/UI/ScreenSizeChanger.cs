@@ -6,17 +6,16 @@ using UnityEngine.UI;
 
 public class ScreenSizeChanger : MonoBehaviour
 {
+    public GameObject settingWindow;
     public Dropdown sizeDropdown;
-    public Toggle sixToggle;
-    public Toggle oneToggle;
-    public Toggle fullSizeToggle;
-    
+
     private int fps = 144;
     private Dictionary<string, int[]> sizeMap;
+    private bool isFullScreen = true;
 
     private void Start()
     {
-        Screen.SetResolution(1280, 720, false, fps);
+        Screen.SetResolution(1980, 1080, true, fps);
         sizeMap = new Dictionary<string, int[]>();
         sizeMap.Add("1280X720", new[] {1280, 720});
         sizeMap.Add("1920X1080", new[] {1920, 1080});
@@ -29,16 +28,31 @@ public class ScreenSizeChanger : MonoBehaviour
         if (sizeMap.ContainsKey(selectedValue))
         {
             var size = sizeMap[selectedValue];
-            Screen.SetResolution(size[0], size[1], fullSizeToggle.isOn, fps);
+            Screen.SetResolution(size[0], size[1], isFullScreen, fps);
         }
     }
 
+    public void UnActiveSettingWindow()
+    {
+        settingWindow.gameObject.SetActive(false);
+    }
+    
+    public void OnFullScreenToggled()
+    {
+        isFullScreen = !isFullScreen;
+    }
+    
     public void OnSixToggled()
     {
         fps = 60;
     }
 
-    public void OnOneToggled()
+    public void OnNineToggled()
+    {
+        fps = 90;
+    }
+    
+    public void OnOneFourFourToggled()
     {
         fps = 144;
     }

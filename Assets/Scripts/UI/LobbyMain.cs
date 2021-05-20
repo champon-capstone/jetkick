@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Voice.PUN;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LobbyMain : MonoBehaviourPunCallbacks
 {
@@ -11,8 +14,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public Button StartButton;
     [Header("List Panel")] public GameObject listPanel;
+    public GameObject roomListPanel;
     public GameObject roomListPrefab;
     [Header("Room Panel")] public GameObject roomPanel;
+    public GameObject playerListPanel;
     public GameObject playerListObject;
     [Header("Create Room")] public GameObject createPanel;
     public InputField roonNameInput;
@@ -25,6 +30,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public Text mapName;
     public Text mapDescription;
     public Chat chat;
+    public GameObject uitlButtonPanel;
     
     #endregion
 
@@ -79,6 +85,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         mapImage.gameObject.SetActive(false);
         mapName.gameObject.SetActive(false);
         mapDescription.gameObject.SetActive(false);
+    }
+
+    private void OnApplicationQuit()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     #endregion
@@ -257,12 +268,12 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            GameObject playerObject = Instantiate(playerListObject);
-            playerObject.transform.SetParent(roomPanel.transform);
-            playerObject.transform.localScale = Vector3.one;
-            var playerPosition =
-                new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
-            playerObject.transform.position = playerPosition;
+            GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
+            // playerObject.transform.SetParent(roomPanel.transform);
+            // playerObject.transform.localScale = Vector3.one;
+            // var playerPosition =
+            //     new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
+            // playerObject.transform.position = playerPosition;
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
             listDelta += 20;
 
@@ -357,7 +368,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private void StartGame()
     {
         PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
-            localPlayer.GetComponent<PlayerListObject>().PlayerColor.color);
+            localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
     }
 
@@ -390,13 +401,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in cachedRoomList.Values)
         {
-            roomDelta -= 20;
-            var room = Instantiate(roomListPrefab);
-            room.transform.SetParent(listPanel.transform);
-            room.transform.localScale = Vector3.one;
-            var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - roomDelta,
-                defaultRoomPosition.z);
-            room.transform.position = roomPosition;
+            // roomDelta -= 20;
+            var room = Instantiate(roomListPrefab, roomListPanel.transform);
+            // room.transform.SetParent(listPanel.transform);
+            // room.transform.localScale = Vector3.one;
+            // var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - roomDelta,
+                // defaultRoomPosition.z);
+            // room.transform.position = roomPosition;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
 
             roomListEntries.Add(info.Name, room);
@@ -410,6 +421,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void ActivePanel(string panelName)
     {
+        if (panelName.Equals(listPanel.name))
+        {
+            uitlButtonPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            uitlButtonPanel.gameObject.SetActive(false);
+        }
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }
@@ -453,8 +472,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             LeaveRoom();
             chat.ConnectToLobby();
         }
-
-        if (currentPanel.Equals(listPanel.name))
+        else if (currentPanel.Equals(createPanel.name))
+        {
+            panelList[currentPanel].SetActive(false);
+            currentPanel = listPanel.name;
+            ActivePanel(currentPanel);
+        }
+        else if (currentPanel.Equals(listPanel.name))
         {
             LeaveLobby();
         }

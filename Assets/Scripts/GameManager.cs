@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public const int PLAYER_MAX_LIVES = 3;
 
     public GameObject camera;
+    public GameObject defaultCamera;
     
     public static GameManager instance;
     
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             testCar = PhotonNetwork.Instantiate(playerPrefab, test, Quaternion.identity, 0);
             
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
+            Destroy(defaultCamera);
         }
         else
         {

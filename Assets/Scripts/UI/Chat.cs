@@ -13,9 +13,12 @@ public class Chat : MonoBehaviour, IChatClientListener
     private string userName;
     private string lobbyChanel = "Lobby";
     private string currentChannel;
+    private float yValue = 0;
+    
+    public GameObject content;
+    public GameObject conversation;
     
     public InputField chatInputField;
-    public Text outputText;
 
     #region Unity
 
@@ -33,6 +36,11 @@ public class Chat : MonoBehaviour, IChatClientListener
         {
             chatClient.Service();
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        chatClient.Disconnect();
     }
 
     #endregion
@@ -60,10 +68,13 @@ public class Chat : MonoBehaviour, IChatClientListener
         chatClient.ConnectUsingSettings(settings);
     }
 
-    private void AddMessage(string message)
+    private void AddMessage(string who,string message)
     {
         Debug.Log(message);
-        outputText.text += "  "+message + "\r\n";
+        var conversationObject = Instantiate(conversation, content.transform);
+        // conversationObject.transform.SetParent(content.transform);
+        conversationObject.GetComponent<ConversationInit>().initConversation(who, message);
+        // yValue -= conversation.GetComponent<RectTransform>().rect.y;
     }
     
     #endregion
@@ -89,7 +100,6 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         chatClient.Unsubscribe(new string[]{lobbyChanel});
         chatClient.Subscribe(new string[] {chatRoom});
-        outputText.text = "";
         currentChannel = chatRoom;
     }
 
@@ -106,7 +116,6 @@ public class Chat : MonoBehaviour, IChatClientListener
         currentChannel = lobbyChanel;
         chatClient.Unsubscribe(channels);
         chatClient.Subscribe(new string[] {lobbyChanel});
-        outputText.text = "";
     }
     
     public void OnChatStateChange(ChatState state)
@@ -118,7 +127,7 @@ public class Chat : MonoBehaviour, IChatClientListener
     {
         if (channelName.Equals(currentChannel))
         {
-            AddMessage(senders[0]+" : "+messages[0]);
+            AddMessage(senders[0], messages[0]+"");
         }
     }
 
