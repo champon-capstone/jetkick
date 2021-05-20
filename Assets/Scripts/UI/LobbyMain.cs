@@ -287,16 +287,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
             Debug.Log("Player " + p.NickName + " Position " + playerObject.transform.position);
 
-            //TODO Change Player Position
-            if (p.NickName.Equals("kbh"))
-            {
-                p.CustomProperties.Add("position", testPosition1);
-            }
-            else
-            {
-                p.CustomProperties.Add("position", testPosition2);
-            }
-
             // object isPlayerReady;
             // if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
             // {
@@ -367,6 +357,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private void StartGame()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            int index = 0;
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                player.CustomProperties.Add("position", index++);
+            }
+        }
         PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
             localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
