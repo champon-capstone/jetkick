@@ -5901,7 +5901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2716025557535238839, guid: 998f42eba43177f46960098308b299ed, type: 3}
       propertyPath: m_Name
-      value: chat_window (1)
+      value: chatPanel
       objectReference: {fileID: 0}
     - target: {fileID: 3247270267861964258, guid: 998f42eba43177f46960098308b299ed, type: 3}
       propertyPath: m_Color.b

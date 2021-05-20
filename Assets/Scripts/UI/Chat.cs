@@ -71,10 +71,10 @@ public class Chat : MonoBehaviour, IChatClientListener
     private void AddMessage(string who,string message)
     {
         Debug.Log(message);
-        var conversationObject = Instantiate(conversation, new Vector3(0, yValue, 0), Quaternion.identity);
-        conversationObject.transform.SetParent(content.transform);
+        var conversationObject = Instantiate(conversation, content.transform);
+        // conversationObject.transform.SetParent(content.transform);
         conversationObject.GetComponent<ConversationInit>().initConversation(who, message);
-        yValue -= conversation.GetComponent<RectTransform>().rect.y;
+        // yValue -= conversation.GetComponent<RectTransform>().rect.y;
     }
     
     #endregion

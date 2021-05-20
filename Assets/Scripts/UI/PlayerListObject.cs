@@ -21,9 +21,9 @@ public class PlayerListObject : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
         PhotonNetwork.LocalPlayer.SetScore(0);
         colorMap = new Dictionary<string, Color>();
-        colorMap.Add("Black", Color.black);
-        colorMap.Add("Blue", Color.blue);
-        colorMap.Add("Green", Color.green);
+        colorMap.Add("BLACK", Color.black);
+        colorMap.Add("BLUE", Color.blue);
+        colorMap.Add("GREEN", Color.green);
     }
 
     public void Initialize(int playerId, string playerName)
