@@ -53,10 +53,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #endregion
 
-    private Vector3 testPosition1 = new Vector3(-132.4f, 40f, -160f);
-    private Vector3 testPosition2 = new Vector3(-132.4f, 40f, -130f);
-
-
     #region Unity
 
     private void Awake()
@@ -218,16 +214,12 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         UpdatePlayerList();
 
-        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
-        {
-            //StartButton.gameObject.SetActive(CheckPlayersReady());
-        }
+        
     }
 
 
@@ -237,18 +229,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             playerListEntries = new Dictionary<int, GameObject>();
         }
-
-        GameObject entry;
-        // if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
-        // {
-        //     object isPlayerReady;
-        //     if (changedProps.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
-        //     {
-        //         entry.GetComponent<PlayerListObject>().SetPlayerReady((bool)isPlayerReady);
-        //     }
-        // }
-
-        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -269,11 +249,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
-            // playerObject.transform.SetParent(roomPanel.transform);
-            // playerObject.transform.localScale = Vector3.one;
-            // var playerPosition =
-            //     new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
-            // playerObject.transform.position = playerPosition;
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
             listDelta += 20;
 
@@ -284,15 +259,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
                     localPlayer = playerObject;
                 }
             }
-
-            Debug.Log("Player " + p.NickName + " Position " + playerObject.transform.position);
-
-            // object isPlayerReady;
-            // if (p.CustomProperties.TryGetValue(GameManager.PLAYER_READY, out isPlayerReady))
-            // {
-            //     playerObject.GetComponent<PlayerListObject>().SetPlayerReady((bool) isPlayerReady);
-            // }
-
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
     }
@@ -362,12 +328,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             int index = 0;
             foreach (var player in PhotonNetwork.PlayerList)
             {
+                Debug.Log("Player "+player.NickName+" index "+index);
                 player.CustomProperties.Add("position", index++);
             }
+            PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
+                localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
-        PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
-            localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
     }
 
     private void LeaveRoom()
@@ -399,13 +366,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in cachedRoomList.Values)
         {
-            // roomDelta -= 20;
             var room = Instantiate(roomListPrefab, roomListPanel.transform);
-            // room.transform.SetParent(listPanel.transform);
-            // room.transform.localScale = Vector3.one;
-            // var roomPosition = new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - roomDelta,
-                // defaultRoomPosition.z);
-            // room.transform.position = roomPosition;
             room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
 
             roomListEntries.Add(info.Name, room);

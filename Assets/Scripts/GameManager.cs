@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             int index = (int) playerPosition;
             testCar = PhotonNetwork.Instantiate(playerPrefab, positionMap[index].transform.position, Quaternion.identity, 0);
             
+            Debug.Log("Position index "+index+" position "+positionMap[index]);
+            
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
             Destroy(defaultCamera);
         }

@@ -613,11 +613,11 @@ MonoBehaviour:
   unityMicrophoneDevice: 
   photonMicrophoneDeviceId: 1
   interestGroup: 0
-  debugEchoMode: 0
+  debugEchoMode: 1
   reliableMode: 0
   encrypt: 0
   transmitEnabled: 1
-  samplingRate: 48000
+  samplingRate: 16000
   frameDuration: 20000
   bitrate: 64000
   sourceType: 0
