@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
     private GameObject testCar;
-    private string playerPrefab = "TestCar2";
+    private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
 
 
@@ -47,14 +47,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         instance = this;
+
+       
+        
         if (PlayerManager.LocalPlayerInstance == null)
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
             object playerPosition;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("position", out playerPosition);
             int index = (int) playerPosition;
             testCar = PhotonNetwork.Instantiate(playerPrefab, positionMap[index].transform.position, Quaternion.identity, 0);
+
+            
             
             Debug.Log("Position index "+index+" position "+positionMap[index]);
             
@@ -65,6 +69,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
         }
+        
+        
     }
     
     #endregion
