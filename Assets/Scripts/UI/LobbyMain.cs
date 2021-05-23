@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using Photon.Voice.PUN;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class LobbyMain : MonoBehaviourPunCallbacks
 {
@@ -31,7 +28,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public Text mapDescription;
     public Chat chat;
     public GameObject uitlButtonPanel;
-    
+
     #endregion
 
     #region Private Fields
@@ -134,15 +131,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        
+
         chat.ConnectToRoomChat(roomName.text);
-        
+
         cachedRoomList.Clear();
-        
+
         roomName.gameObject.SetActive(true);
-        
-        
-        
+
+
         ActivePanel(roomPanel.name);
         panelList[createPanel.name].SetActive(false);
         panelList[listPanel.name].SetActive(false);
@@ -181,7 +177,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("OnPlayerEneteredRoom");
+        Debug.Log("OnPlayerEneteredRoom " + PhotonNetwork.PlayerList.Length);
         listDelta += 20;
 
         GameObject entry = Instantiate(playerListObject);
@@ -194,8 +190,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
-
-        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -213,13 +207,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         listDelta = 0;
 
         UpdatePlayerList();
-
     }
 
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        
     }
 
 
@@ -259,6 +251,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
                     localPlayer = playerObject;
                 }
             }
+
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
     }
@@ -326,11 +319,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             int index = 0;
-            foreach (var player in PhotonNetwork.PlayerList)
+            var list = PhotonNetwork.PlayerList;
+            for (int i = 0; i < list.Length; i++)
             {
-                Debug.Log("Player "+player.NickName+" index "+index);
-                player.CustomProperties.Add("position", index++);
+                list[i].SetCustomProperties(new Hashtable() {{"position", index++}});
+                // list[i].CustomProperties.Add("position", index++);
+                Debug.Log("Player Position input " + list[i].NickName + " index " + index);
             }
+
             PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
                 localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
@@ -388,6 +384,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             uitlButtonPanel.gameObject.SetActive(false);
         }
+
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }

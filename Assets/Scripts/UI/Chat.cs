@@ -106,7 +106,6 @@ public class Chat : MonoBehaviour, IChatClientListener
     public void ConnectToLobby()
     {
         string[] channels = new string[chatClient.PublicChannels.Count];
-        Debug.Log("Channel count "+chatClient.PublicChannels.Count);
         var index = 0;
         foreach (var channel in chatClient.PublicChannels.Values)
         {
