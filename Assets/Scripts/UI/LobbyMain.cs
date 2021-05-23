@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LobbyMain : MonoBehaviourPunCallbacks
 {
@@ -43,10 +45,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private string currentPanel;
 
-    private int roomDelta = 0;
-    private Vector3 defaultRoomPosition;
-    private Vector3 defaultPlayerPosition;
-    
     #endregion
 
     #region Unity
@@ -66,10 +64,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(roomPanel.name, roomPanel);
         panelList.Add(createPanel.name, createPanel);
         panelList.Add(listPanel.name, listPanel);
-        defaultRoomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y + 80,
-            listPanel.transform.position.z);
-        defaultPlayerPosition = new Vector3(roomPanel.transform.position.x, roomPanel.transform.position.y + 80,
-            roomPanel.transform.position.z);
         mapInfoDic = new Dictionary<string, MapInfo>();
 
 
@@ -103,19 +97,22 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
+        Debug.Log("Join Lobby");
         cachedRoomList.Clear();
         ClearRoomListView();
     }
 
     public override void OnLeftLobby()
     {
-        cachedRoomList.Clear();
-        ClearRoomListView();
+        Debug.Log("Left Lobby");
+        // cachedRoomList.Clear();
+        // ClearRoomListView();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Join Falied");
+        PhotonNetwork.ReconnectAndRejoin();
+        Debug.Log("Join Falied "+ returnCode + " message "+message);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -133,7 +130,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         chat.ConnectToRoomChat(roomName.text);
 
-        cachedRoomList.Clear();
+        // cachedRoomList.Clear();
 
         roomName.gameObject.SetActive(true);
 
@@ -149,9 +146,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         UpdatePlayerList();
 
-        //StartButton.gameObject.SetActive(CheckPlayersReady());
-
-
         Hashtable props = new Hashtable
         {
             {GameManager.PLAYER_LOADED_LEVEL, false}
@@ -161,7 +155,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        roomDelta += 20;
         ActivePanel(listPanel.name);
 
         foreach (GameObject entry in playerListEntries.Values)
@@ -175,12 +168,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("OnPlayerEneteredRoom " + PhotonNetwork.PlayerList.Length);
-
         GameObject entry = Instantiate(playerListObject, playerListPanel.transform);
 
         entry.GetComponent<PlayerListObject>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
-
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
     }
@@ -197,7 +187,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         playerListEntries.Clear();
 
-        
+
         UpdatePlayerList();
     }
 
@@ -243,10 +233,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             }
         }
     }
-    
+
     private void UpdatePlayerList()
     {
-       
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
@@ -262,6 +251,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
+
         ChangeMasterClientColor();
     }
 
@@ -310,6 +300,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
+        PhotonNetwork.LeaveLobby();
+        
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
         mapImage.gameObject.SetActive(true);
@@ -331,8 +323,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             for (int i = 0; i < list.Length; i++)
             {
                 list[i].SetCustomProperties(new Hashtable() {{"position", index++}});
-                // list[i].CustomProperties.Add("position", index++);
-                Debug.Log("Player Position input " + list[i].NickName + " index " + index);
             }
 
             PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
@@ -347,7 +337,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LeaveRoom();
         }
-
+        
+        Debug.Log("LeaveRoom cachedRoomList "+cachedRoomList.Count+" room entries "+roomListEntries.Count);
+        
         panelList[roomPanel.name].SetActive(false);
         StartButton.gameObject.SetActive(true);
     }
@@ -357,8 +349,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InLobby)
         {
             PhotonNetwork.LeaveLobby();
-            
         }
+
         PhotonNetwork.LoadLevel("Launcher");
         PhotonNetwork.Disconnect();
     }
