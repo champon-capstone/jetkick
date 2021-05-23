@@ -32,7 +32,12 @@ public class PlayerListObject : MonoBehaviour
         PlayerNameText.text = playerName;
     }
 
-    public Color getPlayerColor()
+    public void SetMasterColor()
+    {
+        PlayerNameText.color = Color.red;
+    }
+    
+    public Color GetPlayerColor()
     {
         return colorMap[colorDropdown.options[colorDropdown.value].text];
     }
