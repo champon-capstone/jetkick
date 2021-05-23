@@ -43,7 +43,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private string currentPanel;
 
-    private int listDelta = 0;
     private int roomDelta = 0;
     private Vector3 defaultRoomPosition;
     private Vector3 defaultPlayerPosition;
@@ -163,7 +162,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         roomDelta += 20;
-        listDelta = 0;
         ActivePanel(listPanel.name);
 
         foreach (GameObject entry in playerListEntries.Values)
@@ -178,14 +176,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("OnPlayerEneteredRoom " + PhotonNetwork.PlayerList.Length);
-        listDelta += 20;
 
-        GameObject entry = Instantiate(playerListObject);
-        entry.transform.SetParent(roomPanel.transform);
-        entry.transform.localScale = Vector3.one;
-        var playerPosition =
-            new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
-        entry.transform.position = playerPosition;
+        GameObject entry = Instantiate(playerListObject, playerListPanel.transform);
+
         entry.GetComponent<PlayerListObject>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
 
 
@@ -204,8 +197,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         playerListEntries.Clear();
 
-        listDelta = 0;
-
+        
         UpdatePlayerList();
     }
 
@@ -242,7 +234,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
-            listDelta += 20;
 
             if (localPlayer == null)
             {
@@ -258,7 +249,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private void ClearRoomListView()
     {
-        listDelta = 0;
         foreach (GameObject room in roomListEntries.Values)
         {
             Destroy(room);
