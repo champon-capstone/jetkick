@@ -46,7 +46,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     private int roomDelta = 0;
     private Vector3 defaultRoomPosition;
     private Vector3 defaultPlayerPosition;
-
+    
     #endregion
 
     #region Unity
@@ -204,6 +204,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
+        ChangeMasterClientColor();
     }
 
 
@@ -228,8 +229,24 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #region Private Methods
 
+    private void ChangeMasterClientColor()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var masterActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+            foreach (var key in playerListEntries.Keys)
+            {
+                if (key == masterActorNumber)
+                {
+                    playerListEntries[key].GetComponent<PlayerListObject>().SetMasterColor();
+                }
+            }
+        }
+    }
+    
     private void UpdatePlayerList()
     {
+       
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
@@ -245,6 +262,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
+        ChangeMasterClientColor();
     }
 
     private void ClearRoomListView()
@@ -318,7 +336,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             }
 
             PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
-                localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
+                localPlayer.GetComponent<PlayerListObject>().GetPlayerColor());
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
     }
