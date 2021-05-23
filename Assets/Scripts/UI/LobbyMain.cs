@@ -357,10 +357,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InLobby)
         {
             PhotonNetwork.LeaveLobby();
-            PhotonNetwork.Disconnect();
+            
         }
-
         PhotonNetwork.LoadLevel("Launcher");
+        PhotonNetwork.Disconnect();
     }
 
     #endregion
