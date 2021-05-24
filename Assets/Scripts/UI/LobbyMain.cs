@@ -144,13 +144,29 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerListEntries = new Dictionary<int, GameObject>();
         }
 
-        UpdatePlayerList();
-
-        Hashtable props = new Hashtable
+        Hashtable props;
+        
+        if (PhotonNetwork.IsMasterClient)
         {
-            {GameManager.PLAYER_LOADED_LEVEL, false}
-        };
+            props = new Hashtable
+            {
+                {GameManager.PLAYER_LOADED_LEVEL, false},
+                {"isMaster", true}
+            };
+        }
+        else
+        {
+            props = new Hashtable
+            {
+                {GameManager.PLAYER_LOADED_LEVEL, false},
+                {"isMaster", false}
+            };   
+        }
+        
+        
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        UpdatePlayerList();
     }
 
     public override void OnLeftRoom()
@@ -194,6 +210,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.ActorNumber == newMasterClient.ActorNumber)
+            {
+                player.SetCustomProperties(new Hashtable(){{"isMaster", true}});
+                break;
+            }
+        }
         ChangeMasterClientColor();
     }
 
@@ -203,6 +227,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (playerListEntries == null)
         {
             playerListEntries = new Dictionary<int, GameObject>();
+        }
+
+        if (currentPanel.Equals(roomPanel.name))
+        {
+            ChangeMasterClientColor();
         }
     }
 
@@ -221,26 +250,29 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private void ChangeMasterClientColor()
     {
-        if (PhotonNetwork.IsMasterClient)
+        foreach (var player in PhotonNetwork.PlayerList)
         {
-            var masterActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-            foreach (var key in playerListEntries.Keys)
+            if (player.CustomProperties["isMaster"] != null)
             {
-                if (key == masterActorNumber)
+                var isMaster = (bool) player.CustomProperties["isMaster"];
+                if (isMaster)
                 {
-                    playerListEntries[key].GetComponent<PlayerListObject>().SetMasterColor();
+                    playerListEntries[player.ActorNumber].GetComponent<PlayerListObject>().SetMasterColor();
+                    break;
                 }
             }
         }
+        
     }
 
     private void UpdatePlayerList()
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
+
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
-
+            
             if (localPlayer == null)
             {
                 if (PhotonNetwork.LocalPlayer.NickName.Equals(p.NickName))
@@ -251,8 +283,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
-
-        ChangeMasterClientColor();
     }
 
     private void ClearRoomListView()
@@ -300,8 +330,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
-        PhotonNetwork.LeaveLobby();
-        
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
         mapImage.gameObject.SetActive(true);
@@ -338,8 +366,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             PhotonNetwork.LeaveRoom();
         }
         
-        Debug.Log("LeaveRoom cachedRoomList "+cachedRoomList.Count+" room entries "+roomListEntries.Count);
-        
         panelList[roomPanel.name].SetActive(false);
         StartButton.gameObject.SetActive(true);
     }
@@ -362,10 +388,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in cachedRoomList.Values)
         {
-            var room = Instantiate(roomListPrefab, roomListPanel.transform);
-            room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
+            if (!roomListEntries.ContainsKey(info.Name))
+            {
+                var room = Instantiate(roomListPrefab, roomListPanel.transform);
+                room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
 
-            roomListEntries.Add(info.Name, room);
+                roomListEntries.Add(info.Name, room);
+            }
         }
     }
 
