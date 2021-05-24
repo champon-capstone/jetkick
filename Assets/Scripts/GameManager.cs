@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("position", out playerPosition);
             int index = (int) playerPosition;
             testCar = PhotonNetwork.Instantiate(playerPrefab, positionMap[index].transform.position, Quaternion.identity, 0);
-
+            PhotonNetwork.LocalPlayer.TagObject = testCar;
             
             
             Debug.Log("Position index "+index+" position "+positionMap[index]);
@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player other)
     {
+        var testObject = (GameObject) other.TagObject;
+        Destroy(testObject);
         Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
     }
 
@@ -105,6 +107,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        
         PhotonNetwork.LeaveRoom();
     }
     
