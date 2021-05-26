@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9948085}
   m_Layer: 0
   m_Name: wheelsContainer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 690329735}
   m_Layer: 0
   m_Name: Back Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 706479551}
   m_Layer: 0
   m_Name: Back Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 1703987197}
   m_Layer: 0
   m_Name: Front Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 2129048073}
   m_Layer: 0
   m_Name: Front Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,6 +352,26 @@ PrefabInstance:
       value: Car7 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
