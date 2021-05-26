@@ -9,6 +9,7 @@ public class ItemController : MonoBehaviour
     public float respawnTime;
     private float spinspeed = 20.0f;
     Renderer renderer;
+    public Canvas Canvas;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,9 @@ public class ItemController : MonoBehaviour
             Instantiate(effect, this.transform);
             //Destroy는 파티클프리팹에 직접넣었음
             StartCoroutine("FadeOut");
-         
+
+            //아이템 획득 코드
+            
             Invoke("respawn", respawnTime);
         }
     }
