@@ -48,4 +48,9 @@ public class PlayerListObject : MonoBehaviour
             }
         }
     }
+
+    public void UnInteractive()
+    {
+        colorDropdown.interactable = false;
+    }
 }

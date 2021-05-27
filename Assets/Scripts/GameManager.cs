@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             object color;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
 
+            Debug.Log("Color "+color);
+            
             if (color != null)
             {
                 Material colorMaterial = colorMap[color.ToString()];
