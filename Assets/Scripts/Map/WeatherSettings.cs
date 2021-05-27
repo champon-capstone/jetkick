@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class WeatherSettings : MonoBehaviour
 {
-    Material skybox;
-
-    WeatherSettings(Material skybox)
-    {
-        this.skybox = skybox;
-    }
+    public Material skybox;
 
     // Start is called before the first frame update
     void Start()
