@@ -41,4 +41,5 @@ public class MultiCar : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(Vector3.forward * 3000);
         Debug.Log("Attacked Sender  "+info.Sender.NickName + "Receiver "+PhotonNetwork.LocalPlayer.NickName);
     }
+
 }

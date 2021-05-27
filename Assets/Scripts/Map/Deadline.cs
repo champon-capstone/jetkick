@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Deadline : MonoBehaviour
 {
+    public Camera camera;
+    public PlayerCamera playerCamera;
     private CameraTest cameraManager;
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,8 @@ public class Deadline : MonoBehaviour
             }
             
             Destroy(col.gameObject.transform.parent.gameObject);
-            
+            camera.gameObject.SetActive(true);
+            playerCamera.target = camera.transform;
         }
     }
 }
