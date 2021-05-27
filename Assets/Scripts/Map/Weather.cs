@@ -1,6 +1,9 @@
 public enum Weather
 {
-    Sunny,
-    Cloudy,
-    Rain
+    SunnyDay,
+    CloudyDay,
+    RainyDay,
+    ClearNight,
+    CloudyNight,
+    RainyNight
 }
