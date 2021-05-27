@@ -86,6 +86,19 @@ public class ItemController : MonoBehaviour
 
     private void plusItem()
     {
+        int number = Random.Range(1, 4);
 
+        if(number ==1)//바나나
+        {
+            firstitem.sprite = banana.sprite;
+        }
+        else if(number == 2)//미사일
+        {
+            firstitem.sprite = missile.sprite;
+        }
+        else // 쉴드
+        {
+            firstitem.sprite = shield.sprite;
+        }
     }
 }
