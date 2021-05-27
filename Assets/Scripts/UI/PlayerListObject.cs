@@ -37,4 +37,16 @@ public class PlayerListObject : MonoBehaviour
     {
         return colorDropdown.options[colorDropdown.value].text;
     }
+
+    public void SetPlayerColor(string colorString)
+    {
+        for (int i = 0; i < colorDropdown.options.Count; i++)
+        {
+            if (colorDropdown.options[i].text.Equals(colorString))
+            {
+                colorDropdown.value = i;
+                break;
+            }
+        }
+    }
 }
