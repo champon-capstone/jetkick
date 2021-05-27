@@ -1070,6 +1070,18 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: red
+      value: 
+      objectReference: {fileID: 2100000, guid: b03f32c61b3f8e342acb576341e4ab4c, type: 2}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: green
+      value: 
+      objectReference: {fileID: 2100000, guid: bdc788b35d2814f44a6a2b0d2d938fc8, type: 2}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: white
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ad7bf6764e7ea8499be6441ef95ca38, type: 2}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 339821082}

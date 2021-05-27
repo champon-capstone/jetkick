@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
+    [Header("Car color")]
+    public Material red;
+    public Material green;
+    public Material white;
+    
     [Header("Position")] 
     public GameObject position1;
     public GameObject position2;
@@ -32,12 +37,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject testCar;
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
-
+    private Dictionary<String, Material> colorMap;
 
     #region Unity
 
     private void Awake()
     {
+        colorMap = new Dictionary<string, Material>();
+        colorMap.Add("GREEN", green);
+        colorMap.Add("RED", red);
+        colorMap.Add("WHITE", white);
         positionMap = new Dictionary<int, GameObject>();
         positionMap.Add(0, position1);
         positionMap.Add(1, position2);
@@ -58,10 +67,16 @@ public class GameManager : MonoBehaviourPunCallbacks
             int index = (int) playerPosition;
             testCar = PhotonNetwork.Instantiate(playerPrefab, positionMap[index].transform.position, Quaternion.identity, 0);
             PhotonNetwork.LocalPlayer.TagObject = testCar;
-            
-            
-            Debug.Log("Position index "+index+" position "+positionMap[index]);
-            
+
+            object color;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
+
+            if (color != null)
+            {
+                Material colorMaterial = colorMap[color.ToString()];
+                testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
+            }
+
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
             Destroy(defaultCamera);
         }
