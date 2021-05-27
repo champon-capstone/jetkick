@@ -42,4 +42,8 @@ public class MultiCar : MonoBehaviour
         Debug.Log("Attacked Sender  "+info.Sender.NickName + "Receiver "+PhotonNetwork.LocalPlayer.NickName);
     }
 
+    public int GetActorNumber()
+    {
+        return _photonView.Owner.ActorNumber;
+    }
 }
