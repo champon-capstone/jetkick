@@ -85,6 +85,18 @@ MonoBehaviour:
     motorTorque: 1200
     steeringAngle: 50
   speed: 0
+--- !u!114 &5701561632002512034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513504700572430323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96efc377b1768349a6a8efdb59ec00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6660910060037123755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,7 +115,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 10
+    InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
@@ -132,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logLevel: 1
   ignoreGlobalLogLevel: 0
-  recorderInUse: {fileID: 2829354021123902734}
+  recorderInUse: {fileID: 0}
   speakerInUse: {fileID: 2838479876392423281}
   AutoCreateRecorderIfNotFound: 0
   UsePrimaryRecorder: 1
@@ -150,7 +162,7 @@ GameObject:
   - component: {fileID: 2838479876392423281}
   m_Layer: 0
   m_Name: Speaker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,7 +309,7 @@ GameObject:
   - component: {fileID: 4319858766174408515}
   m_Layer: 0
   m_Name: Back Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,7 +370,7 @@ GameObject:
   - component: {fileID: 4319858766189646459}
   m_Layer: 0
   m_Name: Back Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -418,7 +430,7 @@ GameObject:
   - component: {fileID: 4319858766819138673}
   m_Layer: 0
   m_Name: wheelsContainer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -453,7 +465,7 @@ GameObject:
   - component: {fileID: 4319858767305609273}
   m_Layer: 0
   m_Name: Front Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -514,7 +526,7 @@ GameObject:
   - component: {fileID: 4319858767462000077}
   m_Layer: 0
   m_Name: Front Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,86 +575,6 @@ WheelCollider:
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_Enabled: 1
---- !u!1 &5606006857065719322
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4218848860112814423}
-  - component: {fileID: 2829354021123902734}
-  m_Layer: 0
-  m_Name: Recorder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4218848860112814423
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5606006857065719322}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1513504700572857299}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2829354021123902734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5606006857065719322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logLevel: 3
-  ignoreGlobalLogLevel: 0
-  voiceDetection: 0
-  voiceDetectionThreshold: 0.01
-  voiceDetectionDelayMs: 500
-  unityMicrophoneDevice: 
-  photonMicrophoneDeviceId: 1
-  interestGroup: 0
-  debugEchoMode: 0
-  reliableMode: 0
-  encrypt: 0
-  transmitEnabled: 1
-  samplingRate: 24000
-  frameDuration: 20000
-  bitrate: 30000
-  sourceType: 0
-  microphoneType: 1
-  audioClip: {fileID: 0}
-  loopAudioClip: 1
-  reactOnSystemChanges: 0
-  autoStart: 1
-  audioSessionParameters:
-    Category: 4
-    Mode: 0
-    CategoryOptions: 0800000004000000
-  useCustomAudioSessionParameters: 0
-  audioSessionPresetIndex: 0
-  nativeAndroidMicrophoneSettings:
-    AcousticEchoCancellation: 0
-    AutomaticGainControl: 0
-    NoiseSuppression: 0
-  recordOnlyWhenEnabled: 0
-  skipDeviceChangeChecks: 0
-  stopRecordingWhenPaused: 0
-  useOnAudioFilterRead: 0
-  trySamplingRateMatch: 0
-  useMicrophoneTypeFallback: 1
 --- !u!1001 &1513504700572461395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,7 +584,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
       propertyPath: m_Name
-      value: TestCar2
+      value: TestCar3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
       propertyPath: m_RootOrder
@@ -704,6 +656,11 @@ PrefabInstance:
       objectReference: {fileID: 4300022, guid: c003cab7f5803b648aca7b7510fe4edf, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+--- !u!1 &1513504700572430325 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+  m_PrefabInstance: {fileID: 1513504700572461395}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1513504700572430321 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
@@ -727,11 +684,6 @@ GameObject:
 --- !u!1 &1513504700572430329 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100010, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
-  m_PrefabInstance: {fileID: 1513504700572461395}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1513504700572430325 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
   m_PrefabInstance: {fileID: 1513504700572461395}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1513504700572430323 stripped

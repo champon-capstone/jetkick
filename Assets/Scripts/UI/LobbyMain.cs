@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using Photon.Voice.PUN;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -31,7 +30,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public Text mapDescription;
     public Chat chat;
     public GameObject uitlButtonPanel;
-    
+
     #endregion
 
     #region Private Fields
@@ -44,12 +43,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private GameObject localPlayer;
 
-    private string currentPanel;
 
-    private int listDelta = 0;
-    private int roomDelta = 0;
-    private Vector3 defaultRoomPosition;
-    private Vector3 defaultPlayerPosition;
+    private string currentPanel;
 
     #endregion
 
@@ -70,12 +65,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(roomPanel.name, roomPanel);
         panelList.Add(createPanel.name, createPanel);
         panelList.Add(listPanel.name, listPanel);
-        defaultRoomPosition = new Vector3(listPanel.transform.position.x, listPanel.transform.position.y + 80,
-            listPanel.transform.position.z);
-        defaultPlayerPosition = new Vector3(roomPanel.transform.position.x, roomPanel.transform.position.y + 80,
-            roomPanel.transform.position.z);
         mapInfoDic = new Dictionary<string, MapInfo>();
 
+        var generator = new MapInfoGenerator();
+        foreach (MapInfo info in generator.MapList)
+        {
+            mapInfoDic.Add(info.MapName, info);
+        }
 
         roomName.gameObject.SetActive(false);
         mapImage.gameObject.SetActive(false);
@@ -107,19 +103,22 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
+        Debug.Log("Join Lobby");
         cachedRoomList.Clear();
         ClearRoomListView();
     }
 
     public override void OnLeftLobby()
     {
-        cachedRoomList.Clear();
-        ClearRoomListView();
+        Debug.Log("Left Lobby");
+        // cachedRoomList.Clear();
+        // ClearRoomListView();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Join Falied");
+        PhotonNetwork.ReconnectAndRejoin();
+        Debug.Log("Join Falied " + returnCode + " message " + message);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -134,15 +133,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        
+
         chat.ConnectToRoomChat(roomName.text);
-        
-        cachedRoomList.Clear();
-        
+
+        // cachedRoomList.Clear();
+
         roomName.gameObject.SetActive(true);
-        
-        
-        
+
+
         ActivePanel(roomPanel.name);
         panelList[createPanel.name].SetActive(false);
         panelList[listPanel.name].SetActive(false);
@@ -152,22 +150,33 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerListEntries = new Dictionary<int, GameObject>();
         }
 
-        UpdatePlayerList();
+        Hashtable props;
 
-        //StartButton.gameObject.SetActive(CheckPlayersReady());
-
-
-        Hashtable props = new Hashtable
+        if (PhotonNetwork.IsMasterClient)
         {
-            {GameManager.PLAYER_LOADED_LEVEL, false}
-        };
+            props = new Hashtable
+            {
+                {GameManager.PLAYER_LOADED_LEVEL, false},
+                {"isMaster", true}
+            };
+        }
+        else
+        {
+            props = new Hashtable
+            {
+                {GameManager.PLAYER_LOADED_LEVEL, false},
+                {"isMaster", false}
+            };
+        }
+
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        UpdatePlayerList();
     }
 
     public override void OnLeftRoom()
     {
-        roomDelta += 20;
-        listDelta = 0;
         ActivePanel(listPanel.name);
 
         foreach (GameObject entry in playerListEntries.Values)
@@ -181,21 +190,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("OnPlayerEneteredRoom");
-        listDelta += 20;
+        GameObject entry = Instantiate(playerListObject, playerListPanel.transform);
 
-        GameObject entry = Instantiate(playerListObject);
-        entry.transform.SetParent(roomPanel.transform);
-        entry.transform.localScale = Vector3.one;
-        var playerPosition =
-            new Vector3(defaultRoomPosition.x, defaultRoomPosition.y - listDelta, defaultRoomPosition.z);
-        entry.transform.position = playerPosition;
         entry.GetComponent<PlayerListObject>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
 
-
         playerListEntries.Add(newPlayer.ActorNumber, entry);
-
-        //StartButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -210,16 +209,23 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         playerListEntries.Clear();
 
-        listDelta = 0;
 
         UpdatePlayerList();
-
     }
 
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.ActorNumber == newMasterClient.ActorNumber)
+            {
+                player.SetCustomProperties(new Hashtable() {{"isMaster", true}});
+                break;
+            }
+        }
+
+        ChangeMasterClientColor();
     }
 
 
@@ -228,6 +234,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (playerListEntries == null)
         {
             playerListEntries = new Dictionary<int, GameObject>();
+        }
+
+        if (currentPanel.Equals(roomPanel.name))
+        {
+            ChangeMasterClientColor();
         }
     }
 
@@ -244,13 +255,28 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #region Private Methods
 
+    private void ChangeMasterClientColor()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties["isMaster"] != null)
+            {
+                var isMaster = (bool) player.CustomProperties["isMaster"];
+                if (isMaster)
+                {
+                    playerListEntries[player.ActorNumber].GetComponent<PlayerListObject>().SetMasterColor();
+                    break;
+                }
+            }
+        }
+    }
+
     private void UpdatePlayerList()
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
-            listDelta += 20;
 
             if (localPlayer == null)
             {
@@ -259,13 +285,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
                     localPlayer = playerObject;
                 }
             }
+
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
     }
 
     private void ClearRoomListView()
     {
-        listDelta = 0;
         foreach (GameObject room in roomListEntries.Values)
         {
             Destroy(room);
@@ -311,13 +337,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
-        mapImage.gameObject.SetActive(true);
-        mapName.gameObject.SetActive(true);
-        mapDescription.gameObject.SetActive(true);
-
-        mapName.text = "Default Map Name";
-        mapDescription.text = "Default Map Description";
-
         roomName.text = roomNameText;
     }
 
@@ -326,15 +345,27 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             int index = 0;
-            foreach (var player in PhotonNetwork.PlayerList)
+            var list = PhotonNetwork.PlayerList;
+            for (int i = 0; i < list.Length; i++)
             {
-                Debug.Log("Player "+player.NickName+" index "+index);
-                player.CustomProperties.Add("position", index++);
+                list[i].SetCustomProperties(new Hashtable() {{"position", index++}});
             }
-            PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
-                localPlayer.GetComponent<PlayerListObject>().getPlayerColor());
+
+            foreach (var player in list)
+            {
+                Debug.Log(player.CustomProperties["position"] + " position " + player.NickName);
+            }
+
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+        {
+            {
+                "color",
+                localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
+            }
+        });
     }
 
     private void LeaveRoom()
@@ -353,10 +384,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InLobby)
         {
             PhotonNetwork.LeaveLobby();
-            PhotonNetwork.Disconnect();
         }
 
         PhotonNetwork.LoadLevel("Launcher");
+        PhotonNetwork.Disconnect();
     }
 
     #endregion
@@ -366,10 +397,13 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in cachedRoomList.Values)
         {
-            var room = Instantiate(roomListPrefab, roomListPanel.transform);
-            room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
+            if (!roomListEntries.ContainsKey(info.Name))
+            {
+                var room = Instantiate(roomListPrefab, roomListPanel.transform);
+                room.GetComponent<LobbyRoomInfo>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
 
-            roomListEntries.Add(info.Name, room);
+                roomListEntries.Add(info.Name, room);
+            }
         }
     }
 
@@ -388,6 +422,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             uitlButtonPanel.gameObject.SetActive(false);
         }
+
+        if (panelName.Equals(createPanel.name))
+        {
+            mapImage.gameObject.SetActive(true);
+            mapName.gameObject.SetActive(true);
+            mapDescription.gameObject.SetActive(true);
+        }
+
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }

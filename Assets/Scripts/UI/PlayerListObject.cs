@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -13,17 +14,12 @@ public class PlayerListObject : MonoBehaviour
     public Dropdown colorDropdown;
 
     private int ownerId;
-    private Dictionary<string, Color> colorMap;
     
     public void Start()
     {
         Hashtable initialProps = new Hashtable() {{GameManager.PLAYER_LIVES, GameManager.PLAYER_MAX_LIVES}};
         PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
         PhotonNetwork.LocalPlayer.SetScore(0);
-        colorMap = new Dictionary<string, Color>();
-        colorMap.Add("BLACK", Color.black);
-        colorMap.Add("BLUE", Color.blue);
-        colorMap.Add("GREEN", Color.green);
     }
 
     public void Initialize(int playerId, string playerName)
@@ -32,8 +28,25 @@ public class PlayerListObject : MonoBehaviour
         PlayerNameText.text = playerName;
     }
 
-    public Color getPlayerColor()
+    public void SetMasterColor()
     {
-        return colorMap[colorDropdown.options[colorDropdown.value].text];
+        PlayerNameText.color = Color.red;
+    }
+    
+    public String GetPlayerColor()
+    {
+        return colorDropdown.options[colorDropdown.value].text;
+    }
+
+    public void SetPlayerColor(string colorString)
+    {
+        for (int i = 0; i < colorDropdown.options.Count; i++)
+        {
+            if (colorDropdown.options[i].text.Equals(colorString))
+            {
+                colorDropdown.value = i;
+                break;
+            }
+        }
     }
 }
