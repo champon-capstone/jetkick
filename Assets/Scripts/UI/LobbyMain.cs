@@ -353,6 +353,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
                 list[i].SetCustomProperties(new Hashtable() {{"position", index++}});
             }
 
+            foreach (var player in list)
+            {
+                Debug.Log(player.CustomProperties["position"]+ " position "+player.NickName);
+            }
+            
             PhotonNetwork.LocalPlayer.CustomProperties.Add("Color",
                 localPlayer.GetComponent<PlayerListObject>().GetPlayerColor());
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
