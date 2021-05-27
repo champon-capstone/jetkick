@@ -43,7 +43,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private GameObject localPlayer;
 
-    
+
     private string currentPanel;
 
     #endregion
@@ -118,7 +118,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         PhotonNetwork.ReconnectAndRejoin();
-        Debug.Log("Join Falied "+ returnCode + " message "+message);
+        Debug.Log("Join Falied " + returnCode + " message " + message);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -151,7 +151,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
 
         Hashtable props;
-        
+
         if (PhotonNetwork.IsMasterClient)
         {
             props = new Hashtable
@@ -166,10 +166,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             {
                 {GameManager.PLAYER_LOADED_LEVEL, false},
                 {"isMaster", false}
-            };   
+            };
         }
-        
-        
+
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         UpdatePlayerList();
@@ -220,10 +220,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             if (player.ActorNumber == newMasterClient.ActorNumber)
             {
-                player.SetCustomProperties(new Hashtable(){{"isMaster", true}});
+                player.SetCustomProperties(new Hashtable() {{"isMaster", true}});
                 break;
             }
         }
+
         ChangeMasterClientColor();
     }
 
@@ -268,17 +269,15 @@ public class LobbyMain : MonoBehaviourPunCallbacks
                 }
             }
         }
-        
     }
 
     private void UpdatePlayerList()
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
             playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
-            
+
             if (localPlayer == null)
             {
                 if (PhotonNetwork.LocalPlayer.NickName.Equals(p.NickName))
@@ -354,18 +353,19 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
             foreach (var player in list)
             {
-                Debug.Log(player.CustomProperties["position"]+ " position "+player.NickName);
+                Debug.Log(player.CustomProperties["position"] + " position " + player.NickName);
             }
 
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-            {
-                {
-                    "color",
-                    localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
-                }
-            });
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+        {
+            {
+                "color",
+                localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
+            }
+        });
     }
 
     private void LeaveRoom()
@@ -374,7 +374,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LeaveRoom();
         }
-        
+
         panelList[roomPanel.name].SetActive(false);
         StartButton.gameObject.SetActive(true);
     }
