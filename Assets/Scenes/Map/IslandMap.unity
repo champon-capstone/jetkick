@@ -693,6 +693,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Voice
       objectReference: {fileID: 0}
+    - target: {fileID: 1635337156167380396, guid: 4f55b49f489d3484dbaf973d2aaf6a13, type: 3}
+      propertyPath: debugEchoMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1635337156167380397, guid: 4f55b49f489d3484dbaf973d2aaf6a13, type: 3}
       propertyPath: m_RootOrder
       value: 8
