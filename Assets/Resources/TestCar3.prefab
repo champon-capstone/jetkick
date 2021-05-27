@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 2838479876392423281}
   m_Layer: 0
   m_Name: Speaker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 4319858766174408515}
   m_Layer: 0
   m_Name: Back Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 4319858766189646459}
   m_Layer: 0
   m_Name: Back Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 4319858766819138673}
   m_Layer: 0
   m_Name: wheelsContainer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 4319858767305609273}
   m_Layer: 0
   m_Name: Front Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 4319858767462000077}
   m_Layer: 0
   m_Name: Front Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -585,6 +585,26 @@ PrefabInstance:
     - target: {fileID: 100000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
       propertyPath: m_Name
       value: TestCar3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c935558ea4ee63746a5a53b50804994b, type: 3}
       propertyPath: m_RootOrder

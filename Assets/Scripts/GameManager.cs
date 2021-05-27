@@ -78,7 +78,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
 
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
-            Destroy(defaultCamera);
+            // Destroy(defaultCamera);
+            defaultCamera.gameObject.SetActive(false);
         }
         else
         {
