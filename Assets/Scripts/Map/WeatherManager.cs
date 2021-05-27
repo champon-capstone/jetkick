@@ -18,6 +18,11 @@ public class WeatherManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ChangeSkyBox(weatherSettings[(int)weather].skybox);
+    }
 
+    void ChangeSkyBox(Material skybox)
+    {
+        RenderSettings.skybox = skybox;
     }
 }
