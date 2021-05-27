@@ -5,52 +5,40 @@ using UnityEngine;
 public class ShieldCollision : MonoBehaviour
 {
 
-    [SerializeField] string[] _collisionTag;
-    float hitTime;
-    Material mat;
+    public GameObject car;
 
     void Start()
     {
-        if (GetComponent<Renderer>())
-        {
-            mat = GetComponent<Renderer>().sharedMaterial;
-        }
+  
+ 
 
     }
 
     void Update()
     {
-
-        if (hitTime > 0)
-        {
-            float myTime = Time.fixedDeltaTime * 1000;
-            hitTime -= myTime;
-            if (hitTime < 0)
-            {
-                hitTime = 0;
-            }
-            mat.SetFloat("_HitTime", hitTime);
-        }
+        transform.position =new Vector3(car.transform.position.x,car.transform.position.y,car.transform.position.z);
+        
+       
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        for (int i = 0; i < _collisionTag.Length; i++)
+        if(other.gameObject.tag == "Missile")
         {
-
-            if (_collisionTag.Length > 0 || collision.transform.CompareTag(_collisionTag[i]))
-            {
-                //Debug.Log("hit");
-                ContactPoint[] _contacts = collision.contacts;
-                for (int i2 = 0; i2 < _contacts.Length; i2++)
-                {
-                    mat.SetVector("_HitPosition", transform.InverseTransformPoint(_contacts[i2].point));
-                    hitTime = 500;
-                    mat.SetFloat("_HitTime", hitTime);
-                }
-            }
+            Debug.Log("실드 미사일 막음");
+            Destroy(other.transform.parent.gameObject);
         }
+        if (other.gameObject.tag == "Banana")
+        { 
+
+            Debug.Log("실드 바나나 막음");
+            Destroy(other.gameObject);
+        }
+
+       
     }
+
+    
 }
 
