@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Deadline : MonoBehaviour
 {
+    public Camera camera;
+    public PlayerCamera playerCamera;
     private CameraTest cameraManager;
     // Start is called before the first frame update
     void Start()
@@ -25,5 +28,11 @@ public class Deadline : MonoBehaviour
                 cameraManager.Cardead();
             }
         }
+
+        if (PhotonNetwork.LocalPlayer.ActorNumber == col.transform.parent.GetComponent<MultiCar>().GetActorNumber())
+        {
+            playerCamera.target = camera.transform;
+        }
+        PhotonNetwork.Destroy(col.transform.parent.gameObject);
     }
 }
