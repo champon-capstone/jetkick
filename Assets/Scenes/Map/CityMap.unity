@@ -644,6 +644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1bd4204bb33aa49b187d8d755ed512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 2071417460}
+  playerCamera: {fileID: 2070947548}
 --- !u!1 &279425170 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1830638524052890, guid: 7983007111fc025458c54df1b9437c94, type: 3}
@@ -1766,6 +1768,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: red
+      value: 
+      objectReference: {fileID: 2100000, guid: b03f32c61b3f8e342acb576341e4ab4c, type: 2}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: green
+      value: 
+      objectReference: {fileID: 2100000, guid: bdc788b35d2814f44a6a2b0d2d938fc8, type: 2}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: white
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ad7bf6764e7ea8499be6441ef95ca38, type: 2}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 2070947547}
@@ -2420,6 +2434,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9005178162156980364, guid: bd19c6a67bb6b71459c4aea88f734096, type: 3}
   m_PrefabInstance: {fileID: 2070947546}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2070947548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5551406550079640413, guid: bd19c6a67bb6b71459c4aea88f734096, type: 3}
+  m_PrefabInstance: {fileID: 2070947546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070947547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18339b0564b13af4a9f9f01bae789942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2071417458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,13 +2521,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071417458}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -105, y: 38, z: -150}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: -121.48, y: 80, z: -150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 28
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!1 &2096353004
 GameObject:
   m_ObjectHideFlags: 0
