@@ -10,7 +10,6 @@ public class PlayerListObject : MonoBehaviour
 {
     [Header("UI References")] 
     public Text PlayerNameText;
-    public Dropdown teamSelector;
     public Dropdown colorDropdown;
 
     private int ownerId;
