@@ -424,13 +424,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             mapName.gameObject.SetActive(true);
             mapDescription.gameObject.SetActive(true);
         }
-        else
-        {
-            mapImage.gameObject.SetActive(false);
-            mapName.gameObject.SetActive(false);
-            mapDescription.gameObject.SetActive(false);
-        }
-        
+
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }
