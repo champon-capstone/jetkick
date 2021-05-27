@@ -43,6 +43,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private GameObject localPlayer;
 
+    
     private string currentPanel;
 
     #endregion
@@ -66,6 +67,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList.Add(listPanel.name, listPanel);
         mapInfoDic = new Dictionary<string, MapInfo>();
 
+        var generator = new MapInfoGenerator();
+        foreach (MapInfo info in generator.MapList)
+        {
+            mapInfoDic.Add(info.MapName, info);
+        }
 
         roomName.gameObject.SetActive(false);
         mapImage.gameObject.SetActive(false);
@@ -332,13 +338,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
-        mapImage.gameObject.SetActive(true);
-        mapName.gameObject.SetActive(true);
-        mapDescription.gameObject.SetActive(true);
-
-        mapName.text = "Default Map Name";
-        mapDescription.text = "Default Map Description";
-
         roomName.text = roomNameText;
     }
 
@@ -419,6 +418,19 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             uitlButtonPanel.gameObject.SetActive(false);
         }
 
+        if (panelName.Equals(createPanel.name))
+        {
+            mapImage.gameObject.SetActive(true);
+            mapName.gameObject.SetActive(true);
+            mapDescription.gameObject.SetActive(true);
+        }
+        else
+        {
+            mapImage.gameObject.SetActive(false);
+            mapName.gameObject.SetActive(false);
+            mapDescription.gameObject.SetActive(false);
+        }
+        
         panelList[panelName].SetActive(true);
         currentPanel = panelName;
     }
