@@ -43,6 +43,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     private GameObject localPlayer;
 
+    private ColorDropdown dropdown = new ColorDropdown();
 
     private string currentPanel;
 
@@ -191,9 +192,19 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         GameObject entry = Instantiate(playerListObject, playerListPanel.transform);
-
-        entry.GetComponent<PlayerListObject>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
-
+        
+        var listObject = entry.GetComponent<PlayerListObject>();
+        
+        listObject.Initialize(newPlayer.ActorNumber, newPlayer.NickName);
+        listObject.colorDropdown.onValueChanged.AddListener(delegate(int arg0) { UpdateColor(); });
+        
+        var objectName = listObject.PlayerNameText.text;
+        var localName = PhotonNetwork.LocalPlayer.NickName;
+        if (!localName.Equals(objectName))
+        {
+            listObject.UnInteractive();
+        }
+        
         playerListEntries.Add(newPlayer.ActorNumber, entry);
     }
 
@@ -236,6 +247,11 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             playerListEntries = new Dictionary<int, GameObject>();
         }
 
+        if (changedProps.ContainsKey("color"))
+        {
+            dropdown.ChangeColorUI(playerListPanel);
+        }
+        
         if (currentPanel.Equals(roomPanel.name))
         {
             ChangeMasterClientColor();
@@ -276,16 +292,25 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject playerObject = Instantiate(playerListObject, playerListPanel.transform);
-            playerObject.GetComponent<PlayerListObject>().Initialize(p.ActorNumber, p.NickName);
+            var listObject = playerObject.GetComponent<PlayerListObject>();
+            listObject.Initialize(p.ActorNumber, p.NickName);
 
             if (localPlayer == null)
             {
                 if (PhotonNetwork.LocalPlayer.NickName.Equals(p.NickName))
                 {
                     localPlayer = playerObject;
+                    listObject.colorDropdown.onValueChanged.AddListener(delegate(int arg0) { UpdateColor(); });
                 }
             }
 
+            var objectName = listObject.PlayerNameText.text;
+            var localName = PhotonNetwork.LocalPlayer.NickName;
+            if (!localName.Equals(objectName))
+            {
+                listObject.UnInteractive();
+            }
+            
             playerListEntries.Add(p.ActorNumber, playerObject);
         }
     }
@@ -355,17 +380,17 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             {
                 Debug.Log(player.CustomProperties["position"] + " position " + player.NickName);
             }
-
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            {
+                {
+                    "color",
+                    localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
+                }
+            });
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
 
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-        {
-            {
-                "color",
-                localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
-            }
-        });
+        
     }
 
     private void LeaveRoom()
@@ -392,6 +417,17 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     #endregion
 
+    public void UpdateColor()
+    {
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+        {
+            {
+                "color",
+                localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
+            }
+        });
+        
+    }
 
     public void UpdateRoomListView()
     {

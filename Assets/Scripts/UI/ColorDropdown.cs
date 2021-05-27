@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class ColorDropdown
 {
-    public GameObject content;
-
-    public void ChangeColorUI()
+    
+    public void ChangeColorUI(GameObject content)
     {
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             var color = player.CustomProperties["color"];
-            for (int i = 0; i < PhotonNetwork.CountOfPlayersInRooms; i++)
+            if (color == null)
+            {
+                return;
+            }
+            for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
                 var child = content.transform.GetChild(i);
                 var playerListObject = child.GetComponent<PlayerListObject>();
-                if (playerListObject.name.Equals(player.NickName))
+                if (playerListObject.PlayerNameText.text.Equals(player.NickName))
                 {
                     playerListObject.SetPlayerColor(color.ToString());
-                }
-                if (playerListObject.name.Equals(PhotonNetwork.LocalPlayer.NickName))
-                {   
-                    
                 }
             }
         }
