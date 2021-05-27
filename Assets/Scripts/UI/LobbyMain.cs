@@ -356,9 +356,14 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             {
                 Debug.Log(player.CustomProperties["position"]+ " position "+player.NickName);
             }
-            
-            PhotonNetwork.LocalPlayer.CustomProperties.Add("color",
-                localPlayer.GetComponent<PlayerListObject>().GetPlayerColor());
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            {
+                {
+                    "color",
+                    localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
+                }
+            });
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
     }

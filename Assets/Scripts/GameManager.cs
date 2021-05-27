@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        
+        Debug.Log("Leave Game");
         PhotonNetwork.LeaveRoom();
     }
     
