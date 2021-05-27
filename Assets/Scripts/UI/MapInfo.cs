@@ -8,7 +8,14 @@ public class MapInfo
     private string mapName;
     private string mapDescription;
     private Sprite mapImage;
-    
+
+    public MapInfo(string mapName, string mapDescription, Sprite mapImage)
+    {
+        this.mapName = mapName;
+        this.mapDescription = mapDescription;
+        this.mapImage = mapImage;
+    }
+
     public string MapName
     {
         get => mapName;
