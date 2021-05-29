@@ -54,9 +54,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(2, position3);
         positionMap.Add(3, position4);
         testMap = new Dictionary<string, string>();
-        testMap.Add("WHITE", "TestCar3_white");
-        testMap.Add("RED", "TestCar3_red");
-        testMap.Add("GREEN", "TestCar3_green");
+        testMap.Add("WHITE", "TestCar3_white 1");
+        testMap.Add("RED", "TestCar3_red 1");
+        testMap.Add("GREEN", "TestCar3_green 1");
 
     }
     private void Start()
@@ -82,6 +82,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
                 // Material colorMaterial = colorMap[color.ToString()];
                 // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
+            }
+
+            if (testCar == null)
+            {
+                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position, Quaternion.identity, 0);
+                PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
