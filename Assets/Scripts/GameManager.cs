@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
     private Dictionary<String, Material> colorMap;
-
+    private Dictionary<string, string> testMap;
+    
     #region Unity
 
     private void Awake()
@@ -52,6 +53,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(1, position2);
         positionMap.Add(2, position3);
         positionMap.Add(3, position4);
+        testMap = new Dictionary<string, string>();
+        testMap.Add("WHITE", "TestCar3_white");
+        testMap.Add("RED", "TestCar3_red");
+        testMap.Add("GREEN", "TestCar3_green");
+
     }
     private void Start()
     {
@@ -65,16 +71,17 @@ public class GameManager : MonoBehaviourPunCallbacks
             object playerPosition;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("position", out playerPosition);
             int index = (int) playerPosition;
-            testCar = PhotonNetwork.Instantiate(playerPrefab, positionMap[index].transform.position, Quaternion.identity, 0);
-            PhotonNetwork.LocalPlayer.TagObject = testCar;
-
             object color;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
 
+            Debug.Log("Color "+color);
+            
             if (color != null)
             {
-                Material colorMaterial = colorMap[color.ToString()];
-                testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
+                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position, Quaternion.identity, 0);
+                PhotonNetwork.LocalPlayer.TagObject = testCar;
+                // Material colorMaterial = colorMap[color.ToString()];
+                // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
             }
 
             camera.GetComponent<PlayerCamera>().target = testCar.transform;

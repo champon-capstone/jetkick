@@ -10,7 +10,6 @@ public class PlayerListObject : MonoBehaviour
 {
     [Header("UI References")] 
     public Text PlayerNameText;
-    public Dropdown teamSelector;
     public Dropdown colorDropdown;
 
     private int ownerId;
@@ -48,5 +47,10 @@ public class PlayerListObject : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void UnInteractive()
+    {
+        colorDropdown.interactable = false;
     }
 }
