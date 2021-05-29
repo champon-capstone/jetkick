@@ -3997,8 +3997,6 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: TestMap
-      m_Image: {fileID: 0}
     - m_Text: CityMap
       m_Image: {fileID: 0}
     - m_Text: IslandMap
