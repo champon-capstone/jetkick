@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   camera: {fileID: 0}
-  height: 1
+  height: 3
   username: 
   color: {r: 0, g: 0, b: 0, a: 255}
 --- !u!1 &6553101505482833396
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

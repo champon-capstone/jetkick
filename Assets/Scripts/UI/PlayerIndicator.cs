@@ -8,7 +8,7 @@ public class PlayerIndicator : MonoBehaviour
     public Transform target;
     public Transform camera;
 
-    public float height = 1.0f;
+    public float height = 3.0f;
     Vector3 velocity = Vector3.zero;
 
     public string username;
