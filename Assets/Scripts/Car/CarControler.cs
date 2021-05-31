@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 
 /// <summary>
 /// Car Controls
@@ -28,10 +29,10 @@ public class CarControler : MonoBehaviour
     /// Calculated speed of the car.
     /// </summary>
     public float speed = 0;
-
+    private PhotonView _photonView;
     private void Start()
     {
-
+        _photonView = GetComponent<PhotonView>();
         ///create rigidbody
         rbody = this.GetComponent<Rigidbody>();
 
@@ -71,6 +72,10 @@ public class CarControler : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (!_photonView.IsMine)
+        {
+            return;
+        }
         ///get speed of the car
         speed = rbody.velocity.magnitude;
 
