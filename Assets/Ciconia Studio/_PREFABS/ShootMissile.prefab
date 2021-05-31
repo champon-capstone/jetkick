@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7305937756887265470}
   m_Layer: 0
   m_Name: ShootMissile
-  m_TagString: Untagged
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,9 +39,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7305937756887265470}
     m_Modifications:
+    - target: {fileID: 9179897939789099645, guid: 3c3732627990957488f0103cb235584c, type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
     - target: {fileID: 9179912764007997069, guid: 3c3732627990957488f0103cb235584c, type: 3}
       propertyPath: m_Name
       value: realMissileEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179912764007997069, guid: 3c3732627990957488f0103cb235584c, type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180027701885786633, guid: 3c3732627990957488f0103cb235584c, type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180126166567102467, guid: 3c3732627990957488f0103cb235584c, type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180345294213998445, guid: 3c3732627990957488f0103cb235584c, type: 3}
+      propertyPath: m_TagString
+      value: Missile
       objectReference: {fileID: 0}
     - target: {fileID: 9181920373214846799, guid: 3c3732627990957488f0103cb235584c, type: 3}
       propertyPath: m_RootOrder
@@ -109,6 +129,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Missile 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1686616441540202, guid: 05712c4767d1b654c8b99b835dfa22bd, type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
     - target: {fileID: 4739065159926366, guid: 05712c4767d1b654c8b99b835dfa22bd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -152,6 +176,10 @@ PrefabInstance:
     - target: {fileID: 4739065159926366, guid: 05712c4767d1b654c8b99b835dfa22bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 136114230619880930, guid: 05712c4767d1b654c8b99b835dfa22bd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05712c4767d1b654c8b99b835dfa22bd, type: 3}
