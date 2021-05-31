@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             var indicator = Instantiate(this.indicator, Vector3.zero, Quaternion.identity);
             var indicatorScript = indicator.GetComponent<PlayerIndicator>();
-            // indicatorScript.camera = camera.GetComponent<PlayerCamera>().camera;
+            indicatorScript.camera = camera.GetComponent<PlayerCamera>().camera;
             indicatorScript.username = targetPlayer.NickName;
             indicatorScript.color = colorMap[changedProps["indicator"].ToString()];
             foreach (MultiCar car in FindObjectsOfType<MultiCar>())

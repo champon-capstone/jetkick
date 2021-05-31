@@ -6,7 +6,7 @@ public class PlayerCamera : MonoBehaviour
 {
     public Transform target;
     Transform pivot;
-    Transform camera;
+    public Transform camera;
 
     public float distance = 13.0f;
     public float height = 8.0f;
