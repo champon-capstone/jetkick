@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Deadline : MonoBehaviour
 {
-    public Camera camera;
-    public PlayerCamera playerCamera;
     private CameraTest cameraManager;
     // Start is called before the first frame update
     void Start()
@@ -19,11 +17,13 @@ public class Deadline : MonoBehaviour
             GameObject BigExplosion;
             BigExplosion = Resources.Load("BigExplosion") as GameObject;
             Instantiate(BigExplosion, col.gameObject.transform.position, Quaternion.identity);
-            cameraManager.Cardead();
-            
-            Destroy(col.gameObject.transform.parent.gameObject);
-            camera.gameObject.SetActive(true);
-            playerCamera.target = camera.transform;
+            if (cameraManager != null)
+            {
+                Debug.Log("cameraManger test");
+                cameraManager.Carcamera.transform.parent.parent.gameObject.GetComponent<PlayerCamera>().enabled = false;
+                Destroy(cameraManager.Carcamera.transform.parent.parent.gameObject);
+                cameraManager.Cardead();
+            }
         }
     }
 }
