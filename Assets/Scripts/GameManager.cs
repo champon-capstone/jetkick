@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             if (changedProps.ContainsKey(requestCarCount))
             {
+                Debug.Log("Count "+(int)changedProps[requestCarCount]);
                 if ((int)changedProps[requestCarCount] <= 0)
                 {
                     Debug.Log("GameOver");
@@ -191,7 +192,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         PhotonNetwork.LeaveRoom();
     }
-    
+
+    public void RequestCarCountMinus()
+    {
+        var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
+        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, --count}});
+    }
     
     #endregion
 

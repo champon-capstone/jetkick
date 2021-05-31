@@ -8,9 +8,12 @@ public class Deadline : MonoBehaviour
     public Camera camera;
     public PlayerCamera playerCamera;
     private CameraTest cameraManager;
+
+    private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         cameraManager = GetComponent<CameraTest>();
     }
     void OnTriggerEnter(Collider col)
@@ -39,5 +42,6 @@ public class Deadline : MonoBehaviour
             playerCamera.target = camera.transform;
         }
         PhotonNetwork.Destroy(col.transform.parent.gameObject);
+        _gameManager.RequestCarCountMinus();
     }
 }
