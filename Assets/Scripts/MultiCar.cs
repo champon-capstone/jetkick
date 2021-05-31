@@ -9,15 +9,23 @@ public class MultiCar : MonoBehaviour
     
     private PhotonView _photonView;
     private bool isShield;
-    
+
+    private void Awake()
+    {
+        _photonView = PhotonView.Get(this); 
+    }
+
     private void Start()
     {
         isShield = false;
-        _photonView = PhotonView.Get(this);
     }
 
     private void Update()
     {
+        if (!_photonView.IsMine)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             _photonView.RPC("Attacked", RpcTarget.Others);
