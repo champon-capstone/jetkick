@@ -65,8 +65,8 @@ Material:
     - _ShieldRimPower: 7.76
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HitColor: {r: 0.3018868, g: 0.28907084, b: 0.28907084, a: 1}
-    - _HitPosition: {r: -0.02922259, g: 0.35827094, b: -0.3475458, a: 0}
+    - _HitColor: {r: 0.3019608, g: 0.2901961, b: 0.2901961, a: 1}
+    - _HitPosition: {r: -0.18184772, g: 0.086946815, b: -0.45757145, a: 0}
     - _IntersectColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShieldPatternColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
