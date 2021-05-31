@@ -1,24 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Object = System.Object;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
-    [Header("Position")] 
-    public GameObject position1;
+    [Header("Position")] public GameObject position1;
     public GameObject position2;
     public GameObject position3;
     public GameObject position4;
-    
+
     public const string PLAYER_LIVES = "PlayerLives";
     public const string PLAYER_READY = "IsPlayerReady";
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
@@ -28,9 +25,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject defaultCamera;
 
     public GameObject indicator;
-    
+
     public static GameManager instance;
-    
+
     #endregion
 
     private GameObject testCar;
@@ -40,7 +37,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Dictionary<string, string> testMap;
 
     private string requestCarCount = "playerCarCount";
-    
+
     #region Unity
 
     private void Awake()
@@ -61,9 +58,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, 0}, {"init", true}});    
+            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, 0}, {"init", true}});
         }
     }
+
     private void Start()
     {
         instance = this;
@@ -79,7 +77,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             if (color != null)
             {
-                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position, Quaternion.identity, 0);
+                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
+                    Quaternion.identity, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
                 // Material colorMaterial = colorMap[color.ToString()];
                 // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
@@ -87,7 +86,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             if (testCar == null)
             {
-                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position, Quaternion.identity, 0);
+                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position,
+                    Quaternion.identity, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 StartCoroutine("RequestCarCountPlus");
             }
 
+            PhotonNetwork.LocalPlayer.TagObject = testCar;
+            Debug.Log("Tag objectd "+PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
         }
         else
@@ -112,10 +114,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
         }
     }
-    
+
     #endregion
-    
-    
+
+
     #region Photon Callbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
@@ -135,20 +137,20 @@ public class GameManager : MonoBehaviourPunCallbacks
                     break;
                 }
             }
-            
         }
-        
+
         if (targetPlayer.IsMasterClient)
         {
-            if (changedProps.ContainsKey("init") && (bool)changedProps["init"] == true)
+            if (changedProps.ContainsKey("init") && (bool) changedProps["init"] == true)
             {
                 changedProps["init"] = false;
                 return;
             }
+
             if (changedProps.ContainsKey(requestCarCount))
             {
-                Debug.Log("Count "+(int)changedProps[requestCarCount]);
-                if ((int)changedProps[requestCarCount] <= 0)
+                Debug.Log("Count " + (int) changedProps[requestCarCount]);
+                if ((int) changedProps[requestCarCount] <= 0)
                 {
                     Debug.Log("GameOver");
                 }
@@ -156,9 +158,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    /// <summary>
-    /// Called when the local player left the room. We need to load the launcher scene.
-    /// </summary>
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene(0);
@@ -167,19 +166,21 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName); // not seen if you're the player connecting
+        Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName); 
     }
 
     public override void OnPlayerLeftRoom(Player other)
     {
-        var testObject = (GameObject) other.TagObject;
-        Destroy(testObject);
-        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
+        GameObject testObject = (GameObject) other.TagObject;
+        if (testObject != null)
+        {
+            PhotonNetwork.Destroy(testObject);
+        }
+        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); 
     }
 
     #endregion
 
-   
 
     #region Public Methods
 
@@ -187,9 +188,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PlayerManager.LocalPlayerInstance != null)
         {
-            var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
-            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, --count}});
+            RequestCarCountMinus();
         }
+
         PhotonNetwork.LeaveRoom();
     }
 
@@ -198,7 +199,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
         PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, --count}});
     }
-    
+
     #endregion
 
     private IEnumerator RequestCarCountPlus()
@@ -207,5 +208,4 @@ public class GameManager : MonoBehaviourPunCallbacks
         var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
         PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, ++count}});
     }
-    
 }
