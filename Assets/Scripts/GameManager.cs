@@ -6,16 +6,13 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Object = System.Object;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
-    [Header("Car color")]
-    public Material red;
-    public Material green;
-    public Material white;
-    
     [Header("Position")] 
     public GameObject position1;
     public GameObject position2;
@@ -29,6 +26,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public GameObject camera;
     public GameObject defaultCamera;
+
+    public GameObject indicator;
     
     public static GameManager instance;
     
@@ -37,17 +36,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject testCar;
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
-    private Dictionary<String, Material> colorMap;
+    private Dictionary<string, Color> colorMap;
     private Dictionary<string, string> testMap;
+
+    private string requestCarCount = "playerCarCount";
     
     #region Unity
 
     private void Awake()
     {
-        colorMap = new Dictionary<string, Material>();
-        colorMap.Add("GREEN", green);
-        colorMap.Add("RED", red);
-        colorMap.Add("WHITE", white);
+        colorMap = new Dictionary<string, Color>();
+        colorMap.Add("GREEN", Color.green);
+        colorMap.Add("RED", Color.red);
+        colorMap.Add("WHITE", Color.white);
         positionMap = new Dictionary<int, GameObject>();
         positionMap.Add(0, position1);
         positionMap.Add(1, position2);
@@ -58,13 +59,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         testMap.Add("RED", "TestCar3_red 1");
         testMap.Add("GREEN", "TestCar3_green 1");
 
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, 0}, {"init", true}});    
+        }
     }
     private void Start()
     {
         instance = this;
 
-       
-        
         if (PlayerManager.LocalPlayerInstance == null)
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
@@ -74,8 +77,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             object color;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
 
-            Debug.Log("Color "+color);
-            
             if (color != null)
             {
                 testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position, Quaternion.identity, 0);
@@ -93,20 +94,67 @@ public class GameManager : MonoBehaviourPunCallbacks
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
             // Destroy(defaultCamera);
             defaultCamera.gameObject.SetActive(false);
+
+            try
+            {
+                var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
+                PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, ++count}});
+            }
+            catch (NullReferenceException e)
+            {
+                StartCoroutine("RequestCarCountPlus");
+            }
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
         }
         else
         {
             Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
         }
-        
-        
     }
     
     #endregion
     
     
     #region Photon Callbacks
-    
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("indicator"))
+        {
+            var indicator = Instantiate(this.indicator, Vector3.zero, Quaternion.identity);
+            var indicatorScript = indicator.GetComponent<PlayerIndicator>();
+            // indicatorScript.camera = camera.GetComponent<PlayerCamera>().camera;
+            indicatorScript.username = targetPlayer.NickName;
+            indicatorScript.color = colorMap[changedProps["indicator"].ToString()];
+            foreach (MultiCar car in FindObjectsOfType<MultiCar>())
+            {
+                if (car.GetActorNumber() == targetPlayer.ActorNumber)
+                {
+                    indicatorScript.target = car.transform;
+                    break;
+                }
+            }
+            
+        }
+        
+        if (targetPlayer.IsMasterClient)
+        {
+            if (changedProps.ContainsKey("init") && (bool)changedProps["init"] == true)
+            {
+                changedProps["init"] = false;
+                return;
+            }
+            if (changedProps.ContainsKey(requestCarCount))
+            {
+                if ((int)changedProps[requestCarCount] <= 0)
+                {
+                    Debug.Log("GameOver");
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Called when the local player left the room. We need to load the launcher scene.
     /// </summary>
@@ -136,8 +184,21 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        if (PlayerManager.LocalPlayerInstance != null)
+        {
+            var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
+            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, --count}});
+        }
         PhotonNetwork.LeaveRoom();
     }
-    
+
     #endregion
+
+    private IEnumerator RequestCarCountPlus()
+    {
+        yield return new WaitForSeconds(2f);
+        var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount];
+        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, ++count}});
+    }
+    
 }
