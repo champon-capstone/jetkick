@@ -29,6 +29,11 @@ public class Deadline : MonoBehaviour
             }
         }
 
+        if (col == null || col.transform.parent == null)
+        {
+            return;
+        }
+        
         if (PhotonNetwork.LocalPlayer.ActorNumber == col.transform.parent.GetComponent<MultiCar>().GetActorNumber())
         {
             playerCamera.target = camera.transform;
