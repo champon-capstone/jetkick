@@ -112,6 +112,10 @@ public class PlayerCamera : MonoBehaviour
 
     void LateUpdate()
     {
+        if (target == null)
+        {
+            return;
+        }
         if (automatic)
         {
             if (distance > 0) // third person
