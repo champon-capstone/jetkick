@@ -191,7 +191,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         PhotonNetwork.LeaveRoom();
     }
-
+    
+    
     #endregion
 
     private IEnumerator RequestCarCountPlus()
