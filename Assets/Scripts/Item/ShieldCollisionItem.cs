@@ -1,17 +1,16 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldCollision : MonoBehaviour
+public class ShieldCollisionItem : MonoBehaviour
 {
-
     public GameObject car;
     public float DestroyTime = 3.0f;
     void Start()
     {
         Destroy(this.gameObject, DestroyTime);
 
-
+         
     }
 
     void Update()
@@ -23,18 +22,16 @@ public class ShieldCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "Missile")
         {
-            Debug.Log("ì‹¤ë“œ ë¯¸ì‚¬ì¼ ë§‰ìŒ");
+            Debug.Log("½Çµå ¹Ì»çÀÏ ¸·À½");
             Destroy(other.transform.parent.gameObject);
         }
         if (other.gameObject.tag == "Banana")
         {
 
-            Debug.Log("ì‹¤ë“œ ë°”ë‚˜ë‚˜ ë§‰ìŒ");
+            Debug.Log("½Çµå ¹Ù³ª³ª ¸·À½");
             Destroy(other.gameObject);
         }
 
 
     }
-
 }
-

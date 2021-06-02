@@ -1088,7 +1088,7 @@ GameObject:
   - component: {fileID: 33523180756738326}
   - component: {fileID: 23268880034199270}
   - component: {fileID: 135900357308531450}
-  - component: {fileID: 114638851674457474}
+  - component: {fileID: 2134856632495647589}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -1173,7 +1173,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114638851674457474
+--- !u!114 &2134856632495647589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1185,8 +1185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc28c28f94f266c48970cf7bc262cd91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collisionTag:
-  - Laser
 --- !u!1 &1474167791017002
 GameObject:
   m_ObjectHideFlags: 0

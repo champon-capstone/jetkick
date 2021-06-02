@@ -1494,7 +1494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4233494580616524, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9
+      value: -6.41
       objectReference: {fileID: 0}
     - target: {fileID: 4233494580616524, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1532,18 +1532,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114638851674457474, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
-      propertyPath: car
-      value: 
-      objectReference: {fileID: 2061910064}
-    - target: {fileID: 114638851674457474, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
-      propertyPath: DestroyTime
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 135900357308531450, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2134856632495647589, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
+      propertyPath: car
+      value: 
+      objectReference: {fileID: 2061910064}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
 --- !u!1 &1686457146
