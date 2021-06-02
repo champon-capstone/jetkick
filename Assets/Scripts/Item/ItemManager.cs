@@ -13,6 +13,11 @@ public class ItemManager : MonoBehaviour
     public Image banana;
     private bool firstitemEmpty = true;
     private bool seconditemEmpty = true;
+
+    public GameObject MissilePrefab;
+    public GameObject BananaPrefab;
+    public GameObject ShieldPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,25 +31,29 @@ public class ItemManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.LeftControl))
         {
-            if(!firstitemEmpty)
+            //Firstitem not Empty
+            if (!firstitemEmpty)
             {
                 //using item and delete UI
                 if(firstitem.sprite == missile.sprite)//Firstitem == missile
                 {
                     Debug.Log("using missile");
+
                 }
                 else if(firstitem.sprite == shield.sprite)//Firstitem == shield
                 {
                     Debug.Log("using shield");
+
                 }
                 else if(firstitem.sprite == banana.sprite) //Firstitem == banana
                 {
                     Debug.Log("using banana");
-                }
-              
 
-                //change image
-                if(!seconditemEmpty)
+                }
+
+
+                //change item image , seconditem not Empty 
+                if (!seconditemEmpty)
                 {
                     firstitem.sprite = seconditem.sprite;
                     seconditem.sprite = empty.sprite;

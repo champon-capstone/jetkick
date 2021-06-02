@@ -1248,6 +1248,9 @@ MonoBehaviour:
   missile: {fileID: 272071078}
   shield: {fileID: 1474004729}
   banana: {fileID: 1814266856}
+  MissilePrefab: {fileID: 7660289058974857200, guid: a49bb628e016e99429b2113b04386b7a, type: 3}
+  BananaPrefab: {fileID: 3394215605391785801, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
+  ShieldPrefab: {fileID: 1444638899229730, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
 --- !u!1 &1405161518
 GameObject:
   m_ObjectHideFlags: 0
