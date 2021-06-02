@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -37,15 +38,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Dictionary<string, string> testMap;
 
     private string localPlayerColor;
-    
+
     private string mode;
-    
+
     private string requestCarCount = "playerCarCount";
 
     private int totalPlayerCarCount = 0;
-    
-    
-    
+
+
     #region Unity
 
     private void Awake()
@@ -79,9 +79,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance = this;
 
         totalPlayerCarCount = 0;
-        
-        Debug.Log("Total player car count = "+totalPlayerCarCount);
-        
+
+        Debug.Log("Total player car count = " + totalPlayerCarCount);
+
         if (PlayerManager.LocalPlayerInstance == null)
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
@@ -114,8 +114,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             try
             {
-                var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount+localPlayerColor];
-                PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount+localPlayerColor, ++count}});
+                var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount + " " + localPlayerColor];
+                PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable()
+                    {{requestCarCount + " " + localPlayerColor, ++count}});
             }
             catch (NullReferenceException e)
             {
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
 
             PhotonNetwork.LocalPlayer.TagObject = testCar;
-            Debug.Log("Tag objectd "+PhotonNetwork.LocalPlayer.TagObject);
+            Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
         }
         else
@@ -165,7 +166,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
 
             CheckGameOver(changedProps);
-            
         }
     }
 
@@ -180,28 +180,58 @@ public class GameManager : MonoBehaviourPunCallbacks
             ItemMode(info);
         }
     }
-    
+
     private void ItemMode(Hashtable info)
     {
-        
-    }
+        if (!CheckIsContain(info))
+        {
+            return;
+        }
 
-    private void SpeedMode(Hashtable info)
-    {
-        bool isCheck = false;
+        Dictionary<string, int> teamPlayerCount = new Dictionary<string, int>();
+
         foreach (string key in info.Keys)
         {
             if (key.Contains(requestCarCount))
             {
-                isCheck = true;
-                break;
-            } 
+                var tokens = key.Split(' ');
+                teamPlayerCount.Add(tokens[1], (int) info[key]);
+            }
         }
 
-        if (!isCheck)
+        if (IsItemGameOver(teamPlayerCount))
+        {
+            Debug.Log("GameOver");
+        }
+    }
+
+    private bool IsItemGameOver(Dictionary<string, int> teamPlayer)
+    {
+        var list = teamPlayer.Keys.ToArray();
+        foreach (string key in teamPlayer.Keys)
+        {
+            if (teamPlayer[key] > 0)
+            {
+                foreach (string key1 in list)
+                {
+                    if (key != key1 && teamPlayer[key1] > 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void SpeedMode(Hashtable info)
+    {
+        if (!CheckIsContain(info))
         {
             return;
         }
+
         totalPlayerCarCount = 0;
         foreach (string key in info.Keys)
         {
@@ -216,7 +246,22 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.Log("GameOver");
         }
     }
-    
+
+    private bool CheckIsContain(Hashtable info)
+    {
+        bool isCheck = false;
+        foreach (string key in info.Keys)
+        {
+            if (key.Contains(requestCarCount))
+            {
+                isCheck = true;
+                break;
+            }
+        }
+
+        return isCheck;
+    }
+
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene(0);
@@ -225,7 +270,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName); 
+        Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName);
     }
 
     public override void OnPlayerLeftRoom(Player other)
@@ -235,7 +280,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Destroy(testObject);
         }
-        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); 
+
+        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName);
     }
 
     #endregion
@@ -253,14 +299,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void RequestCarCountMinus()
     {
-        var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount+localPlayerColor];
-        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount+localPlayerColor, --count}});
+        var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount + " " + localPlayerColor];
+        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable()
+            {{requestCarCount + " " + localPlayerColor, --count}});
     }
 
     private IEnumerator RequestCarCountPlus()
     {
         yield return new WaitForSeconds(1f);
         // var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount+localPlayerColor];
-        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount+localPlayerColor, 1}});
+        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount + " " + localPlayerColor, 1}});
     }
 }
