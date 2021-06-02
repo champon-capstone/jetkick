@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Normal
+    - m_Text: SPEED
       m_Image: {fileID: 0}
     - m_Text: Item
       m_Image: {fileID: 0}
