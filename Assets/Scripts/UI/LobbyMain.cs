@@ -362,6 +362,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
+        var mode = modeDropdown.options[modeDropdown.value].text;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"mode", mode}});
+        
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
         roomName.text = roomNameText;
