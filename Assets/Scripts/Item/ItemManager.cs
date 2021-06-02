@@ -50,9 +50,10 @@ public class ItemManager : MonoBehaviour
                     seconditem.sprite = empty.sprite;
                     seconditemEmpty = true;
                 }
-                else //seconditemEmpty
+                else//seconditemEmpty
                 {
                     firstitem.sprite = empty.sprite;
+                    firstitemEmpty = true;
                 }
             }
             else//no item 
