@@ -23,13 +23,7 @@ public class Deadline : MonoBehaviour
             GameObject BigExplosion;
             BigExplosion = Resources.Load("BigExplosion") as GameObject;
             Instantiate(BigExplosion, col.gameObject.transform.position, Quaternion.identity);
-            if (cameraManager != null)
-            {
-                Debug.Log("cameraManger test");
-                cameraManager.Carcamera.transform.parent.parent.gameObject.GetComponent<PlayerCamera>().enabled = false;
-                Destroy(cameraManager.Carcamera.transform.parent.parent.gameObject);
-                cameraManager.Cardead();
-            }
+          
         }
 
         if (col == null || col.transform.parent == null)
