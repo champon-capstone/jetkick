@@ -278,6 +278,20 @@ Transform:
   m_Father: {fileID: 5793487666648096630}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1491380117
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5793487666648253268}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300020, guid: 7722de6fbed7f214d8e8c82e36beb790, type: 3}
 --- !u!54 &1491380121
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -294,52 +308,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1491380120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5793487666648253270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b1c59f58a9a5aa40b3717512fc02136, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wheelAxleList:
-  - wheelColliderLeft: {fileID: 214078368}
-    wheelColliderRight: {fileID: 216458726}
-    wheelMeshLeft: {fileID: 5793487666648253264}
-    wheelMeshRight: {fileID: 5793487666648253276}
-    motor: 1
-    steering: 1
-  - wheelColliderLeft: {fileID: 361161889}
-    wheelColliderRight: {fileID: 1212157222}
-    wheelMeshLeft: {fileID: 5793487666648253266}
-    wheelMeshRight: {fileID: 5793487666648253278}
-    motor: 1
-    steering: 0
-  carSettings:
-    mass: 1500
-    drag: 0.05
-    centerOfMass: {x: 0, y: -1, z: 0}
-    motorTorque: 1200
-    steeringAngle: 50
-  speed: 0
---- !u!64 &1491380117
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5793487666648253268}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300020, guid: 7722de6fbed7f214d8e8c82e36beb790, type: 3}
 --- !u!1001 &5793487666648221174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -349,7 +317,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
       propertyPath: m_Name
-      value: Car2
+      value: Car2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
       propertyPath: m_IsActive
@@ -426,25 +394,5 @@ Transform:
 --- !u!1 &5793487666648253268 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
-  m_PrefabInstance: {fileID: 5793487666648221174}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5793487666648253264 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
-  m_PrefabInstance: {fileID: 5793487666648221174}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5793487666648253276 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100010, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
-  m_PrefabInstance: {fileID: 5793487666648221174}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5793487666648253266 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100004, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
-  m_PrefabInstance: {fileID: 5793487666648221174}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5793487666648253278 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100008, guid: a6c1dd22aab11f943a7de21a160938a7, type: 3}
   m_PrefabInstance: {fileID: 5793487666648221174}
   m_PrefabAsset: {fileID: 0}
