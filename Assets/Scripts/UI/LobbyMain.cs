@@ -158,7 +158,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             props = new Hashtable
             {
                 {GameManager.PLAYER_LOADED_LEVEL, false},
-                {"isMaster", true}
+                {"isMaster", true},
+                {"color", "GREEN"}
             };
         }
         else
@@ -166,7 +167,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             props = new Hashtable
             {
                 {GameManager.PLAYER_LOADED_LEVEL, false},
-                {"isMaster", false}
+                {"isMaster", false},
+                {"color", "GREEN"}
             };
         }
 
@@ -360,6 +362,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
+        var mode = modeDropdown.options[modeDropdown.value].text;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"mode", mode}});
+        
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
         roomName.text = roomNameText;
@@ -375,18 +381,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             {
                 list[i].SetCustomProperties(new Hashtable() {{"position", index++}});
             }
-
-            foreach (var player in list)
-            {
-                Debug.Log(player.CustomProperties["position"] + " position " + player.NickName);
-            }
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-            {
-                {
-                    "color",
-                    localPlayer.GetComponent<PlayerListObject>().GetPlayerColor()
-                }
-            });
+            
+            
             PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() {{"Start", true}});
         }
 
@@ -419,6 +415,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
     public void UpdateColor()
     {
+        Debug.Log("Change color");
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
         {
             {

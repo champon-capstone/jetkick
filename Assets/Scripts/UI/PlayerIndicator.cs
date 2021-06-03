@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,8 +32,16 @@ public class PlayerIndicator : MonoBehaviour
     {
         usernameText.text = username;
         usernameText.color = color;
-
-        transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0), ref velocity, 0);
+        try
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, target.position + new Vector3(0, height, 0),
+                ref velocity, 0);
+        }
+        catch (MissingReferenceException e)
+        {
+            Destroy(gameObject);
+        }
+        
         transform.LookAt(camera);
     }
 }

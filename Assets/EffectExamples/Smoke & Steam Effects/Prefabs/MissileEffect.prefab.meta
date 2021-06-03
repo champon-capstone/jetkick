@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/EffectExamples/Smoke & Steam Effects/Prefabs/MissileEffect.prefab.meta
 guid: feae80a3afe2d584991f5e325844487a
+========
+guid: 960416649414f3c47a2a125ef0fbb54b
+>>>>>>>> develop:Assets/Ciconia Studio/_PREFABS/ShootMissile.prefab.meta
+=======
+guid: b399a30facf2bf844b1b176cf10ff472
+>>>>>>> develop
 PrefabImporter:
   externalObjects: {}
   userData: 

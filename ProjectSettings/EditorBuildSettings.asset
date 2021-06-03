@@ -17,10 +17,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map/IslandMap.unity
     guid: 1e63ab42ea52d8e4395ed57d4bbc69ed
-  - enabled: 1
-    path: Assets/Scenes/Map/ObstacleMap.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/Map/ItemtestMap.unity
-    guid: eab9df4d54d6e8046aafb5f45cf850a8
   m_configObjects: {}

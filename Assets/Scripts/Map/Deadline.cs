@@ -7,11 +7,14 @@ public class Deadline : MonoBehaviour
 {
     public Camera camera;
     public PlayerCamera playerCamera;
-    
+    private CameraTest cameraManager;
+
+    private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _gameManager = FindObjectOfType<GameManager>();
+        cameraManager = GetComponent<CameraTest>();
     }
     void OnTriggerEnter(Collider col)
     {
@@ -23,10 +26,16 @@ public class Deadline : MonoBehaviour
           
         }
 
+        if (col == null || col.transform.parent == null)
+        {
+            return;
+        }
+        
         if (PhotonNetwork.LocalPlayer.ActorNumber == col.transform.parent.GetComponent<MultiCar>().GetActorNumber())
         {
             playerCamera.target = camera.transform;
         }
         PhotonNetwork.Destroy(col.transform.parent.gameObject);
+        _gameManager.RequestCarCountMinus();
     }
 }
