@@ -26,9 +26,9 @@ public class FallBlock : MonoBehaviour
 	{
 		if(number == 2.0f)
         {
-			gameObject.transform.GetComponent<Rigidbody>();
+			
 			//Debug.Log("Destroy 2 second");
-			Destroy(gameObject, 2.0f);
+			Destroy(gameObject, 3.0f);
 		}
 		if (warning)
 		{
