@@ -6,7 +6,7 @@ public class PlayerCamera : MonoBehaviour
 {
     public Transform target;
     Transform pivot;
-    Transform camera;
+    public Transform camera;
 
     public float distance = 13.0f;
     public float height = 8.0f;
@@ -112,6 +112,10 @@ public class PlayerCamera : MonoBehaviour
 
     void LateUpdate()
     {
+        if (target == null)
+        {
+            return;
+        }
         if (automatic)
         {
             if (distance > 0) // third person

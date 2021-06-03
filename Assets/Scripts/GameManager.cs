@@ -1,27 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
+using System.Linq;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
-    [Header("Car color")]
-    public Material red;
-    public Material green;
-    public Material white;
-    
-    [Header("Position")] 
-    public GameObject position1;
+    [Header("Position")] public GameObject position1;
     public GameObject position2;
     public GameObject position3;
     public GameObject position4;
-    
+
     public const string PLAYER_LIVES = "PlayerLives";
     public const string PLAYER_READY = "IsPlayerReady";
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
@@ -29,25 +24,36 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public GameObject camera;
     public GameObject defaultCamera;
-    
+
+    public GameObject indicator;
+
     public static GameManager instance;
-    
+
     #endregion
 
     private GameObject testCar;
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
-    private Dictionary<String, Material> colorMap;
+    private Dictionary<string, Color> colorMap;
     private Dictionary<string, string> testMap;
-    
+
+    private string localPlayerColor;
+
+    private string mode;
+
+    private string requestCarCount = "playerCarCount";
+
+    private int totalPlayerCarCount = 0;
+
+
     #region Unity
 
     private void Awake()
     {
-        colorMap = new Dictionary<string, Material>();
-        colorMap.Add("GREEN", green);
-        colorMap.Add("RED", red);
-        colorMap.Add("WHITE", white);
+        colorMap = new Dictionary<string, Color>();
+        colorMap.Add("GREEN", Color.green);
+        colorMap.Add("RED", Color.red);
+        colorMap.Add("WHITE", Color.white);
         positionMap = new Dictionary<int, GameObject>();
         positionMap.Add(0, position1);
         positionMap.Add(1, position2);
@@ -58,13 +64,24 @@ public class GameManager : MonoBehaviourPunCallbacks
         testMap.Add("RED", "TestCar3_red 1");
         testMap.Add("GREEN", "TestCar3_green 1");
 
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, 0}, {"init", true}});
+
+            object modeText;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("mode", out modeText);
+            mode = (string) modeText;
+        }
     }
+
     private void Start()
     {
         instance = this;
 
-       
-        
+        totalPlayerCarCount = 0;
+
+        Debug.Log("Total player car count = " + totalPlayerCarCount);
+
         if (PlayerManager.LocalPlayerInstance == null)
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
@@ -74,11 +91,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             object color;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
 
-            Debug.Log("Color "+color);
-            
             if (color != null)
             {
-                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position, Quaternion.identity, 0);
+                localPlayerColor = color.ToString();
+                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
+                    Quaternion.identity, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
                 // Material colorMaterial = colorMap[color.ToString()];
                 // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
@@ -86,30 +103,163 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             if (testCar == null)
             {
-                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position, Quaternion.identity, 0);
+                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position,
+                    Quaternion.identity, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
             // Destroy(defaultCamera);
             defaultCamera.gameObject.SetActive(false);
+
+            try
+            {
+                var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount + " " + localPlayerColor];
+                PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable()
+                    {{requestCarCount + " " + localPlayerColor, ++count}});
+            }
+            catch (NullReferenceException e)
+            {
+                StartCoroutine("RequestCarCountPlus");
+            }
+
+            PhotonNetwork.LocalPlayer.TagObject = testCar;
+            Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
         }
         else
         {
             Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
         }
-        
-        
     }
-    
+
     #endregion
-    
-    
-    #region Photon Callbacks
-    
-    /// <summary>
-    /// Called when the local player left the room. We need to load the launcher scene.
-    /// </summary>
+
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("indicator"))
+        {
+            var indicator = Instantiate(this.indicator, Vector3.zero, Quaternion.identity);
+            var indicatorScript = indicator.GetComponent<PlayerIndicator>();
+            indicatorScript.camera = camera.GetComponent<PlayerCamera>().camera;
+            indicatorScript.username = targetPlayer.NickName;
+            indicatorScript.color = colorMap[changedProps["indicator"].ToString()];
+            foreach (MultiCar car in FindObjectsOfType<MultiCar>())
+            {
+                if (car.GetActorNumber() == targetPlayer.ActorNumber)
+                {
+                    indicatorScript.target = car.transform;
+                    break;
+                }
+            }
+        }
+
+        if (targetPlayer.IsMasterClient)
+        {
+            if (changedProps.ContainsKey("init") && (bool) changedProps["init"] == true)
+            {
+                changedProps["init"] = false;
+                return;
+            }
+
+            CheckGameOver(changedProps);
+        }
+    }
+
+    private void CheckGameOver(Hashtable info)
+    {
+        if (mode.Equals("SPEED"))
+        {
+            SpeedMode(info);
+        }
+        else
+        {
+            ItemMode(info);
+        }
+    }
+
+    private void ItemMode(Hashtable info)
+    {
+        if (!CheckIsContain(info))
+        {
+            return;
+        }
+
+        Dictionary<string, int> teamPlayerCount = new Dictionary<string, int>();
+
+        foreach (string key in info.Keys)
+        {
+            if (key.Contains(requestCarCount))
+            {
+                var tokens = key.Split(' ');
+                teamPlayerCount.Add(tokens[1], (int) info[key]);
+            }
+        }
+
+        if (IsItemGameOver(teamPlayerCount))
+        {
+            Debug.Log("GameOver");
+        }
+    }
+
+    private bool IsItemGameOver(Dictionary<string, int> teamPlayer)
+    {
+        var list = teamPlayer.Keys.ToArray();
+        foreach (string key in teamPlayer.Keys)
+        {
+            if (teamPlayer[key] > 0)
+            {
+                foreach (string key1 in list)
+                {
+                    if (key != key1 && teamPlayer[key1] > 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void SpeedMode(Hashtable info)
+    {
+        if (!CheckIsContain(info))
+        {
+            return;
+        }
+
+        totalPlayerCarCount = 0;
+        foreach (string key in info.Keys)
+        {
+            if (key.Contains(requestCarCount))
+            {
+                totalPlayerCarCount += (int) info[key];
+            }
+        }
+
+        if (totalPlayerCarCount <= 0)
+        {
+            Debug.Log("GameOver");
+        }
+    }
+
+    private bool CheckIsContain(Hashtable info)
+    {
+        bool isCheck = false;
+        foreach (string key in info.Keys)
+        {
+            if (key.Contains(requestCarCount))
+            {
+                isCheck = true;
+                break;
+            }
+        }
+
+        return isCheck;
+    }
+
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene(0);
@@ -118,26 +268,43 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName); // not seen if you're the player connecting
+        Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName);
     }
 
     public override void OnPlayerLeftRoom(Player other)
     {
-        var testObject = (GameObject) other.TagObject;
-        Destroy(testObject);
-        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
+        GameObject testObject = (GameObject) other.TagObject;
+        if (testObject != null)
+        {
+            PhotonNetwork.Destroy(testObject);
+        }
+
+        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName);
     }
 
-    #endregion
 
-   
-
-    #region Public Methods
 
     public void LeaveRoom()
     {
+        if (PlayerManager.LocalPlayerInstance != null)
+        {
+            RequestCarCountMinus();
+        }
+
         PhotonNetwork.LeaveRoom();
     }
-    
-    #endregion
+
+    public void RequestCarCountMinus()
+    {
+        var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount + " " + localPlayerColor];
+        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable()
+            {{requestCarCount + " " + localPlayerColor, --count}});
+    }
+
+    private IEnumerator RequestCarCountPlus()
+    {
+        yield return new WaitForSeconds(1f);
+        // var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount+localPlayerColor];
+        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount + " " + localPlayerColor, 1}});
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 
 /// <summary>
 /// Car Controls
@@ -28,10 +29,10 @@ public class CarControler : MonoBehaviour
     /// Calculated speed of the car.
     /// </summary>
     public float speed = 0;
-
+    private PhotonView _photonView;
     private void Start()
     {
-
+        _photonView = GetComponent<PhotonView>();
         ///create rigidbody
         rbody = this.GetComponent<Rigidbody>();
 
@@ -71,6 +72,10 @@ public class CarControler : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (!_photonView.IsMine)
+        {
+            return;
+        }
         ///get speed of the car
         speed = rbody.velocity.magnitude;
 
@@ -114,27 +119,6 @@ public class CarControler : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-       
-        if (other.gameObject.tag == "Missile")
-        {
-            Debug.Log("차와 미사일과 충돌");
-            GameObject BigExplosion;
-            BigExplosion = Resources.Load("BigExplosion") as GameObject;
-            Instantiate(BigExplosion, other.gameObject.transform.position, Quaternion.identity);
-            rbody.AddForce(Vector3.up * 1000000.0f);
-            Destroy(other.transform.parent.gameObject);
-        }
-
-        if (other.gameObject.tag == "Banana")
-        {
-
-            rbody.AddTorque(Vector3.right * 1000000.0f);
-
-            Debug.Log("차와 바나나충돌");
-            Destroy(other.gameObject);
-        }
-    }
+    
 
 }
