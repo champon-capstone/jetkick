@@ -1,12 +1,21 @@
+using System;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 
 public class MultiCar : MonoBehaviour
 {
+    public float power = 10f;
+
+    public GameObject missilePosition;
+    public GameObject bananaPosition;
+    public GameObject shieldPosition;
+    
     private PhotonView _photonView;
-    private bool isShield;
     private Rigidbody rbody;
 
+    private bool isShield = false;
+    
     private void Awake()
     {
         _photonView = PhotonView.Get(this);
@@ -14,7 +23,6 @@ public class MultiCar : MonoBehaviour
 
     private void Start()
     {
-        isShield = false;
         rbody = this.GetComponent<Rigidbody>();
     }
 
@@ -27,62 +35,98 @@ public class MultiCar : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _photonView.RPC("Attacked", RpcTarget.Others);
+            MissileAttack();
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            isShield = true;
+            ActiveShield();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Missile")
+        if (isShield)
         {
-            _photonView.RPC("MissileAttacked", PhotonNetwork.LocalPlayer, other.transform.position);
-            PhotonNetwork.Destroy(other.transform.parent.gameObject);
+            return;
+        }
+        
+        if (other.gameObject.CompareTag("Missile"))
+        {
+            _photonView.RPC("MissileAttacked", PhotonNetwork.LocalPlayer, other);
+            // PhotonNetwork.Destroy(other.gameObject);
         }
 
-        if (other.gameObject.tag == "Banana")
+        if (other.gameObject.CompareTag("Banana"))
         {
-            _photonView.RPC("BananaAttacked", PhotonNetwork.LocalPlayer);
-            PhotonNetwork.Destroy(other.gameObject);
+            _photonView.RPC("BananaAttacked", PhotonNetwork.LocalPlayer, other);
+            // PhotonNetwork.Destroy(other.gameObject);
         }
+        
+        // if (other.CompareTag("Player"))
+        // {
+        //    _photonView.RPC("BallAttacked", PhotonNetwork.LocalPlayer);
+        // }
     }
+
+
 
     #region Item Effect
 
     [PunRPC]
-    private void Attacked(PhotonMessageInfo info)
-    {
-        Debug.Log("Shield " + isShield);
-        if (isShield)
-        {
-            Debug.Log("Shield in " + info.Sender.NickName + info.photonView);
-            return;
-        }
-
-        GetComponent<Rigidbody>().AddForce(Vector3.forward * 3000);
-        Debug.Log("Attacked Sender  " + info.Sender.NickName + "Receiver " + PhotonNetwork.LocalPlayer.NickName);
-    }
-
-    [PunRPC]
-    private void BananaAttacked()
+    private void BananaAttacked(Collider info)
     {
         rbody.AddTorque(Vector3.right * 1000000.0f);
+        PhotonNetwork.Destroy(info.gameObject);
     }
 
     [PunRPC]
-    private void MissileAttacked(Vector3 position)
+    private void MissileAttacked(Collider info)
     {
         Debug.Log("차와 미사일과 충돌");
-        PhotonNetwork.Instantiate("BigExplosion", position, Quaternion.identity);
+        Debug.Log("Is shield "+isShield);
+        if (isShield)
+        {
+            return;
+        }
+        PhotonNetwork.Instantiate("BigExplosion", info.transform.position, Quaternion.identity);
         rbody.AddForce(Vector3.up * 1000000.0f);
+        PhotonNetwork.Destroy(info.gameObject);
     }
+
+    [PunRPC]
+    private void BallAttacked(Collider other)
+    {
+        PhotonNetwork.Instantiate("BigExplosion", other.gameObject.transform.position, Quaternion.identity);
+        other.attachedRigidbody.AddForce(Vector3.left * power * 100000.0f);
+        PhotonNetwork.Destroy(gameObject);
+    }
+    
     #endregion
     
-   
+    public void MissileAttack()
+    {
+        var missile = PhotonNetwork.Instantiate("missile", missilePosition.transform.position, missilePosition.transform.rotation);
+    }
+
+    public void SpawnBanana()
+    {
+        var banana = PhotonNetwork.Instantiate("banana", bananaPosition.transform.position, bananaPosition.transform.rotation);
+    }
+
+    public void ActiveShield()
+    {
+        var shield = PhotonNetwork.Instantiate("shield", shieldPosition.transform.position, shieldPosition.transform.rotation);
+        shield.GetComponent<ShieldCollisionitem>().car = gameObject;
+        isShield = true;
+        StartCoroutine("TurnOffShield");
+    }
+
+    private IEnumerator TurnOffShield()
+    {
+        yield return new WaitForSeconds(3f);
+        isShield = false;
+    }
 
     public int GetActorNumber()
     {

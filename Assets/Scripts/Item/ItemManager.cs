@@ -11,13 +11,13 @@ public class ItemManager : MonoBehaviour
     public Image missile;
     public Image shield;
     public Image banana;
+
     private bool firstitemEmpty = true;
     private bool seconditemEmpty = true;
 
-    public GameObject MissilePrefab;
-    public GameObject BananaPrefab;
-    public GameObject ShieldPrefab;
-
+    private MultiCar multiCar;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,17 +38,17 @@ public class ItemManager : MonoBehaviour
                 if(firstitem.sprite == missile.sprite)//Firstitem == missile
                 {
                     Debug.Log("using missile");
-
+                    multiCar.MissileAttack();
                 }
                 else if(firstitem.sprite == shield.sprite)//Firstitem == shield
                 {
                     Debug.Log("using shield");
-
+                    multiCar.ActiveShield();
                 }
                 else if(firstitem.sprite == banana.sprite) //Firstitem == banana
                 {
                     Debug.Log("using banana");
-
+                    multiCar.SpawnBanana();
                 }
 
 
@@ -114,5 +114,10 @@ public class ItemManager : MonoBehaviour
         {
             Debug.Log("item full");
         }
+    }
+
+    public void SetMultiCat(MultiCar multiCar)
+    {
+        this.multiCar = multiCar;
     }
 }

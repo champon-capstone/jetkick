@@ -7,7 +7,6 @@ public class Deadline : MonoBehaviour
 {
     public Camera camera;
     public PlayerCamera playerCamera;
-  
 
     private GameManager _gameManager;
     // Start is called before the first frame update
