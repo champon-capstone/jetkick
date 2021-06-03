@@ -16,17 +16,18 @@ public class FallBlock : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
 	{
-		foreach (ContactPoint contact in collision.contacts)
+		
+	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+		if (other.gameObject.tag == "Player")
 		{
-			renderer = gameObject.GetComponent<Renderer>();
-			if (collision.gameObject.tag == "Player")
-			{
-				FallWarning();
-			}
+			FallWarning();
 		}
 	}
 
-	public void FallWarning()
+    public void FallWarning()
 	{
 		if(number == 2.0f)
         {
