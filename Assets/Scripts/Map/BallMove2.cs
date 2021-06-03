@@ -20,19 +20,5 @@ public class BallMove2 : MonoBehaviour
         transform.Translate(Vector3.right * speed * Time.deltaTime * 5f);
         Destroy(gameObject, destroyTime);
     }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.tag == "Player")
-        {
-
-            rb = collision.GetComponentInParent<Rigidbody>();
-
-            GameObject BigExplosion;
-            BigExplosion = Resources.Load("BigExplosion") as GameObject;
-            Instantiate(BigExplosion, collision.gameObject.transform.position, Quaternion.identity);
-            collision.attachedRigidbody.AddForce(Vector3.right * power * 100000.0f);
-            Destroy(gameObject);
-        }
-    }
+    
 }

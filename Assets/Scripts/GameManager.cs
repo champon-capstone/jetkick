@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(2, position3);
         positionMap.Add(3, position4);
         testMap = new Dictionary<string, string>();
-        testMap.Add("WHITE", "TestCar3_white 1");
-        testMap.Add("RED", "TestCar3_red 1");
-        testMap.Add("GREEN", "TestCar3_green 1");
+        testMap.Add("WHITE", "TestCar3_white");
+        testMap.Add("RED", "TestCar3_red");
+        testMap.Add("GREEN", "TestCar3_green");
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 localPlayerColor = color.ToString();
                 testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
-                    Quaternion.identity, 0);
+                    positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
                 // Material colorMaterial = colorMap[color.ToString()];
                 // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (testCar == null)
             {
                 testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position,
-                    Quaternion.identity, 0);
+                    positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
@@ -126,6 +126,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.TagObject = testCar;
             Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
+
+
+            var itemManager = FindObjectOfType<ItemManager>();
+            itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
+
         }
         else
         {
