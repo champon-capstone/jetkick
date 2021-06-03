@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class BallShooter : MonoBehaviour
@@ -25,16 +26,15 @@ public class BallShooter : MonoBehaviour
         pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         if (rnd == 0)
         {
-            Instantiate(Rball, pos, transform.rotation);
-            
+            PhotonNetwork.Instantiate("Rball", transform.position, transform.rotation);
         }
         else if(rnd == 1)
         {
-            Instantiate(Yball, pos, transform.rotation);
+            PhotonNetwork.Instantiate("Yball", transform.position, transform.rotation);
         }
         else
         {
-            Instantiate(Bball, pos, transform.rotation);
+            PhotonNetwork.Instantiate("Bball", transform.position, transform.rotation);
         }
     }
 }

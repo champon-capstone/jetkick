@@ -11,6 +11,8 @@ public class ItemController : MonoBehaviour
     private float spinspeed = 20.0f;
     Renderer renderer;
 
+    
+    
     // Start is called before the first frame update
     void Start()
     {

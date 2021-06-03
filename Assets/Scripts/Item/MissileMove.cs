@@ -9,7 +9,8 @@ public class MissileMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(this.gameObject.transform.parent.gameObject, DestroyTime);
+        // Destroy(this.gameObject.transform.parent.gameObject, DestroyTime);
+        Destroy(gameObject, DestroyTime);
     }
 
     // Update is called once per frame

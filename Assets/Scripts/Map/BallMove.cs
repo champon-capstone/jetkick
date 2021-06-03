@@ -18,22 +18,12 @@ public class BallMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime * 5f);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime * 5f);
         Destroy(gameObject, destroyTime);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "Player")
-        {
-           
-            rb = collision.GetComponentInParent<Rigidbody>();
-            
-            GameObject BigExplosion;
-            BigExplosion = Resources.Load("BigExplosion") as GameObject;
-            Instantiate(BigExplosion, collision.gameObject.transform.position, Quaternion.identity);
-            collision.attachedRigidbody.AddForce(Vector3.left * power * 100000.0f);
-            Destroy(gameObject);
-        }
+        
     }
 }
