@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(2, position3);
         positionMap.Add(3, position4);
         testMap = new Dictionary<string, string>();
-        testMap.Add("WHITE", "TestCar3_white 1");
-        testMap.Add("RED", "TestCar3_red 1");
-        testMap.Add("GREEN", "TestCar3_green 1");
+        testMap.Add("WHITE", "TestCar3_white");
+        testMap.Add("RED", "TestCar3_red");
+        testMap.Add("GREEN", "TestCar3_green");
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
