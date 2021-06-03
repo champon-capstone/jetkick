@@ -28,6 +28,8 @@ public class Chat : MonoBehaviour, IChatClientListener
         userName = PhotonNetwork.LocalPlayer.NickName;
         currentChannel = lobbyChanel;
         ConnectToChatServer();
+        chatInputField.Select();
+        chatInputField.ActivateInputField();
     }
 
     private void Update()
@@ -53,6 +55,8 @@ public class Chat : MonoBehaviour, IChatClientListener
         var message = chatInputField.text;
         chatInputField.text = "";
         chatClient.PublishMessage(currentChannel, message);
+        chatInputField.Select();
+        chatInputField.ActivateInputField();
     }
 
     #endregion

@@ -136,8 +136,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region Photon Callbacks
-
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         if (changedProps.ContainsKey("indicator"))
@@ -284,7 +282,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName);
     }
 
-    #endregion
 
 
     public void LeaveRoom()
