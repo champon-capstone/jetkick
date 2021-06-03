@@ -35,7 +35,7 @@ public class MultiCar : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            SpawnBanana();
+            MissileAttack();
         }
 
         if (Input.GetMouseButtonDown(1))
