@@ -14,25 +14,21 @@ public class FallBlock : MonoBehaviour
 		renderer = this.GetComponent<Renderer>();
     }
 
-    void OnCollisionEnter(Collision collision)
-	{
-		foreach (ContactPoint contact in collision.contacts)
+    private void OnTriggerEnter(Collider other)
+    {
+		if (other.gameObject.tag == "Player")
 		{
-			renderer = gameObject.GetComponent<Renderer>();
-			if (collision.gameObject.tag == "Player")
-			{
-				FallWarning();
-			}
+			FallWarning();
 		}
 	}
 
-	public void FallWarning()
+    public void FallWarning()
 	{
 		if(number == 2.0f)
         {
-			gameObject.transform.GetComponent<Rigidbody>();
+			
 			//Debug.Log("Destroy 2 second");
-			Destroy(gameObject, 2.0f);
+			Destroy(gameObject, 3.0f);
 		}
 		if (warning)
 		{
