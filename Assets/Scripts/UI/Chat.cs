@@ -29,7 +29,6 @@ public class Chat : MonoBehaviour, IChatClientListener
         currentChannel = lobbyChanel;
         ConnectToChatServer();
         chatInputField.Select();
-        chatInputField.ActivateInputField();
     }
 
     private void Update()
@@ -56,7 +55,6 @@ public class Chat : MonoBehaviour, IChatClientListener
         chatInputField.text = "";
         chatClient.PublishMessage(currentChannel, message);
         chatInputField.Select();
-        chatInputField.ActivateInputField();
     }
 
     #endregion
