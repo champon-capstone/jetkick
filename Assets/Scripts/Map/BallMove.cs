@@ -24,16 +24,6 @@ public class BallMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "Player")
-        {
-           
-            rb = collision.GetComponentInParent<Rigidbody>();
-            
-            GameObject BigExplosion;
-            BigExplosion = Resources.Load("BigExplosion") as GameObject;
-            Instantiate(BigExplosion, collision.gameObject.transform.position, Quaternion.identity);
-            collision.attachedRigidbody.AddForce(Vector3.left * power * 100000.0f);
-            Destroy(gameObject);
-        }
+        
     }
 }

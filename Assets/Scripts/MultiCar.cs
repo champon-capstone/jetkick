@@ -1,8 +1,11 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
 public class MultiCar : MonoBehaviour
 {
+    public float power = 10f;
+    
     private PhotonView _photonView;
     private bool isShield;
     private Rigidbody rbody;
@@ -49,7 +52,14 @@ public class MultiCar : MonoBehaviour
             _photonView.RPC("BananaAttacked", PhotonNetwork.LocalPlayer);
             PhotonNetwork.Destroy(other.gameObject);
         }
+        
+        if (other.tag == "Player")
+        {
+           _photonView.RPC("BallAttacked", PhotonNetwork.LocalPlayer);
+        }
     }
+
+
 
     #region Item Effect
 
@@ -80,6 +90,15 @@ public class MultiCar : MonoBehaviour
         PhotonNetwork.Instantiate("BigExplosion", position, Quaternion.identity);
         rbody.AddForce(Vector3.up * 1000000.0f);
     }
+
+    [PunRPC]
+    private void BallAttacked(Collider other)
+    {
+        PhotonNetwork.Instantiate("BigExplosion", other.gameObject.transform.position, Quaternion.identity);
+        other.attachedRigidbody.AddForce(Vector3.left * power * 100000.0f);
+        PhotonNetwork.Destroy(gameObject);
+    }
+    
     #endregion
     
    
