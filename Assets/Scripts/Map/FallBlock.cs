@@ -4,78 +4,86 @@ using UnityEngine;
 
 public class FallBlock : MonoBehaviour
 {
-    public float fallTime = 2.5f;
+    
 	public bool warning = false;
 	private float number = 0.0f;
 	Renderer renderer;
-    // Start is called before the first frame update
-	void OnCollisionEnter(Collision collision)
+
+    private void Start()
+    {
+		renderer = this.GetComponent<Renderer>();
+    }
+
+    void OnCollisionEnter(Collision collision)
 	{
 		foreach (ContactPoint contact in collision.contacts)
 		{
 			renderer = gameObject.GetComponent<Renderer>();
 			if (collision.gameObject.tag == "Player")
 			{
-				StartCoroutine(Fall(fallTime));
+				FallWarning();
 			}
 		}
 	}
 
-	IEnumerator Fall(float time)
+	public void FallWarning()
 	{
-		if(number == 4.0f)
+		if(number == 2.0f)
         {
-			Debug.Log("Destroy");
-			Destroy(gameObject);
+			gameObject.transform.GetComponent<Rigidbody>();
+			//Debug.Log("Destroy 2 second");
+			Destroy(gameObject, 2.0f);
 		}
 		if (warning)
 		{
 			StartCoroutine(FadeOut());
-			Debug.Log("warningt");
-			yield return new WaitForSeconds(time);
+			//Debug.Log("warning fadeout");
+			
 			warning = false;
 			number++;
-			StartCoroutine(Fall(fallTime));
+			
 		}
 		else
         {
 			StartCoroutine(FadeIn());
-			Debug.Log("warningf");
-			yield return new WaitForSeconds(time);
+			//Debug.Log("warning fadein");
 			warning = true;
 			number++;
-			StartCoroutine(Fall(fallTime));
 		}
 		
 	}
 
 	IEnumerator FadeOut()
 	{
-		Debug.Log("fadeout");
-		float i = 100.0f;
+		//Debug.Log("fadeout");
+		int i = 10;
 		while (i > 0)
 		{
-			i -= 0.1f;
+			i -= 1;
 			float f = i / 10.0f;
 			Color c = renderer.material.color;
 			c.a = f;
 			renderer.material.color = c;
-			yield return new WaitForSeconds(0.2f);
+			yield return new WaitForSeconds(0.02f);
 		}
+		warning = false;
+		FallWarning();
 	}
 
 	IEnumerator FadeIn()
 	{
-		Debug.Log("fadein");
-		float i = 0f;
-		while (i < 100)
+		//Debug.Log("fadein");
+		int i = 0;
+		while (i < 10)
 		{
-			i += 0.1f;
+			i += 1;
 			float f = i / 10.0f;
 			Color c = renderer.material.color;
 			c.a = f;
 			renderer.material.color = c;
-			yield return new WaitForSeconds(0.2f);
+			yield return new WaitForSeconds(0.02f);
 		}
+		warning = true;
+		FallWarning();
 	}
 }
