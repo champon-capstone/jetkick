@@ -48,23 +48,19 @@ public class MultiCar : MonoBehaviour
     {
         if (isShield)
         {
-            if (!other.CompareTag("Shield"))
-            {
-                PhotonNetwork.Destroy(other.gameObject);
-            }
             return;
         }
         
         if (other.gameObject.CompareTag("Missile"))
         {
-            _photonView.RPC("MissileAttacked", PhotonNetwork.LocalPlayer, other.transform.position);
-            PhotonNetwork.Destroy(other.gameObject);
+            _photonView.RPC("MissileAttacked", PhotonNetwork.LocalPlayer, other);
+            // PhotonNetwork.Destroy(other.gameObject);
         }
 
         if (other.gameObject.CompareTag("Banana"))
         {
-            _photonView.RPC("BananaAttacked", PhotonNetwork.LocalPlayer);
-            PhotonNetwork.Destroy(other.gameObject);
+            _photonView.RPC("BananaAttacked", PhotonNetwork.LocalPlayer, other);
+            // PhotonNetwork.Destroy(other.gameObject);
         }
         
         // if (other.CompareTag("Player"))
@@ -78,17 +74,24 @@ public class MultiCar : MonoBehaviour
     #region Item Effect
 
     [PunRPC]
-    private void BananaAttacked()
+    private void BananaAttacked(Collider info)
     {
         rbody.AddTorque(Vector3.right * 1000000.0f);
+        PhotonNetwork.Destroy(info.gameObject);
     }
 
     [PunRPC]
-    private void MissileAttacked(Vector3 position)
+    private void MissileAttacked(Collider info)
     {
         Debug.Log("차와 미사일과 충돌");
-        PhotonNetwork.Instantiate("BigExplosion", position, Quaternion.identity);
+        Debug.Log("Is shield "+isShield);
+        if (isShield)
+        {
+            return;
+        }
+        PhotonNetwork.Instantiate("BigExplosion", info.transform.position, Quaternion.identity);
         rbody.AddForce(Vector3.up * 1000000.0f);
+        PhotonNetwork.Destroy(info.gameObject);
     }
 
     [PunRPC]
