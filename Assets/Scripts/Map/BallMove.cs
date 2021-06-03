@@ -18,7 +18,7 @@ public class BallMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime * 5f);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime * 5f);
         Destroy(gameObject, destroyTime);
     }
 

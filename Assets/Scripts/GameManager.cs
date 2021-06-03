@@ -126,6 +126,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.TagObject = testCar;
             Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
+
+
+            var itemManager = FindObjectOfType<ItemManager>();
+            itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
+
         }
         else
         {

@@ -72,6 +72,11 @@ public class CarControler : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (_photonView == null)
+        {
+            return;
+        }
+        
         if (!_photonView.IsMine)
         {
             return;
