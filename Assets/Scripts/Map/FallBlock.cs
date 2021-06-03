@@ -14,11 +14,6 @@ public class FallBlock : MonoBehaviour
 		renderer = this.GetComponent<Renderer>();
     }
 
-    void OnCollisionEnter(Collision collision)
-	{
-		
-	}
-
     private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Player")

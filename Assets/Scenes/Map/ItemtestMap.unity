@@ -1037,6 +1037,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5999723834763089565, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
 --- !u!4 &1043919648 stripped
@@ -1538,8 +1542,28 @@ PrefabInstance:
       propertyPath: car
       value: 
       objectReference: {fileID: 2061910064}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2134856632495647589, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
+--- !u!1 &1684745369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1444638899229730, guid: 18ed84bba105fb0419e3b2b89496b375, type: 3}
+  m_PrefabInstance: {fileID: 1684745368}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1684745370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684745369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f289f9144199be14c84a656cac22c15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 2061910064}
+  DestroyTime: 3
 --- !u!1 &1814266854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,6 +1698,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5999723834763089565, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
 --- !u!4 &1867912403 stripped
@@ -1743,6 +1771,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3394215605913877327, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999723834763089565, guid: 2915cc54f4b9cf9498590fe5f551d55b, type: 3}
+      propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
