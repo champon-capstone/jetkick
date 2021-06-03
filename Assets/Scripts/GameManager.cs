@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 localPlayerColor = color.ToString();
                 testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
-                    Quaternion.identity, 0);
+                    positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
                 // Material colorMaterial = colorMap[color.ToString()];
                 // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (testCar == null)
             {
                 testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position,
-                    Quaternion.identity, 0);
+                    positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
