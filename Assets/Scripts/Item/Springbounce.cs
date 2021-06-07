@@ -5,7 +5,7 @@ using UnityEngine;
 public class Springbounce : MonoBehaviour
 {
 	// Start is called before the first frame update
-	public float force = 10f; //Force 10000f
+	public float force = 1000f; //Force 10000f
 	
 	private Vector3 hitDir;
 	private Rigidbody rb;
@@ -15,7 +15,7 @@ public class Springbounce : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            Debug.Log("Æ¨±â´ÂÁß");
+            //Debug.Log("Æ¨±â´ÂÁß");
 			other.attachedRigidbody.AddForce(new Vector3(0.0f,force,0.0f) * 100.0f);
         }
     }
