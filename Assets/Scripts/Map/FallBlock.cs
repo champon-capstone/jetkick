@@ -24,7 +24,7 @@ public class FallBlock : MonoBehaviour
 
     public void FallWarning()
 	{
-		if(number == 8.0f)
+		if(number == 16.0f)
         {
 
 			//Debug.Log("Destroy 2 second");
