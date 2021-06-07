@@ -23,11 +23,16 @@ public class MagneticField : MonoBehaviour
     {
         if (time > interval && timecountdown.EndTime())
         {
-            Debug.Log("자기장 축소들어왔냐??");
+            //Debug.Log("자기장 축소들어왔냐??");
+            
             transform.localScale -= new Vector3(delta, delta, delta);
             time = 0.0f;
+            if(transform.localScale.x <= 0.0f && transform.localScale.y <= 0.0f && transform.localScale.z <= 0.0f)
+            {
+                Destroy(gameObject);
+            }
             // (ring out)player destroy everyone 
-
+            //if (Vector3.Distance(this.tranform.position,everyonecar.tranform.position) > )using 
         }
         time += Time.deltaTime;
     }

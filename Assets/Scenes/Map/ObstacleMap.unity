@@ -9257,8 +9257,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeCount: {fileID: 1863565429}
-  TimeCost: 10
-  PlusTimeCost: 10
+  TimeCost: 5
+  PlusTimeCost: 5
   MagneticField: {fileID: 4314151675152704227, guid: 331d43701e5baf94ab6ea259602f3dab, type: 3}
   SpawnMagnetic: {fileID: 1257300083}
 --- !u!1 &1863565427
