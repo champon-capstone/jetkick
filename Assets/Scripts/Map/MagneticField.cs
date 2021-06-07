@@ -37,6 +37,10 @@ public class MagneticField : MonoBehaviour
             if (Vector3.Distance(gameObject.transform.position, TargetCar.transform.position) > transform.localScale.x * 0.5 )
             {
                 Debug.Log("ÀÚµ¿Â÷ Æø¹ß!!!!!");
+                GameObject BigExplosion;
+                BigExplosion = Resources.Load("BigExplosion") as GameObject;
+                Instantiate(BigExplosion, TargetCar.transform.position, Quaternion.identity);
+                Destroy(TargetCar.gameObject);
             }
         }
         time += Time.deltaTime;
