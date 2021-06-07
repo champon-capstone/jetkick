@@ -75,9 +75,9 @@ public class CarControler : MonoBehaviour
        /* if (_photonView == null)
         {
             return;
-        }*/
+        }
         
-        /*if (!_photonView.IsMine)
+        if (!_photonView.IsMine)
         {
             return;
         }*/
