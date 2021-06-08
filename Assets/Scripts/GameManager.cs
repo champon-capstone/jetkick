@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public GameObject indicator;
 
+    public GameObject winnerPanel;
+    public GameObject winnerContent;
+    public GameObject winnerItem;
+
     public static GameManager instance;
 
     #endregion
@@ -37,11 +41,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Dictionary<string, Color> colorMap;
     private Dictionary<string, string> testMap;
 
+    private Dictionary<string, int> teamPlayerCount;
+
+
+    private PhotonView _photonView;
+
     private string localPlayerColor;
 
     private string mode;
 
-    private string requestCarCount = "playerCarCount";
+    private string requestAdd = "add";
+    private string requestDelete = "die";
 
     private int totalPlayerCarCount = 0;
 
@@ -50,6 +60,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        teamPlayerCount = new Dictionary<string, int>();
+        _photonView = PhotonView.Get(this);
         colorMap = new Dictionary<string, Color>();
         colorMap.Add("GREEN", Color.green);
         colorMap.Add("RED", Color.red);
@@ -66,12 +78,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount, 0}, {"init", true}});
+            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{"init", true}});
 
             object modeText;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("mode", out modeText);
             mode = (string) modeText;
         }
+
+        winnerPanel.SetActive(false);
     }
 
     private void Start()
@@ -112,29 +126,45 @@ public class GameManager : MonoBehaviourPunCallbacks
             // Destroy(defaultCamera);
             defaultCamera.gameObject.SetActive(false);
 
-            try
-            {
-                var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount + " " + localPlayerColor];
-                PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable()
-                    {{requestCarCount + " " + localPlayerColor, ++count}});
-            }
-            catch (NullReferenceException e)
-            {
-                StartCoroutine("RequestCarCountPlus");
-            }
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{requestAdd, 1}, {"color", localPlayerColor}});
 
             PhotonNetwork.LocalPlayer.TagObject = testCar;
             Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
 
 
-            var itemManager = FindObjectOfType<ItemManager>();
-            itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
+            var mode = PhotonNetwork.LocalPlayer.CustomProperties["mode"];
+            var isMode = mode.ToString();
 
+            if (isMode.Equals("Classic"))
+            {
+                testCar.GetComponent<MultiCar>().SetItemMode(false);
+            }
+            else
+            {
+                var itemManager = FindObjectOfType<ItemManager>();
+                if (itemManager != null)
+                {
+                    itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
+                }
+
+                testCar.GetComponent<MultiCar>().SetItemMode(true);
+            }
         }
         else
         {
             Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+        }
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var properties = PhotonNetwork.MasterClient.CustomProperties;
+
+            Debug.Log("count " + totalPlayerCarCount);
         }
     }
 
@@ -160,109 +190,120 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (targetPlayer.IsMasterClient)
-        {
-            if (changedProps.ContainsKey("init") && (bool) changedProps["init"] == true)
-            {
-                changedProps["init"] = false;
-                return;
-            }
-
-            CheckGameOver(changedProps);
-        }
+        CheckGameOver(changedProps);
     }
 
     private void CheckGameOver(Hashtable info)
     {
-        if (mode.Equals("SPEED"))
+        if (mode.Equals("Classic"))
         {
-            SpeedMode(info);
+            SoloMode(info);
         }
         else
         {
-            ItemMode(info);
+            Debug.Log("Team Mode in");
+            TeamMode(info);
         }
     }
 
-    private void ItemMode(Hashtable info)
+    private void TeamMode(Hashtable changedProps)
     {
-        if (!CheckIsContain(info))
+        
+
+        var color = changedProps["color"].ToString();
+        if (!teamPlayerCount.ContainsKey(color))
         {
-            return;
+            teamPlayerCount.Add(color, 0);
         }
+        ChangeTeamPlayerCount(changedProps, color, teamPlayerCount);
+    }
 
-        Dictionary<string, int> teamPlayerCount = new Dictionary<string, int>();
-
-        foreach (string key in info.Keys)
+    private void ChangeTeamPlayerCount(Hashtable changedProps, string color, Dictionary<string, int> teamCount)
+    {
+        if (changedProps.ContainsKey(requestAdd))
         {
-            if (key.Contains(requestCarCount))
+            totalPlayerCarCount += (int) changedProps[requestAdd];
+            teamCount[color] += (int) changedProps[requestAdd];
+        }
+        
+        if (changedProps.ContainsKey(requestDelete))
+        {
+            teamCount[color] += (int) changedProps[requestDelete];
+            CheckTeamGameOver(teamCount);
+        }
+    }
+
+    private void CheckTeamGameOver(Dictionary<string, int> teamPlayer)
+    {
+        foreach (string teamColor in teamPlayer.Keys)
+        {
+            if (teamPlayer[teamColor] > 0)
             {
-                var tokens = key.Split(' ');
-                teamPlayerCount.Add(tokens[1], (int) info[key]);
+                if (IsTeamGameOver(teamPlayer, teamColor))
+                {
+                    _photonView.RPC("DisplayTeamWinner", RpcTarget.All, teamColor);
+                }
             }
         }
 
-        if (IsItemGameOver(teamPlayerCount))
-        {
-            Debug.Log("GameOver");
-        }
     }
 
-    private bool IsItemGameOver(Dictionary<string, int> teamPlayer)
+    private bool IsTeamGameOver(Dictionary<string, int> teamPlayer, string targetColor)
     {
-        var list = teamPlayer.Keys.ToArray();
-        foreach (string key in teamPlayer.Keys)
+        foreach (string teamPlayerKey in teamPlayer.Keys)
         {
-            if (teamPlayer[key] > 0)
+            if (!teamPlayerKey.Equals(targetColor))
             {
-                foreach (string key1 in list)
+                if (teamPlayer[teamPlayerKey] > 0)
                 {
-                    if (key != key1 && teamPlayer[key1] > 0)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
         }
 
         return true;
     }
-
-    private void SpeedMode(Hashtable info)
+    
+    private void SoloMode(Hashtable changedProps)
     {
-        if (!CheckIsContain(info))
+        
+        if (changedProps.ContainsKey(requestAdd))
         {
-            return;
+            totalPlayerCarCount += (int) changedProps[requestAdd];
+            Debug.Log("count add "+totalPlayerCarCount);
         }
 
-        totalPlayerCarCount = 0;
-        foreach (string key in info.Keys)
+        if (changedProps.ContainsKey(requestDelete))
         {
-            if (key.Contains(requestCarCount))
+            totalPlayerCarCount += (int) changedProps[requestDelete];
+            Debug.Log("count die "+totalPlayerCarCount);
+            if (totalPlayerCarCount <= 1)
             {
-                totalPlayerCarCount += (int) info[key];
+                _photonView.RPC("DisplayWinner", RpcTarget.All);
+                Debug.Log("GameOver");
             }
-        }
-
-        if (totalPlayerCarCount <= 0)
-        {
-            Debug.Log("GameOver");
         }
     }
 
-    private bool CheckIsContain(Hashtable info)
+    [PunRPC]
+    private void DisplayTeamWinner(string color)
     {
-        bool isCheck = false;
-        foreach (string key in info.Keys)
+        var item = Instantiate(winnerItem, winnerContent.transform);
+        item.GetComponent<WinnerItemInit>().SetName(color);
+        winnerPanel.SetActive(true);
+    }
+    
+    [PunRPC]
+    private void DisplayWinner()
+    {
+        var list = FindObjectsOfType<MultiCar>();
+        foreach (MultiCar player in list)
         {
-            if (key.Contains(requestCarCount))
-            {
-                isCheck = true;
-                break;
-            }
+            var item = Instantiate(winnerItem, winnerContent.transform);
+            item.GetComponent<WinnerItemInit>().SetName(player.GetComponent<PhotonView>().Owner.NickName);
         }
 
-        return isCheck;
+        winnerPanel.SetActive(true);
     }
 
     public override void OnLeftRoom()
@@ -288,7 +329,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-
     public void LeaveRoom()
     {
         if (PlayerManager.LocalPlayerInstance != null)
@@ -301,15 +341,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void RequestCarCountMinus()
     {
-        var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount + " " + localPlayerColor];
-        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable()
-            {{requestCarCount + " " + localPlayerColor, --count}});
-    }
-
-    private IEnumerator RequestCarCountPlus()
-    {
-        yield return new WaitForSeconds(1f);
-        // var count = (int) PhotonNetwork.MasterClient.CustomProperties[requestCarCount+localPlayerColor];
-        PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{requestCarCount + " " + localPlayerColor, 1}});
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{requestDelete, -1}, {"color", localPlayerColor}});
     }
 }
