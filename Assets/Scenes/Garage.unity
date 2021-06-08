@@ -146,13 +146,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13657262}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 20, z: 0.2}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1086832587}
+  m_Father: {fileID: 682787026}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &46275676
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,13 +361,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77203467}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 0, y: 5, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!114 &77203470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +427,13 @@ MonoBehaviour:
   CarName: {fileID: 1783643288}
   CarDetail: {fileID: 1234797679}
   CarSpawnPoint: {fileID: 13657262}
+  Parent: {fileID: 682787025}
+  Cars:
+  - {fileID: 100000, guid: 9ea2ea91c8ce9fa41abab502c21dce33, type: 3}
+  - {fileID: 100000, guid: a446810b4feee0342962f7375c74f6a0, type: 3}
+  - {fileID: 100000, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+  - {fileID: 100000, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
+  - {fileID: 100000, guid: 21eccd1df4cce0b42b03ae31b91a2882, type: 3}
 --- !u!1 &474086893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1066,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660330926}
   m_CullTransparentMesh: 1
+--- !u!1 &682787025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 682787026}
+  - component: {fileID: 682787027}
+  m_Layer: 0
+  m_Name: Ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &682787026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682787025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 13657263}
+  - {fileID: 1086832587}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &682787027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682787025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53929205b4978e04ea91745ce3f24224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 15
 --- !u!1 &743246512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,7 +1326,6 @@ GameObject:
   - component: {fileID: 1086832586}
   - component: {fileID: 1086832585}
   - component: {fileID: 1086832584}
-  - component: {fileID: 1086832588}
   m_Layer: 0
   m_Name: CarSettingGround
   m_TagString: Untagged
@@ -1351,27 +1403,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086832583}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 5, y: 0.05, z: 5}
-  m_Children:
-  - {fileID: 13657263}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Children: []
+  m_Father: {fileID: 682787026}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1086832588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086832583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53929205b4978e04ea91745ce3f24224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spinSpeed: 15
 --- !u!1 &1234797677
 GameObject:
   m_ObjectHideFlags: 0
