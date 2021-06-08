@@ -83,7 +83,7 @@ public class MultiCar : MonoBehaviour
     [PunRPC]
     private void MissileAttacked(Collider info)
     {
-        Debug.Log("차와 미사일과 충돌");
+        Debug.Log("차�? 미사?�과 충돌");
         Debug.Log("Is shield "+isShield);
         if (isShield)
         {
