@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -28,8 +29,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject indicator;
 
     public GameObject winnerPanel;
-    public GameObject winnerContent;
-    public GameObject winnerItem;
+    public Text winnerText;
 
     public static GameManager instance;
 
@@ -288,8 +288,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void DisplayTeamWinner(string color)
     {
-        var item = Instantiate(winnerItem, winnerContent.transform);
-        item.GetComponent<WinnerItemInit>().SetName(color);
+        winnerText.text = color + " Team";
         winnerPanel.SetActive(true);
     }
     
@@ -297,12 +296,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void DisplayWinner()
     {
         var list = FindObjectsOfType<MultiCar>();
+        string text="";
         foreach (MultiCar player in list)
         {
-            var item = Instantiate(winnerItem, winnerContent.transform);
-            item.GetComponent<WinnerItemInit>().SetName(player.GetComponent<PhotonView>().Owner.NickName);
+            text += player.gameObject.GetComponent<PhotonView>().Owner.NickName + "\n";
         }
 
+        winnerText.text = text;
         winnerPanel.SetActive(true);
     }
 
