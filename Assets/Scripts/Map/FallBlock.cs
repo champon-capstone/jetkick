@@ -24,11 +24,13 @@ public class FallBlock : MonoBehaviour
 
     public void FallWarning()
 	{
-		if(number == 2.0f)
+		if(number == 16.0f)
         {
-			
+
 			//Debug.Log("Destroy 2 second");
-			Destroy(gameObject, 3.0f);
+			//Destroy(gameObject, 3.0f);
+			gameObject.SetActive(false);
+			Invoke("ReActive",3.0f);
 		}
 		if (warning)
 		{
@@ -81,5 +83,14 @@ public class FallBlock : MonoBehaviour
 		}
 		warning = true;
 		FallWarning();
+	}
+
+	public void ReActive()
+    {
+		number = 0.0f;
+		Color c = renderer.material.color;
+		c.a = 1.0f;
+		renderer.material.color = c;
+		gameObject.SetActive(true);
 	}
 }

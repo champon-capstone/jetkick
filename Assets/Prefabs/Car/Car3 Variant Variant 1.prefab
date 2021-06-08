@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 50031924}
   m_Layer: 0
   m_Name: Low
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 155706700}
   m_Layer: 1
   m_Name: Crash
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 232612347}
   m_Layer: 0
   m_Name: Idle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 284673765}
   m_Layer: 1
   m_Name: Componets
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 287932481}
   m_Layer: 1
   m_Name: Nitro
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 329423041}
   m_Layer: 1
   m_Name: Sounds
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 332075389}
   m_Layer: 1
   m_Name: RedLights
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: 490663178}
   m_Layer: 1
   m_Name: ParticleSystem(Shift)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5435,7 +5435,7 @@ GameObject:
   - component: {fileID: 494512017}
   m_Layer: 1
   m_Name: LightL
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5527,7 +5527,7 @@ GameObject:
   - component: {fileID: 726896752}
   m_Layer: 1
   m_Name: ReverseLights
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5559,7 +5559,7 @@ GameObject:
   - component: {fileID: 853784147}
   m_Layer: 1
   m_Name: View3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5590,7 +5590,7 @@ GameObject:
   - component: {fileID: 1100113360}
   m_Layer: 1
   m_Name: LightR
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5682,7 +5682,7 @@ GameObject:
   - component: {fileID: 1164485057}
   m_Layer: 1
   m_Name: View2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5713,7 +5713,7 @@ GameObject:
   - component: {fileID: 1217845985}
   m_Layer: 1
   m_Name: LightL
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5807,7 +5807,7 @@ GameObject:
   - component: {fileID: 1451163421}
   m_Layer: 1
   m_Name: ParticleSystem(Shift)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10615,7 +10615,7 @@ GameObject:
   - component: {fileID: 1564748153}
   m_Layer: 1
   m_Name: View1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10646,7 +10646,7 @@ GameObject:
   - component: {fileID: 1700645222}
   m_Layer: 1
   m_Name: SwitchGear
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10773,7 +10773,7 @@ GameObject:
   - component: {fileID: 1877497720}
   m_Layer: 1
   m_Name: LightR
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10866,7 +10866,7 @@ GameObject:
   - component: {fileID: 1903865994}
   m_Layer: 0
   m_Name: High
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11098,6 +11098,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 430622390, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 718409620, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432795427, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808802665, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1881731365, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_Drag
       value: 0
@@ -11114,9 +11130,37 @@ PrefabInstance:
       propertyPath: m_Interpolate
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1933166968, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795670543424445472, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795670543424445474, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795670543424445480, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3795670543424445482, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_Name
       value: Car3 Variant Variant 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795670543424445482, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795670543424445484, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795670543424445486, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3795670543424667658, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_RootOrder

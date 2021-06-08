@@ -9,20 +9,39 @@ public class MagneticField : MonoBehaviour
     float delta = 0.01f;
     float interval = 0.01f;
     float time = 0.0f;
+    public TimeCountdown timecountdown;
+    public GameObject TargetCar; //Test Destroy target car 
 
     // Start is called before the first frame update
     void Start()
     {
         interval = delta / speed;
+        timecountdown = GameManager.instance.GetComponent<TimeCountdown>();
+        TargetCar = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().target.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (time > interval)
+        if (time > interval && timecountdown.EndTime())
         {
+            //Debug.Log("자기장 축소들어왔냐??");
+            
             transform.localScale -= new Vector3(delta, delta, delta);
             time = 0.0f;
+            if(transform.localScale.x <= 0.0f && transform.localScale.y <= 0.0f && transform.localScale.z <= 0.0f)
+            {
+                Destroy(gameObject);
+            }
+            // (ring out)player destroy everyone 
+            if (Vector3.Distance(gameObject.transform.position, TargetCar.transform.position) > transform.localScale.x * 0.5 )
+            {
+                Debug.Log("자동차 폭발!!!!!");
+                GameObject BigExplosion;
+                BigExplosion = Resources.Load("BigExplosion") as GameObject;
+                Instantiate(BigExplosion, TargetCar.transform.position, Quaternion.identity);
+                Destroy(TargetCar.gameObject);
+            }
         }
         time += Time.deltaTime;
     }

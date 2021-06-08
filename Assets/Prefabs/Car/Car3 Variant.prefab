@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 430622392}
   m_Layer: 0
   m_Name: Back Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 718409622}
   m_Layer: 0
   m_Name: Front Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1432795428}
   m_Layer: 0
   m_Name: Back Right
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 1808802666}
   m_Layer: 0
   m_Name: wheelsContainer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1933166970}
   m_Layer: 0
   m_Name: Front Left
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -349,11 +349,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
       propertyPath: m_Name
-      value: Car3
+      value: Car3 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7f9f06fe325089a40a5a101b03f5d4e5, type: 3}
       propertyPath: m_RootOrder
