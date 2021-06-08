@@ -10,9 +10,9 @@ public class MapInfoGenerator
     {
         mapList = new ArrayList();
 
-        mapList.Add(new MapInfo("TestMap", "testMap Description", Resources.Load<Sprite>("test")));
-        mapList.Add(new MapInfo("CityMap", "CityMap Description", Resources.Load<Sprite>("test")));
-        mapList.Add(new MapInfo("IslandMap", "islandMap Description", Resources.Load<Sprite>("test")));
+        mapList.Add(new MapInfo("ObstacleMap", "ObstableMap Description", Resources.Load<Sprite>("obstacle")));
+        mapList.Add(new MapInfo("CityMap", "CityMap Description", Resources.Load<Sprite>("citymap")));
+        mapList.Add(new MapInfo("IslandMap", "islandMap Description", Resources.Load<Sprite>("islandmap")));
     }
     
     public ArrayList MapList

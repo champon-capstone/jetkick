@@ -458,6 +458,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         if (panelName.Equals(createPanel.name))
         {
+            mapName.text = mapInfoDic["CityMap"].MapName;
+            mapDescription.text = mapInfoDic["CityMap"].MapDescription;
+            mapImage.sprite = mapInfoDic["CityMap"].MapImage;
             mapImage.gameObject.SetActive(true);
             mapName.gameObject.SetActive(true);
             mapDescription.gameObject.SetActive(true);
