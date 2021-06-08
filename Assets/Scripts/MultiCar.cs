@@ -15,6 +15,8 @@ public class MultiCar : MonoBehaviour
     private Rigidbody rbody;
 
     private bool isShield = false;
+
+    private bool isItemMode = false;
     
     private void Awake()
     {
@@ -28,6 +30,10 @@ public class MultiCar : MonoBehaviour
 
     private void Update()
     {
+        if (!isItemMode)
+        {
+            return;
+        }
         if (!_photonView.IsMine)
         {
             return;
@@ -69,7 +75,10 @@ public class MultiCar : MonoBehaviour
         // }
     }
 
-
+    public void SetItemMode(bool mode)
+    {
+        isItemMode = mode;
+    }
 
     #region Item Effect
 
