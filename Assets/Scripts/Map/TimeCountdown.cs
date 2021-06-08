@@ -7,6 +7,7 @@ public class TimeCountdown : MonoBehaviour
 {
     public Text TimeCount;
     public Text Explanation;
+    public Text ControllText;
     public float TimeCost;
     public float PlusTimeCost;
     public GameObject MagneticField;
@@ -20,7 +21,8 @@ public class TimeCountdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(TimeCost > 0)
+        ControllText.text = "시점 거리 변경: V\n" + "시점 자동/수동 전환: B\n" + "브레이크: Space bar\n" + "아이템 사용: ??\n" + "자동차 방향조절: WASD,방향키\n";
+        if (TimeCost > 0)
         {
             TimeCost -= Time.deltaTime;
             minute = (int)(TimeCost / 60);
