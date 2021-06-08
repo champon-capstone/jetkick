@@ -1353,6 +1353,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 339821082}
     - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
+      propertyPath: indicator
+      value: 
+      objectReference: {fileID: 6553101504237697232, guid: 0c5e457fd1b2e9047a282d4cb37c3480, type: 3}
+    - target: {fileID: 8308880028266739518, guid: 8215c6853173c35479c701ea94b226f2, type: 3}
       propertyPath: position1
       value: 
       objectReference: {fileID: 1549106783}

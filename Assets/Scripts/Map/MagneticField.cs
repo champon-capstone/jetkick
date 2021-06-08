@@ -10,14 +10,16 @@ public class MagneticField : MonoBehaviour
     float interval = 0.01f;
     float time = 0.0f;
     public TimeCountdown timecountdown;
-    public GameObject TargetCar; //Test Destroy target car 
+    public MultiCar[] TargetCar; //Test Destroy target car 
 
     // Start is called before the first frame update
     void Start()
     {
         interval = delta / speed;
         timecountdown = GameManager.instance.GetComponent<TimeCountdown>();
-        TargetCar = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().target.gameObject;
+        //TargetCar = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().target.gameObject;
+        //TargetCar = FindObjectOfsType<MultiCar>().gameObject;
+        TargetCar = FindObjectsOfType<MultiCar>();
     }
 
     // Update is called once per frame
@@ -34,14 +36,18 @@ public class MagneticField : MonoBehaviour
                 Destroy(gameObject);
             }
             // (ring out)player destroy everyone 
-            if (Vector3.Distance(gameObject.transform.position, TargetCar.transform.position) > transform.localScale.x * 0.5 )
+            for(int i=0; i<TargetCar.Length;i++)
             {
-                Debug.Log("ÀÚµ¿Â÷ Æø¹ß!!!!!");
-                GameObject BigExplosion;
-                BigExplosion = Resources.Load("BigExplosion") as GameObject;
-                Instantiate(BigExplosion, TargetCar.transform.position, Quaternion.identity);
-                Destroy(TargetCar.gameObject);
+                if (Vector3.Distance(gameObject.transform.position, TargetCar[i].transform.position) > transform.localScale.x * 0.5)
+                {
+                    Debug.Log("ÀÚµ¿Â÷ Æø¹ß!!!!!");
+                    GameObject BigExplosion;
+                    BigExplosion = Resources.Load("BigExplosion") as GameObject;
+                    Instantiate(BigExplosion, TargetCar[i].transform.position, Quaternion.identity);
+                    Destroy(TargetCar[i].gameObject);
+                }
             }
+            
         }
         time += Time.deltaTime;
     }

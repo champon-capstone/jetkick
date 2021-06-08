@@ -32,7 +32,7 @@ public class CarControler : MonoBehaviour
     private PhotonView _photonView;
     private void Start()
     {
-        //_photonView = GetComponent<PhotonView>();
+        _photonView = GetComponent<PhotonView>();
         ///create rigidbody
         rbody = this.GetComponent<Rigidbody>();
 
@@ -72,7 +72,7 @@ public class CarControler : MonoBehaviour
 
     public void FixedUpdate()
     {
-       /* if (_photonView == null)
+        if (_photonView == null)
         {
             return;
         }
@@ -80,7 +80,7 @@ public class CarControler : MonoBehaviour
         if (!_photonView.IsMine)
         {
             return;
-        }*/
+        }
         ///get speed of the car
         speed = rbody.velocity.magnitude;
 
