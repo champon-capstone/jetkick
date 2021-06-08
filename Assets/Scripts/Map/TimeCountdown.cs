@@ -13,8 +13,8 @@ public class TimeCountdown : MonoBehaviour
     public GameObject SpawnMagnetic;
 
 
-    private float minute;
-    private float second;
+    private int minute;
+    private int second;
     private bool endgame = false;
     private bool endtime;
     // Update is called once per frame
@@ -23,8 +23,8 @@ public class TimeCountdown : MonoBehaviour
         if(TimeCost > 0)
         {
             TimeCost -= Time.deltaTime;
-            minute = TimeCost / 60.0f;
-            second = TimeCost % 60.0f;
+            minute = (int)(TimeCost / 60);
+            second = (int)(TimeCost % 60.0f);
             if(endgame)
             {
                 //TimeCount.text = "자기장 축소 남은시간: " + string.Format("{0:f0}" + ":", minute) + string.Format("{0:f0}", second);

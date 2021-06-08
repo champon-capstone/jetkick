@@ -2478,6 +2478,7 @@ GameObject:
   - component: {fileID: 448078438}
   - component: {fileID: 448078440}
   - component: {fileID: 448078439}
+  - component: {fileID: 448078441}
   m_Layer: 5
   m_Name: Explanation
   m_TagString: Untagged
@@ -2546,6 +2547,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448078437}
   m_CullTransparentMesh: 1
+--- !u!114 &448078441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448078437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1
 --- !u!4 &461049427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 173c4970f65578644bee1e3a1f674ad7, type: 3}
@@ -9337,8 +9353,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeCount: {fileID: 1863565429}
   Explanation: {fileID: 448078439}
-  TimeCost: 5
-  PlusTimeCost: 5
+  TimeCost: 70
+  PlusTimeCost: 70
   MagneticField: {fileID: 4314151675152704227, guid: 331d43701e5baf94ab6ea259602f3dab, type: 3}
   SpawnMagnetic: {fileID: 1257300083}
 --- !u!1 &1863565427
@@ -9352,6 +9368,7 @@ GameObject:
   - component: {fileID: 1863565428}
   - component: {fileID: 1863565430}
   - component: {fileID: 1863565429}
+  - component: {fileID: 1863565431}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -9420,6 +9437,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863565427}
   m_CullTransparentMesh: 1
+--- !u!114 &1863565431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863565427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1869323730
 GameObject:
   m_ObjectHideFlags: 0
