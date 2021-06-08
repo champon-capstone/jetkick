@@ -9,8 +9,14 @@ public class CarSpot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Invoke("Startlight", 0.5f);
+    }
+
+    private void Startlight()
+    {
         StartCoroutine(Spot(0f, 85f));
     }
+
 
     private IEnumerator Spot(float a, float b)
     {
