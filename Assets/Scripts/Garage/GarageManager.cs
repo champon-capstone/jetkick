@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GarageManager : MonoBehaviour
 {
     public Text CarName;
@@ -9,6 +10,7 @@ public class GarageManager : MonoBehaviour
     public GameObject CarSpawnPoint;
     public GameObject Parent;
     public GameObject[] Cars = new GameObject[5];
+    public GameObject currentCar;
 
     private bool Startchoose = true;
     private string[] Names = {"차량1번임","차량2번임","차량3번임" ,"차량1번임","차량5번임" };
@@ -20,7 +22,12 @@ public class GarageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        CarName.text = Names[0];
+        CarDetail.text = Details[0];
+        currentCar = Instantiate(Cars[0], CarSpawnPoint.transform.position, Quaternion.identity, Parent.transform);
+        currentCar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        currentCar.transform.localEulerAngles = new Vector3(0, 180.0f, 0);
+        Startchoose = false;
     }
 
     // Update is called once per frame
@@ -54,7 +61,7 @@ public class GarageManager : MonoBehaviour
         CarName.text = Names[i];
         CarDetail.text = Details[i];
 
-        GameObject currentCar;
+        
         if(i == 1)
         {
             CarSpawnPoint.transform.position = new Vector3(CarSpawnPoint.transform.position.x, CarSpawnPoint.transform.position.y - 0.4f, CarSpawnPoint.transform.position.z);
@@ -78,5 +85,15 @@ public class GarageManager : MonoBehaviour
         //Instantiate(BigExplosion, TargetCar[i].transform.position, Quaternion.identity);
     }
 
-    
+    public void CallOk()
+    {
+        //Check currentCar and requst to server what is choosing car 
+        Debug.Log("지금 고른 차량이 선택됨");
+    }
+
+    public void returnLobby()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
+
 }
