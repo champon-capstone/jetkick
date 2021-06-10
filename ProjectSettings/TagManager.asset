@@ -9,6 +9,8 @@ TagManager:
   - Shield
   - Missile
   - Banana
+  - Bullet
+  - Street
   layers:
   - Default
   - TransparentFX
