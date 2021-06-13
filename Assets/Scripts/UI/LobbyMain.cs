@@ -358,7 +358,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         byte maxPlayer;
         byte.TryParse(playerNumberInput.text, out maxPlayer);
-        maxPlayer = (byte) Mathf.Clamp(maxPlayer, 1, 8);
+        maxPlayer = (byte) Mathf.Clamp(maxPlayer, 2, 8);
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
