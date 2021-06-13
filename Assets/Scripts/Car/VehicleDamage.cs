@@ -6,7 +6,7 @@ public class VehicleDamage : MonoBehaviour
 
 
 
-    public float maxMoveDelta = 1.0f; // maximum distance one vertice moves per explosion (in meters)
+    public float maxMoveDelta = 10.0f; // maximum distance one vertice moves per explosion (in meters)
     public float maxCollisionStrength = 50.0f;
     public float YforceDamp = 0.1f; // 0.0 - 1.0
     public float demolutionRange = 0.5f;
@@ -33,7 +33,6 @@ public class VehicleDamage : MonoBehaviour
     }
 
 
-
     private Vector3 colPointToMe;
     private float colStrength;
 
@@ -56,8 +55,8 @@ public class VehicleDamage : MonoBehaviour
             if (colPointToMe.magnitude > 1.0f && !crashSound.isPlaying)
             {
                 crashSound.Play();
-                crashSound.volume = colStrength / 200;
-
+                crashSound.volume = colStrength / 100;
+             
                 OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength));
 
             }
@@ -65,9 +64,7 @@ public class VehicleDamage : MonoBehaviour
 
     }
 
-
-
-    // if called by SendMessage(), we only have 1 param
+ 
     public void OnMeshForce(Vector4 originPosAndForce)
     {
         OnMeshForce((Vector3)originPosAndForce, originPosAndForce.w);
@@ -76,12 +73,7 @@ public class VehicleDamage : MonoBehaviour
 
     public void OnMeshForce(Vector3 originPos, float force)
     {
-        // force should be between 0.0 and 1.0
         force = Mathf.Clamp01(force);
-
-
-
-
 
 
         for (int j = 0; j < meshfilters.Length; ++j)
@@ -97,16 +89,16 @@ public class VehicleDamage : MonoBehaviour
                 flatVertToCenterDir.y = 0.0f;
 
 
-                // 0.5 - 1 => 45° to 0°  / current vertice is nearer to exploPos than center of bounds
+                
                 if (originToMeDir.sqrMagnitude < sqrDemRange) //dot > 0.8f )
                 {
                     float dist = Mathf.Clamp01(originToMeDir.sqrMagnitude / sqrDemRange);
-                    float moveDelta = force * (1.0f - dist) * maxMoveDelta;
+                    float moveDelta = force * (10.0f - dist) * 100 * maxMoveDelta;
 
                     Vector3 moveDir = Vector3.Slerp(originToMeDir, flatVertToCenterDir, impactDirManipulator).normalized * moveDelta;
 
                     verts[i] += Quaternion.Inverse(transform.rotation) * moveDir;
-
+                        
 
                 }
 
