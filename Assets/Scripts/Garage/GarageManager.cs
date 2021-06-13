@@ -4,7 +4,9 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.SceneManagement;
 
 public class GarageManager : MonoBehaviour
 {
@@ -13,21 +15,27 @@ public class GarageManager : MonoBehaviour
     public GameObject CarSpawnPoint;
     public GameObject Parent;
     public GameObject[] Cars = new GameObject[5];
+    public GameObject currentCar;
 
     private bool Startchoose = true;
-    private string[] Names = {"Â÷·®1¹øÀÓ","Â÷·®2¹øÀÓ","Â÷·®3¹øÀÓ" ,"Â÷·®1¹øÀÓ","Â÷·®5¹øÀÓ" };
-    private string[] Details = { "ÀÌÂ÷´Â 1¹øÀ¸·Î½á ¾Æ¹«Æ° 1¹øÀÓ",
-                                 "ÀÌÂ÷´Â 2¹øÀ¸·Î½á ¾Æ¹«Æ° 2¹øÀÓ",
-                                 "ÀÌÂ÷´Â 3¹øÀ¸·Î½á ¾Æ¹«Æ° 3¹øÀÓ",
-                                 "ÀÌÂ÷´Â 4¹øÀ¸·Î½á ¾Æ¹«Æ° 4¹øÀÓ",
-                                 "ÀÌÂ÷´Â 5¹øÀ¸·Î½á ¾Æ¹«Æ° 5¹øÀÓ" };
+    private string[] Names = {"ì°¨ëŸ‰1ë²ˆì„","ì°¨ëŸ‰2ë²ˆì„","ì°¨ëŸ‰3ë²ˆì„" ,"ì°¨ëŸ‰1ë²ˆì„","ì°¨ëŸ‰5ë²ˆì„" };
+    private string[] Details = { "ì´ì°¨ëŠ” 1ë²ˆìœ¼ë¡œì¨ ì•„ë¬´íŠ¼ 1ë²ˆì„",
+                                 "ì´ì°¨ëŠ” 2ë²ˆìœ¼ë¡œì¨ ì•„ë¬´íŠ¼ 2ë²ˆì„",
+                                 "ì´ì°¨ëŠ” 3ë²ˆìœ¼ë¡œì¨ ì•„ë¬´íŠ¼ 3ë²ˆì„",
+                                 "ì´ì°¨ëŠ” 4ë²ˆìœ¼ë¡œì¨ ì•„ë¬´íŠ¼ 4ë²ˆì„",
+                                 "ì´ì°¨ëŠ” 5ë²ˆìœ¼ë¡œì¨ ì•„ë¬´íŠ¼ 5ë²ˆì„" };
     
     GameObject currentCar;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        CarName.text = Names[0];
+        CarDetail.text = Details[0];
+        currentCar = Instantiate(Cars[0], CarSpawnPoint.transform.position, Quaternion.identity, Parent.transform);
+        currentCar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        currentCar.transform.localEulerAngles = new Vector3(0, 180.0f, 0);
+        Startchoose = false;
     }
 
     // Update is called once per frame
@@ -52,8 +60,8 @@ public class GarageManager : MonoBehaviour
         {
             Startchoose = false;
         }
-        /*Debug.Log("CallCar ºÒ¸²");
-        Debug.Log("³Ñ¾î¿Â °ª"+ i);
+        /*Debug.Log("CallCar ë¶ˆë¦¼");
+        Debug.Log("ë„˜ì–´ì˜¨ ê°’"+ i);
         Debug.Log(Names[i]);
         Debug.Log(Details[i]);*/
 
@@ -90,4 +98,9 @@ public class GarageManager : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"car", currentCar.name}});
     }
     
+    public void returnLobby()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
+
 }
