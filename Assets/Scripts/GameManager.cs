@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         testMap.Add("RED", "TestCar3_red");
         testMap.Add("GREEN", "TestCar3_green");
 
+
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{"init", true}});
@@ -105,14 +106,27 @@ public class GameManager : MonoBehaviourPunCallbacks
             object color;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
 
-            if (color != null)
+            // if (color != null)
+            // {
+            //     localPlayerColor = color.ToString();
+            //     
+            //     //TODO Make Car color 
+            //     
+            //     testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
+            //         positionMap[index].transform.rotation, 0);
+            //     PhotonNetwork.LocalPlayer.TagObject = testCar;
+            //     // Material colorMaterial = colorMap[color.ToString()];
+            //     // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
+            // }
+
+            object car;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("car", out car);
+
+            if (car != null)
             {
-                localPlayerColor = color.ToString();
                 testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
                     positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
-                // Material colorMaterial = colorMap[color.ToString()];
-                // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
             }
 
             if (testCar == null)
@@ -126,7 +140,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             // Destroy(defaultCamera);
             defaultCamera.gameObject.SetActive(false);
 
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{requestAdd, 1}, {"color", localPlayerColor}});
+            PhotonNetwork.LocalPlayer.SetCustomProperties(
+                new Hashtable() {{requestAdd, 1}, {"color", localPlayerColor}});
 
             PhotonNetwork.LocalPlayer.TagObject = testCar;
             Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
@@ -208,13 +223,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void TeamMode(Hashtable changedProps)
     {
-        
-
         var color = changedProps["color"].ToString();
         if (!teamPlayerCount.ContainsKey(color))
         {
             teamPlayerCount.Add(color, 0);
         }
+
         ChangeTeamPlayerCount(changedProps, color, teamPlayerCount);
     }
 
@@ -225,7 +239,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             totalPlayerCarCount += (int) changedProps[requestAdd];
             teamCount[color] += (int) changedProps[requestAdd];
         }
-        
+
         if (changedProps.ContainsKey(requestDelete))
         {
             teamCount[color] += (int) changedProps[requestDelete];
@@ -245,7 +259,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-
     }
 
     private bool IsTeamGameOver(Dictionary<string, int> teamPlayer, string targetColor)
@@ -263,20 +276,19 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         return true;
     }
-    
+
     private void SoloMode(Hashtable changedProps)
     {
-        
         if (changedProps.ContainsKey(requestAdd))
         {
             totalPlayerCarCount += (int) changedProps[requestAdd];
-            Debug.Log("count add "+totalPlayerCarCount);
+            Debug.Log("count add " + totalPlayerCarCount);
         }
 
         if (changedProps.ContainsKey(requestDelete))
         {
             totalPlayerCarCount += (int) changedProps[requestDelete];
-            Debug.Log("count die "+totalPlayerCarCount);
+            Debug.Log("count die " + totalPlayerCarCount);
             if (totalPlayerCarCount <= 1)
             {
                 _photonView.RPC("DisplayWinner", RpcTarget.All);
@@ -291,12 +303,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         winnerText.text = color + " Team";
         winnerPanel.SetActive(true);
     }
-    
+
     [PunRPC]
     private void DisplayWinner()
     {
         var list = FindObjectsOfType<MultiCar>();
-        string text="";
+        string text = "";
         foreach (MultiCar player in list)
         {
             text += player.gameObject.GetComponent<PhotonView>().Owner.NickName + "\n";
@@ -341,6 +353,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void RequestCarCountMinus()
     {
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{requestDelete, -1}, {"color", localPlayerColor}});
+        PhotonNetwork.LocalPlayer.SetCustomProperties(
+            new Hashtable() {{requestDelete, -1}, {"color", localPlayerColor}});
     }
 }

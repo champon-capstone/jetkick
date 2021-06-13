@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 public class GarageManager : MonoBehaviour
 {
     public Text CarName;
@@ -17,6 +21,9 @@ public class GarageManager : MonoBehaviour
                                  "이차는 3번으로써 아무튼 3번임",
                                  "이차는 4번으로써 아무튼 4번임",
                                  "이차는 5번으로써 아무튼 5번임" };
+    
+    GameObject currentCar;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +61,7 @@ public class GarageManager : MonoBehaviour
         CarName.text = Names[i];
         CarDetail.text = Details[i];
 
-        GameObject currentCar;
+        
         if(i == 1)
         {
             CarSpawnPoint.transform.position = new Vector3(CarSpawnPoint.transform.position.x, CarSpawnPoint.transform.position.y - 0.4f, CarSpawnPoint.transform.position.z);
@@ -78,5 +85,9 @@ public class GarageManager : MonoBehaviour
         //Instantiate(BigExplosion, TargetCar[i].transform.position, Quaternion.identity);
     }
 
+    public void CallOk()
+    {
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"car", currentCar.name}});
+    }
     
 }
