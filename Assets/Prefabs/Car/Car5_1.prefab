@@ -10518,7 +10518,7 @@ MonoBehaviour:
     dampers: 1500
     carPower: 380
     shiftPower: 180
-    brakePower: 7000
+    brakePower: 20000
     shiftCentre: {x: 0, y: -0.8, z: 0}
     maxSteerAngle: 50
     shiftDownRPM: 3000
@@ -10648,7 +10648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5793487666648253270, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
       propertyPath: m_Name
-      value: Car2 Variant Variant
+      value: Car5_1
       objectReference: {fileID: 0}
     - target: {fileID: 5793487666648253270, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
       propertyPath: m_IsActive
