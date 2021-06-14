@@ -10571,6 +10571,22 @@ PrefabInstance:
       propertyPath: m_Interpolate
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 215787737433000339, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027363704113154793, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277594402692255864, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5251110422425736173, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6703152613607234199, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -10617,11 +10633,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6703152613607458487, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
       propertyPath: m_Name
-      value: Car1 Variant
+      value: Car1_1
       objectReference: {fileID: 0}
     - target: {fileID: 6703152613607458487, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107073403260271028, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1644995156, guid: 2df9b9a8d45374448a95980f0417f753, type: 3}

@@ -10527,7 +10527,7 @@ MonoBehaviour:
     dampers: 1500
     carPower: 380
     shiftPower: 180
-    brakePower: 10000
+    brakePower: 20000
     shiftCentre: {x: 0, y: -0.05, z: 0}
     maxSteerAngle: 50
     shiftDownRPM: 3000
@@ -10599,6 +10599,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 196954891416197762, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3795670543424445472, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_TagString
       value: Player
@@ -10613,7 +10617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795670543424445482, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_Name
-      value: Car3 Variant Variant 1
+      value: Car3_1
       objectReference: {fileID: 0}
     - target: {fileID: 3795670543424445482, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_TagString
@@ -10670,6 +10674,22 @@ PrefabInstance:
     - target: {fileID: 3795670543424667658, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062457721963367745, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181760680994756382, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829467772096835699, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8261409552578199915, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1881731366, guid: a7df3d88771c9fd43accaaf1500b84a6, type: 3}
