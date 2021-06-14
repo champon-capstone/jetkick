@@ -122,16 +122,20 @@ public class GameManager : MonoBehaviourPunCallbacks
             object car;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("car", out car);
 
+            string carName = car.ToString();
+            string[] tokens = carName.Split('(');
+            
+            
             if (car != null)
             {
-                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
+                testCar = PhotonNetwork.Instantiate(tokens[0], positionMap[index].transform.position,
                     positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
             if (testCar == null)
             {
-                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position,
+                testCar = PhotonNetwork.Instantiate("Car1", positionMap[index].transform.position,
                     positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
