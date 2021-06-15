@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -33,12 +34,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public static GameManager instance;
 
+    public Material[] colors;
+    
     #endregion
 
     private GameObject testCar;
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
-    private Dictionary<string, Color> colorMap;
+    private Dictionary<string, Material> colorMap;
     private Dictionary<string, string> testMap;
 
     private Dictionary<string, int> teamPlayerCount;
@@ -55,17 +58,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private int totalPlayerCarCount = 0;
 
+    private WeatherManager _weatherManager;
+    
 
     #region Unity
 
     private void Awake()
     {
+        _weatherManager = FindObjectOfType<WeatherManager>();
         teamPlayerCount = new Dictionary<string, int>();
         _photonView = PhotonView.Get(this);
-        colorMap = new Dictionary<string, Color>();
-        colorMap.Add("GREEN", Color.green);
-        colorMap.Add("RED", Color.red);
-        colorMap.Add("WHITE", Color.white);
+        colorMap = new Dictionary<string, Material>();
+        colorMap.Add("GREEN", colors[1]);
+        colorMap.Add("RED", colors[0]);
+        colorMap.Add("WHITE", colors[2]);
         positionMap = new Dictionary<int, GameObject>();
         positionMap.Add(0, position1);
         positionMap.Add(1, position2);
@@ -95,8 +101,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         totalPlayerCarCount = 0;
 
-        Debug.Log("Total player car count = " + totalPlayerCarCount);
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            object test;
+            PhotonNetwork.MasterClient.CustomProperties.TryGetValue("weather", out test);
+            if (test != null)
+            {
+                Weather weather;
+                if (Enum.TryParse(test.ToString(), out weather))
+                {
+                    _weatherManager.weather = weather;
+                }
+            }
+        }
+        
         if (PlayerManager.LocalPlayerInstance == null)
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
@@ -105,37 +123,33 @@ public class GameManager : MonoBehaviourPunCallbacks
             int index = (int) playerPosition;
             object color;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("color", out color);
-
-            // if (color != null)
-            // {
-            //     localPlayerColor = color.ToString();
-            //     
-            //     //TODO Make Car color 
-            //     
-            //     testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
-            //         positionMap[index].transform.rotation, 0);
-            //     PhotonNetwork.LocalPlayer.TagObject = testCar;
-            //     // Material colorMaterial = colorMap[color.ToString()];
-            //     // testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
-            // }
-
             object car;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("car", out car);
 
             if (car != null)
             {
-                testCar = PhotonNetwork.Instantiate(testMap[color.ToString()], positionMap[index].transform.position,
+                string carName = car.ToString();
+                string[] tokens = carName.Split('(');
+                testCar = PhotonNetwork.Instantiate(tokens[0]+"_1", positionMap[index].transform.position,
                     positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
-
+            
             if (testCar == null)
             {
-                testCar = PhotonNetwork.Instantiate("TestCar3_green 1", positionMap[index].transform.position,
+                testCar = PhotonNetwork.Instantiate("Car1_1", positionMap[index].transform.position,
                     positionMap[index].transform.rotation, 0);
                 PhotonNetwork.LocalPlayer.TagObject = testCar;
             }
 
+            if (color != null)
+            {
+                localPlayerColor = color.ToString();
+                
+                Material colorMaterial = colorMap[color.ToString()];
+                testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
+            }
+            
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
             // Destroy(defaultCamera);
             defaultCamera.gameObject.SetActive(false);
@@ -194,7 +208,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             var indicatorScript = indicator.GetComponent<PlayerIndicator>();
             indicatorScript.camera = camera.GetComponent<PlayerCamera>().camera;
             indicatorScript.username = targetPlayer.NickName;
-            indicatorScript.color = colorMap[changedProps["indicator"].ToString()];
+            indicatorScript.color = colorMap[changedProps["indicator"].ToString()].color;
             foreach (MultiCar car in FindObjectsOfType<MultiCar>())
             {
                 if (car.GetActorNumber() == targetPlayer.ActorNumber)
