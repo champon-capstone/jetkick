@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -8215865123662283537}
   - component: {fileID: 214241590665984982}
   - component: {fileID: 2321734498813873686}
+  - component: {fileID: 3130626276125303335}
   m_Layer: 0
   m_Name: Car4
   m_TagString: Untagged
@@ -155,6 +156,19 @@ MonoBehaviour:
   AutoCreateRecorderIfNotFound: 0
   UsePrimaryRecorder: 1
   SetupDebugSpeaker: 1
+--- !u!65 &3130626276125303335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.654951, y: 2.4807487, z: 8.424409}
+  m_Center: {x: 0.089007616, y: 0.063206434, z: 0.062427998}
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
