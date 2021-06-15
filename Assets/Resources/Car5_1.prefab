@@ -10462,11 +10462,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fa078d2d0ce344ab4de361da32ebfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMoveDelta: 1
-  maxCollisionStrength: 100
-  YforceDamp: 0.3
-  demolutionRange: 0.6
-  impactDirManipulator: 0.75
+  maxMoveDelta: 200
+  maxCollisionStrength: 10
+  YforceDamp: 2
+  demolutionRange: 0
+  impactDirManipulator: 0
   optionalMeshList: []
   crashSound: {fileID: 341088261}
 --- !u!114 &913086393

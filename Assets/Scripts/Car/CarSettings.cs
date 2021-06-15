@@ -12,12 +12,12 @@ public class CarSettings
     /// <summary>
     /// mass of the car rigidbody
     /// </summary>
-    public float mass = 1500;
+    public float mass = 300;
 
     /// <summary>
     /// drag of the car rigidbody
     /// </summary>
-    public float drag = 0.05f;
+    public float drag = 0.0f;
 
     /// <summary>
     /// center of the mass of the car rigidbody
