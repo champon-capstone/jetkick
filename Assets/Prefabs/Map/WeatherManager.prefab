@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: beb2117bc298b4b1e8ae6faebd91f1ae, type: 2}
+  rainIntensity: 1
 --- !u!1 &185078310877515540
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: 069e9b45805484722b4c811a9ec42c49, type: 2}
+  rainIntensity: 0
 --- !u!1 &2649953457140970068
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: 0cfbfc60e36774ccd874e658f6002ae1, type: 2}
+  rainIntensity: 1
 --- !u!1 &4369713981929949394
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: 3785ce9c014ff478789f18c7f2b7c4e1, type: 2}
+  rainIntensity: 0
 --- !u!1 &4683328274765244063
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +237,7 @@ MonoBehaviour:
   - {fileID: 3758030588138910980}
   - {fileID: 6333769127635295422}
   - {fileID: 5525304267482116656}
+  rainPrefab: {fileID: 0}
 --- !u!1 &5857174184537111307
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: ddec5a11d69cc4da293f4e1ae57b0447, type: 2}
+  rainIntensity: 0
 --- !u!1 &6856299259567483317
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,3 +327,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: 2802676fe83354dfc96a5cbf13841124, type: 2}
+  rainIntensity: 0
