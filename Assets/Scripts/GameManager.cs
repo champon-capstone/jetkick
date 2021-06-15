@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
     private Dictionary<string, Material> colorMap;
-    private Dictionary<string, string> testMap;
 
     private Dictionary<string, int> teamPlayerCount;
 
@@ -77,10 +76,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(1, position2);
         positionMap.Add(2, position3);
         positionMap.Add(3, position4);
-        testMap = new Dictionary<string, string>();
-        testMap.Add("WHITE", "TestCar3_white");
-        testMap.Add("RED", "TestCar3_red");
-        testMap.Add("GREEN", "TestCar3_green");
 
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
