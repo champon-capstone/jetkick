@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeatherSettings : MonoBehaviour
 {
     public Material skybox;
+    public float rainIntensity = 0;
 
     // Start is called before the first frame update
     void Start()
