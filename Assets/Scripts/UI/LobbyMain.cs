@@ -23,6 +23,9 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     public InputField playerNumberInput;
     public Dropdown mapDropdown;
     public Dropdown modeDropdown;
+    public Dropdown weatherDropdown;
+
+    
 
     [Header("Commom UI")] public Text roomName;
     public Image mapImage;
@@ -364,6 +367,15 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         var mode = modeDropdown.options[modeDropdown.value].text;
 
+        Debug.Log("lobby "+mode);
+        
+        var weather = weatherDropdown.options[weatherDropdown.value].text;
+        
+        Debug.Log("Lobby weather "+weather);
+        
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            {{"weather", weather}});
+        
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"mode", mode}});
         
         PhotonNetwork.CreateRoom(roomNameText, options, null);

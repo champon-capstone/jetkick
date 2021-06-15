@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -57,11 +58,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private int totalPlayerCarCount = 0;
 
+    private WeatherManager _weatherManager;
+    
 
     #region Unity
 
     private void Awake()
     {
+        _weatherManager = FindObjectOfType<WeatherManager>();
         teamPlayerCount = new Dictionary<string, int>();
         _photonView = PhotonView.Get(this);
         colorMap = new Dictionary<string, Material>();
@@ -97,8 +101,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         totalPlayerCarCount = 0;
 
-        Debug.Log("Total player car count = " + totalPlayerCarCount);
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            object test;
+            PhotonNetwork.MasterClient.CustomProperties.TryGetValue("weather", out test);
+            if (test != null)
+            {
+                Weather weather;
+                if (Enum.TryParse(test.ToString(), out weather))
+                {
+                    _weatherManager.weather = weather;
+                }
+            }
+        }
+        
         if (PlayerManager.LocalPlayerInstance == null)
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
