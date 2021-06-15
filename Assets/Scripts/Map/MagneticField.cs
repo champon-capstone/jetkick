@@ -27,7 +27,7 @@ public class MagneticField : MonoBehaviour
     {
         if (time > interval && timecountdown.EndTime())
         {
-            //Debug.Log("ÀÚ±âÀå Ãà¼Òµé¾î¿Ô³Ä??");
+            //Debug.Log("ìê¸°ì¥ ì¶•ì†Œë“¤ì–´ì™”ëƒ??");
             
             transform.localScale -= new Vector3(delta, delta, delta);
             time = 0.0f;
@@ -40,7 +40,7 @@ public class MagneticField : MonoBehaviour
             {
                 if (Vector3.Distance(gameObject.transform.position, TargetCar[i].transform.position) > transform.localScale.x * 0.5)
                 {
-                    Debug.Log("ÀÚµ¿Â÷ Æø¹ß!!!!!");
+                    Debug.Log("ìë™ì°¨ í­ë°œ!!!!!");
                     GameObject BigExplosion;
                     BigExplosion = Resources.Load("BigExplosion") as GameObject;
                     Instantiate(BigExplosion, TargetCar[i].transform.position, Quaternion.identity);
