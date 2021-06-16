@@ -30,14 +30,15 @@ public class MultiCar : MonoBehaviour
 
     private void Update()
     {
-        if (!isItemMode)
-        {
-            return;
-        }
         if (!_photonView.IsMine)
         {
             return;
         }
+        if (!isItemMode)
+        {
+            return;
+        }
+        
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -92,7 +93,7 @@ public class MultiCar : MonoBehaviour
     [PunRPC]
     private void MissileAttacked(Collider info)
     {
-        Debug.Log("차�? 미사?�과 충돌");
+        Debug.Log("차�? 미사?�과 충돌");
         Debug.Log("Is shield "+isShield);
         if (isShield)
         {

@@ -10,9 +10,9 @@ public class MapInfoGenerator
     {
         mapList = new ArrayList();
 
-        mapList.Add(new MapInfo("ObstacleMap", "´Ù¸¥¸Êµé°ú´Â ´Ù¸£°Ô ¿©·¯ Àå¾Ö¹°ÀÌ ÀÖ´Â À§ÇèÇÑ ¹«´ë¿¡¼­ ¹ĞÄ¡°í ¶³¾î¶ß¸®´Â ¾ÆÀÌÅÛÀüÀÇ ¹«´ë! ´ç½ÅÀº »ì¾Æ³²À» ¼ö ÀÖÀ»±î¿ä?", Resources.Load<Sprite>("obstacle")));
-        mapList.Add(new MapInfo("CityMap", "µµ½É ÇÑ°¡¿îµ¥¿¡ °¡Àå Å©±â°¡ ÀÛÀº ¿Á»óÀÌ Á¦Æ®Å±ÀÇ ¹«´ë°¡ µË´Ï´Ù. ¹«´ë°¡ ÀÛÀº¸¸Å­ ´õ¿í ½É¸®ÀûÀÎ ½Î¿òÀ» ÇØ¾ß ÇÒ °ÍÀÔ´Ï´Ù.", Resources.Load<Sprite>("citymap")));
-        mapList.Add(new MapInfo("IslandMap", "Áö±¸ ¾îµò°¡¿¡ Á¸ÀçÇÏ´Â ½ÅºñÇÑ ¼¶,  ¿ïÅüºÒÅüÇÑ ÁöÇüÀ¸·Î ¼­·Î¸¦ ¹Ğ¾î³»±â À§ÇØ¼± ÇÃ·¹ÀÌ¾î¿¡°Ô ¼¶¼¼ÇÑ ÄÁÆ®·ÑÀÌ ¿ä±¸µË´Ï´Ù.", Resources.Load<Sprite>("islandmap")));
+        mapList.Add(new MapInfo("ObstacleMap", "ë‹¤ë¥¸ ë§µê³¼ëŠ” ë‹¤ë¥´ê²Œ ì—¬ëŸ¬ ì¥ì• ë¬¼ì´ ìˆê³  ì•„ì´í…œì´ ì¡´ì¬í•˜ëŠ” ë§µì…ë‹ˆë‹¤.", Resources.Load<Sprite>("obstacle")));
+        mapList.Add(new MapInfo("CityMap", "ë„ì‹¬ í•œê°€ìš´ë°ì— ë§µ ì¢…ë¥˜ ì¤‘ ê°€ì¥ í¬ê¸°ê°€ ì‘ì€ ì˜¥ìƒì´ ì œíŠ¸í‚¥ì˜ ë¬´ëŒ€ê°€ ë©ë‹ˆë‹¤. ", Resources.Load<Sprite>("citymap")));
+        mapList.Add(new MapInfo("IslandMap", "ì§€êµ¬ ì–´ë”˜ê°€ì— ì¡´ì¬í•˜ëŠ” ì‹ ë¹„í•œ ì„¬ì…ë‹ˆë‹¤. ìš¸í‰ë¶ˆí‰í•œ ì§€í˜•ì´ ì¡°ì‘ì´ ì–´ë ¤ìš¸ ê²ƒì…ë‹ˆë‹¤.", Resources.Load<Sprite>("islandmap")));
     }
     
     public ArrayList MapList

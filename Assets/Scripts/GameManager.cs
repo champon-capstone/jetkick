@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private string playerPrefab = "TestCar3";
     private Dictionary<int, GameObject> positionMap;
     private Dictionary<string, Material> colorMap;
-    private Dictionary<string, string> testMap;
 
     private Dictionary<string, int> teamPlayerCount;
 
@@ -77,10 +76,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(1, position2);
         positionMap.Add(2, position3);
         positionMap.Add(3, position4);
-        testMap = new Dictionary<string, string>();
-        testMap.Add("WHITE", "TestCar3_white");
-        testMap.Add("RED", "TestCar3_red");
-        testMap.Add("GREEN", "TestCar3_green");
 
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -145,9 +140,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (color != null)
             {
                 localPlayerColor = color.ToString();
-                
-                Material colorMaterial = colorMap[color.ToString()];
-                testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
             }
             
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
@@ -161,11 +153,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
 
-
-            var mode = PhotonNetwork.LocalPlayer.CustomProperties["mode"];
-            var isMode = mode.ToString();
-
-            if (isMode.Equals("Classic"))
+            object map;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("map", out map);
+            
+            
+            if (map == null || map.ToString().Equals("ObstacleMap"))
             {
                 testCar.GetComponent<MultiCar>().SetItemMode(false);
             }
@@ -176,7 +168,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
                 }
-
+            
                 testCar.GetComponent<MultiCar>().SetItemMode(true);
             }
         }
@@ -224,20 +216,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void CheckGameOver(Hashtable info)
     {
-        if (mode.Equals("Classic"))
+        if (mode.Equals("Solo"))
         {
             SoloMode(info);
         }
         else
         {
-            Debug.Log("Team Mode in");
             TeamMode(info);
         }
     }
 
     private void TeamMode(Hashtable changedProps)
     {
+        if (!changedProps.ContainsKey("color"))
+        {
+            return;
+        }
         var color = changedProps["color"].ToString();
+       
         if (!teamPlayerCount.ContainsKey(color))
         {
             teamPlayerCount.Add(color, 0);

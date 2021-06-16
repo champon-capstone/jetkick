@@ -53,8 +53,6 @@ public class Chat : MonoBehaviour, IChatClientListener
         var message = chatInputField.text;
         chatInputField.text = "";
         chatClient.PublishMessage(currentChannel, message);
-        chatInputField.Select();
-        chatInputField.ActivateInputField();
     }
 
     #endregion

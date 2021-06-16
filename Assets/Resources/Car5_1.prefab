@@ -10450,6 +10450,96 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &1921483466988323178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8316916114222018145}
+  m_Layer: 0
+  m_Name: BananaPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8316916114222018145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921483466988323178}
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -90.9897, y: 42.84, z: -168.31029}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8977501510173912532}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3797201521916174909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3662642504236999973}
+  m_Layer: 0
+  m_Name: MissilePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3662642504236999973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3797201521916174909}
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -97.72136, y: 43.519997, z: -161.09781}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8977501510173912532}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6906170588203537486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378803347566106037}
+  m_Layer: 0
+  m_Name: ShieldPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1378803347566106037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6906170588203537486}
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -94.9, y: 42.6, z: -164.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8977501510173912532}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &913086392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10663,9 +10753,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
---- !u!4 &8977501510173912530 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5793487666648096624, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
+--- !u!33 &8977501510171012596 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 5793487666647326550, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
   m_PrefabInstance: {fileID: 3238339204750013090}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8977501510173912532 stripped
@@ -10686,6 +10776,11 @@ Transform:
 --- !u!4 &8977501510173912542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5793487666648096636, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
+  m_PrefabInstance: {fileID: 3238339204750013090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8977501510173912530 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5793487666648096624, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
   m_PrefabInstance: {fileID: 3238339204750013090}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8977501510174077428 stripped
