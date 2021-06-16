@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2867792559406986634}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   camera: {fileID: 1747267756133353190}
-  pivot: {fileID: 5684439857195258260}
   distance: 13
   height: 8
   smoothTime: 0.3
@@ -171,3 +170,4 @@ MonoBehaviour:
   maxAngle: 35
   lookAngle: 0
   tiltAngle: 0
+  turnSpeed: 5
