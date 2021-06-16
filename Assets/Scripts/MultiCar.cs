@@ -38,17 +38,6 @@ public class MultiCar : MonoBehaviour
         {
             return;
         }
-        
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            MissileAttack();
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            ActiveShield();
-        }
     }
 
     private void OnTriggerEnter(Collider other)
