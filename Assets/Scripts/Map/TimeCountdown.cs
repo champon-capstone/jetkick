@@ -21,7 +21,7 @@ public class TimeCountdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ControllText.text = "시점 거리 변경: V\n" + "시점 자동/수동 전환: B\n" + "브레이크: Space bar\n" + "아이템 사용: ??\n" + "자동차 방향조절: WASD,방향키\n";
+        ControllText.text = "시점 거리 변경: V\n" + "시점 자동/수동 전환: B\n" + "브레이크: Space bar\n" + "아이템 사용: 왼쪽 Shift\n" + "자동차 방향조절: WASD,방향키\n";
         if (TimeCost > 0)
         {
             TimeCost -= Time.deltaTime;
