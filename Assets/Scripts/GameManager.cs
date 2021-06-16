@@ -140,9 +140,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (color != null)
             {
                 localPlayerColor = color.ToString();
-                
-                Material colorMaterial = colorMap[color.ToString()];
-                testCar.transform.GetChild(0).GetComponent<MeshRenderer>().material = colorMaterial;
             }
             
             camera.GetComponent<PlayerCamera>().target = testCar.transform;
