@@ -18,10 +18,7 @@ public class Deadline : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            GameObject BigExplosion;
-            BigExplosion = Resources.Load("BigExplosion") as GameObject;
-            Instantiate(BigExplosion, col.gameObject.transform.position, Quaternion.identity);
-          
+            PhotonNetwork.Instantiate("BigExplosion", col.gameObject.transform.position, Quaternion.identity);
         }
 
         if (col == null || col.transform.parent == null)
