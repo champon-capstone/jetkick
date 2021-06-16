@@ -79,6 +79,7 @@ public class CarControler : MonoBehaviour
         
         if (!_photonView.IsMine)
         {
+            Debug.Log("This car is not mine");
             return;
         }
         ///get speed of the car

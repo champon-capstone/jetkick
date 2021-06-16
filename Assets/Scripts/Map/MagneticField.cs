@@ -38,7 +38,8 @@ public class MagneticField : MonoBehaviour
             // (ring out)player destroy everyone 
             for(int i=0; i<TargetCar.Length;i++)
             {
-                if (Vector3.Distance(gameObject.transform.position, TargetCar[i].transform.position) > transform.localScale.x * 0.5)
+                if (TargetCar[i] != null && 
+                    Vector3.Distance(gameObject.transform.position, TargetCar[i].transform.position) > transform.localScale.x * 0.5)
                 {
                     Debug.Log("자동차 폭발!!!!!");
                     GameObject BigExplosion;

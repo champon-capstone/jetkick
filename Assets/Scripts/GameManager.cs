@@ -208,12 +208,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void CheckGameOver(Hashtable info)
     {
+        
         if (mode.Equals("Solo"))
         {
+           
             SoloMode(info);
         }
         else
         {
+            
             TeamMode(info);
         }
     }
@@ -247,6 +250,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             teamCount[color] += (int) changedProps[requestDelete];
             CheckTeamGameOver(teamCount);
         }
+        
+        Debug.Log("CheckGameOver Team "+totalPlayerCarCount);
     }
 
     private void CheckTeamGameOver(Dictionary<string, int> teamPlayer)
@@ -297,6 +302,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 Debug.Log("GameOver");
             }
         }
+        
+        Debug.Log("CheckGameOver Solo "+totalPlayerCarCount);
     }
 
     [PunRPC]
@@ -346,7 +353,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        Debug.Log("¹öÆ°´©¸§");
+        Debug.Log("ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½");
         if (PlayerManager.LocalPlayerInstance != null)
         {
             RequestCarCountMinus();

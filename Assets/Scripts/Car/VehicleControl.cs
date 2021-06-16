@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine.UI;
 
 
@@ -8,6 +9,8 @@ public class VehicleControl : MonoBehaviour
 {
     public bool activeControl = true;
 
+    private PhotonView _photonView;
+    
     [System.Serializable]
     public class ConnectWheel
     {
@@ -213,6 +216,7 @@ public class VehicleControl : MonoBehaviour
 
     void Awake()
     {
+        _photonView = PhotonView.Get(this);
         if (carSetting.autoGear) NtralGear = false;
 
         carRigidbody = transform.GetComponent<Rigidbody>();
@@ -335,6 +339,15 @@ public class VehicleControl : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_photonView == null)
+        {
+            return;
+        }
+
+        if (!_photonView.IsMine)
+        {
+            return;
+        }
         speed = carRigidbody.velocity.magnitude * 2.7f;
 
         if (speed < last_speed - 10 && slip1 < 10)
