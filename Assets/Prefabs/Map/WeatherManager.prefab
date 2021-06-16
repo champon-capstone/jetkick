@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: beb2117bc298b4b1e8ae6faebd91f1ae, type: 2}
-  rainIntensity: 1
+  rainIntensity: 0.2
 --- !u!1 &185078310877515540
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skybox: {fileID: 2100000, guid: 0cfbfc60e36774ccd874e658f6002ae1, type: 2}
-  rainIntensity: 1
+  rainIntensity: 0.2
 --- !u!1 &4369713981929949394
 GameObject:
   m_ObjectHideFlags: 0
