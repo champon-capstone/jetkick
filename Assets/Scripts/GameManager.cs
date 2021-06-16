@@ -179,15 +179,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var properties = PhotonNetwork.MasterClient.CustomProperties;
 
-            Debug.Log("count " + totalPlayerCarCount);
-        }
-    }
 
     #endregion
 
@@ -354,6 +346,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        Debug.Log("버튼누름");
         if (PlayerManager.LocalPlayerInstance != null)
         {
             RequestCarCountMinus();
