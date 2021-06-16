@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Dictionary<int, GameObject> positionMap;
     private Dictionary<string, Material> colorMap;
 
-    private Dictionary<string, int> teamPlayerCount;
+    private Dictionary<string, ArrayList> teamPlayerCount;
 
 
     private PhotonView _photonView;
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         _weatherManager = FindObjectOfType<WeatherManager>();
-        teamPlayerCount = new Dictionary<string, int>();
+        teamPlayerCount = new Dictionary<string, ArrayList>();
         _photonView = PhotonView.Get(this);
         colorMap = new Dictionary<string, Material>();
         colorMap.Add("GREEN", colors[1]);
@@ -148,13 +148,10 @@ public class GameManager : MonoBehaviourPunCallbacks
                 new Hashtable() {{requestAdd, 1}, {"color", localPlayerColor}});
 
             PhotonNetwork.LocalPlayer.TagObject = testCar;
-            Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
 
             object map;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("map", out map);
-            
-            Debug.Log("Map null? "+map.ToString());
             
             if (map == null || !map.ToString().Equals("ObstacleMap"))
             {
@@ -165,8 +162,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 var itemManager = FindObjectOfType<ItemManager>();
                 if (itemManager != null && PhotonNetwork.LocalPlayer.IsLocal)
                 {
-                    Debug.Log("Client Spawn "+PhotonNetwork.LocalPlayer.NickName);
-                    Debug.Log("Is PHoton View Null? "+_photonView);
                     itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
                 }
                 testCar.GetComponent<MultiCar>().SetItemMode(true);
@@ -202,12 +197,13 @@ public class GameManager : MonoBehaviourPunCallbacks
                     break;
                 }
             }
+            return;
         }
 
-        CheckGameOver(changedProps);
+        CheckGameOver(changedProps, targetPlayer);
     }
 
-    private void CheckGameOver(Hashtable info)
+    private void CheckGameOver(Hashtable info, Player targetPlayer)
     {
         if (mode == null)
         {
@@ -219,11 +215,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            TeamMode(info);
+            TeamMode(info, targetPlayer);
         }
     }
 
-    private void TeamMode(Hashtable changedProps)
+    private void TeamMode(Hashtable changedProps, Player targetPlayer)
     {
         if (!changedProps.ContainsKey("color"))
         {
@@ -233,34 +229,41 @@ public class GameManager : MonoBehaviourPunCallbacks
        
         if (!teamPlayerCount.ContainsKey(color))
         {
-            teamPlayerCount.Add(color, 0);
+            teamPlayerCount.Add(color, new ArrayList());
         }
-
-        ChangeTeamPlayerCount(changedProps, color, teamPlayerCount);
+        
+        
+        ChangeTeamPlayerCount(changedProps, color, teamPlayerCount, targetPlayer);
     }
 
-    private void ChangeTeamPlayerCount(Hashtable changedProps, string color, Dictionary<string, int> teamCount)
+    private void ChangeTeamPlayerCount(Hashtable changedProps, string color, Dictionary<string, ArrayList> teamCount, Player targetPlayer)
     {
         if (changedProps.ContainsKey(requestAdd))
         {
-            totalPlayerCarCount += (int) changedProps[requestAdd];
-            teamCount[color] += (int) changedProps[requestAdd];
+            Debug.Log("Add ZXC"+targetPlayer.ActorNumber);
+            totalPlayerCarCount += 1;
+            if (!teamCount[color].Contains(targetPlayer.ActorNumber))
+            {
+                teamCount[color].Add(targetPlayer.ActorNumber);       
+            }
         }
 
         if (changedProps.ContainsKey(requestDelete))
         {
-            teamCount[color] += (int) changedProps[requestDelete];
+            Debug.Log("Delete ZXC"+targetPlayer.ActorNumber);
+            totalPlayerCarCount -= 1;
+            teamCount[color].Remove(targetPlayer.ActorNumber);
             CheckTeamGameOver(teamCount);
         }
         
-        Debug.Log("CheckGameOver Team "+totalPlayerCarCount);
+        Debug.Log("ZXC CheckGameOver Team "+totalPlayerCarCount);
     }
 
-    private void CheckTeamGameOver(Dictionary<string, int> teamPlayer)
+    private void CheckTeamGameOver(Dictionary<string, ArrayList> teamPlayer)
     {
         foreach (string teamColor in teamPlayer.Keys)
         {
-            if (teamPlayer[teamColor] > 0)
+            if (teamPlayer[teamColor].Count > 0)
             {
                 if (IsTeamGameOver(teamPlayer, teamColor))
                 {
@@ -270,13 +273,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private bool IsTeamGameOver(Dictionary<string, int> teamPlayer, string targetColor)
+    private bool IsTeamGameOver(Dictionary<string, ArrayList> teamPlayer, string targetColor)
     {
         foreach (string teamPlayerKey in teamPlayer.Keys)
         {
             if (!teamPlayerKey.Equals(targetColor))
             {
-                if (teamPlayer[teamPlayerKey] > 0)
+                if (teamPlayer[teamPlayerKey].Count > 0)
                 {
                     return false;
                 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class MagneticField : MonoBehaviour
@@ -42,10 +43,8 @@ public class MagneticField : MonoBehaviour
                     Vector3.Distance(gameObject.transform.position, TargetCar[i].transform.position) > transform.localScale.x * 0.5)
                 {
                     Debug.Log("자동차 폭발!!!!!");
-                    GameObject BigExplosion;
-                    BigExplosion = Resources.Load("BigExplosion") as GameObject;
-                    Instantiate(BigExplosion, TargetCar[i].transform.position, Quaternion.identity);
-                    Destroy(TargetCar[i].gameObject);
+                    PhotonNetwork.Instantiate("BigExplosion", TargetCar[i].transform.position, Quaternion.identity);
+                    PhotonNetwork.Destroy(TargetCar[i].gameObject);
                 }
             }
             
