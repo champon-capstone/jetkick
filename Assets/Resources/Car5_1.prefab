@@ -10450,6 +10450,96 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &1921483466988323178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8316916114222018145}
+  m_Layer: 0
+  m_Name: BananaPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8316916114222018145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921483466988323178}
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -90.9897, y: 42.84, z: -168.31029}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8977501510173912532}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3797201521916174909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3662642504236999973}
+  m_Layer: 0
+  m_Name: MissilePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3662642504236999973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3797201521916174909}
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -97.72136, y: 43.519997, z: -161.09781}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8977501510173912532}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6906170588203537486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378803347566106037}
+  m_Layer: 0
+  m_Name: ShieldPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1378803347566106037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6906170588203537486}
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -94.9, y: 42.6, z: -164.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8977501510173912532}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &913086392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10462,11 +10552,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fa078d2d0ce344ab4de361da32ebfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMoveDelta: 1
-  maxCollisionStrength: 100
-  YforceDamp: 0.3
-  demolutionRange: 0.6
-  impactDirManipulator: 0.75
+  maxMoveDelta: 200
+  maxCollisionStrength: 10
+  YforceDamp: 2
+  demolutionRange: 0
+  impactDirManipulator: 0
   optionalMeshList: []
   crashSound: {fileID: 341088261}
 --- !u!114 &913086393
@@ -10485,47 +10575,45 @@ MonoBehaviour:
   carWheels:
     wheels:
       frontWheelDrive: 1
-      frontRight: {fileID: 8977501510173912542}
-      frontLeft: {fileID: 8977501510173912530}
+      frontLeftWheel: {fileID: 8977501510173912530}
+      frontRightWheel: {fileID: 8977501510173912542}
       backWheelDrive: 1
-      backRight: {fileID: 8977501510173912540}
-      backLeft: {fileID: 8977501510173912528}
+      backLeftWheel: {fileID: 8977501510173912528}
+      backRightWheel: {fileID: 8977501510173912540}
     setting:
-      Radius: 0.4
-      Weight: 1000
+      Rad: 0.5
+      wheelmass: 900
       Distance: 0.2
   carSounds:
-    IdleEngine: {fileID: 226971414}
+    normalEngine: {fileID: 226971414}
     LowEngine: {fileID: 607105938}
     HighEngine: {fileID: 405941557}
     nitro: {fileID: 50326728}
     switchGear: {fileID: 474207740}
   carParticles:
-    brakeParticlePerfab: {fileID: 100000, guid: 7688b4d44a0c11a43b20da32baad8732, type: 3}
+    brakeParticle: {fileID: 100000, guid: 7688b4d44a0c11a43b20da32baad8732, type: 3}
     shiftParticle1: {fileID: 278064829}
     shiftParticle2: {fileID: 830601058}
   carSetting:
-    showNormalGizmos: 0
     carSteer: {fileID: 0}
     hitGround:
     - tag: Street
       grounded: 0
       brakeSound: {fileID: 8300000, guid: 334cc9dcd313b2f48bda705e3eefc2df, type: 3}
-      groundSound: {fileID: 0}
       brakeColor: {r: 0, g: 0, b: 0, a: 0}
     cameraSwitchView: []
-    springs: 14000
-    dampers: 1500
-    carPower: 380
-    shiftPower: 180
-    brakePower: 20000
-    shiftCentre: {x: 0, y: -0.8, z: 0}
-    maxSteerAngle: 50
+    Spring: 14000
+    Damper: 1500
+    Power: 200
+    shiftPower: 100
+    brake_Power: 50000
+    Centre: {x: 0, y: -0.8, z: 0}
+    maximumSteerAngle: 50
     shiftDownRPM: 3000
     shiftUpRPM: 6000
-    idleRPM: 700
+    normalRPM: 450
     stiffness: 2
-    automaticGear: 1
+    autoGear: 1
     gears:
     - -10
     - 9
@@ -10533,20 +10621,17 @@ MonoBehaviour:
     - 4.5
     - 3
     - 2.5
-    LimitBackwardSpeed: 60
-    LimitForwardSpeed: 220
+    LimitBackSpeed: 150
+    LimitFrontSpeed: 250
   brake: 0
-  curTorque: 100
-  powerShift: 100
+  currentTorque: 100
+  power_Shift: 100
   shift: 0
   speed: 0
-  currentGear: 0
-  NeutralGear: 1
+  curGear: 0
+  NtralGear: 1
   motorRPM: 0
   Backward: 0
-  accelFwd: 0
-  accelBack: 0
-  steerAmount: 0
 --- !u!1001 &3238339204750013090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10668,9 +10753,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
---- !u!4 &8977501510173912530 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5793487666648096624, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
+--- !u!33 &8977501510171012596 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 5793487666647326550, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
   m_PrefabInstance: {fileID: 3238339204750013090}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8977501510173912532 stripped
@@ -10691,6 +10776,11 @@ Transform:
 --- !u!4 &8977501510173912542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5793487666648096636, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
+  m_PrefabInstance: {fileID: 3238339204750013090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8977501510173912530 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5793487666648096624, guid: 3c2746dccb7ecfd4f94e24dca97c1207, type: 3}
   m_PrefabInstance: {fileID: 3238339204750013090}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8977501510174077428 stripped

@@ -61,6 +61,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList = new Dictionary<string, GameObject>();
         roomPanel.SetActive(false);
         createPanel.SetActive(false);
+        listPanel.SetActive(true);
         currentPanel = listPanel.name;
     }
 
@@ -366,17 +367,15 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
         var mode = modeDropdown.options[modeDropdown.value].text;
-
-        Debug.Log("lobby "+mode);
-        
         var weather = weatherDropdown.options[weatherDropdown.value].text;
-        
-        Debug.Log("Lobby weather "+weather);
-        
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-            {{"weather", weather}});
+        {
+            {"weather", weather},
+            {"mode", mode},
+            {"map", mapName.text}    
+        });
         
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"mode", mode}});
         
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
@@ -476,6 +475,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             mapImage.gameObject.SetActive(true);
             mapName.gameObject.SetActive(true);
             mapDescription.gameObject.SetActive(true);
+            listPanel.SetActive(false);
         }
 
         panelList[panelName].SetActive(true);
