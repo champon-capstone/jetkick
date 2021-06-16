@@ -10458,7 +10458,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219644648734326737}
   serializedVersion: 2
-  m_Mass: 300
+  m_Mass: 400
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -10502,47 +10502,45 @@ MonoBehaviour:
   carWheels:
     wheels:
       frontWheelDrive: 1
-      frontRight: {fileID: 1219644648734352379}
-      frontLeft: {fileID: 1219644648734352377}
+      frontLeftWheel: {fileID: 1219644648734352377}
+      frontRightWheel: {fileID: 1219644648734352379}
       backWheelDrive: 1
-      backRight: {fileID: 1219644648734352375}
-      backLeft: {fileID: 1219644648734352373}
+      backLeftWheel: {fileID: 1219644648734352373}
+      backRightWheel: {fileID: 1219644648734352375}
     setting:
-      Radius: 0.4
-      Weight: 900
+      Rad: 0.5
+      wheelmass: 900
       Distance: 0.2
   carSounds:
-    IdleEngine: {fileID: 832254337}
+    normalEngine: {fileID: 832254337}
     LowEngine: {fileID: 439726429}
     HighEngine: {fileID: 510160837}
     nitro: {fileID: 526351887}
     switchGear: {fileID: 426989031}
   carParticles:
-    brakeParticlePerfab: {fileID: 100000, guid: 7688b4d44a0c11a43b20da32baad8732, type: 3}
+    brakeParticle: {fileID: 100000, guid: 7688b4d44a0c11a43b20da32baad8732, type: 3}
     shiftParticle1: {fileID: 118208822}
     shiftParticle2: {fileID: 1041594677}
   carSetting:
-    showNormalGizmos: 0
     carSteer: {fileID: 0}
     hitGround:
     - tag: Street
       grounded: 0
       brakeSound: {fileID: 8300000, guid: 334cc9dcd313b2f48bda705e3eefc2df, type: 3}
-      groundSound: {fileID: 0}
       brakeColor: {r: 0, g: 0, b: 0, a: 0}
     cameraSwitchView: []
-    springs: 14000
-    dampers: 1500
-    carPower: 350
-    shiftPower: 150
-    brakePower: 20000
-    shiftCentre: {x: 0, y: -0.8, z: 0}
-    maxSteerAngle: 50
+    Spring: 14000
+    Damper: 1500
+    Power: 100
+    shiftPower: 70
+    brake_Power: 60000
+    Centre: {x: 0, y: -0.8, z: 0}
+    maximumSteerAngle: 50
     shiftDownRPM: 2500
     shiftUpRPM: 5000
-    idleRPM: 1000
+    normalRPM: 400
     stiffness: 2
-    automaticGear: 1
+    autoGear: 1
     gears:
     - -10
     - 9
@@ -10550,20 +10548,17 @@ MonoBehaviour:
     - 4.5
     - 3
     - 2.5
-    LimitBackwardSpeed: 70
-    LimitForwardSpeed: 250
+    LimitBackSpeed: 120
+    LimitFrontSpeed: 200
   brake: 0
-  curTorque: 100
-  powerShift: 100
+  currentTorque: 100
+  power_Shift: 100
   shift: 0
   speed: 0
-  currentGear: 0
-  NeutralGear: 1
+  curGear: 0
+  NtralGear: 1
   motorRPM: 0
   Backward: 0
-  accelFwd: 0
-  accelBack: 0
-  steerAmount: 0
 --- !u!64 &2037437116
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10588,6 +10583,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
       propertyPath: m_Name
       value: Car4_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
       propertyPath: m_RootOrder
@@ -10641,6 +10640,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3130626276125303335, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3716228925429154780, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -10653,7 +10656,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3130626276125303335, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0cbd6e5da31e96d4ea851a8f4b59aed2, type: 3}
 --- !u!1 &1219644648734326737 stripped
 GameObject:
