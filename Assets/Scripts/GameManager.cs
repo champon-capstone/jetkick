@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("map", out map);
             
             
-            if (map == null || map.ToString().Equals("ObstacleMap"))
+            if (map == null || !map.ToString().Equals("ObstacleMap"))
             {
                 testCar.GetComponent<MultiCar>().SetItemMode(false);
             }
