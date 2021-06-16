@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,13 +12,13 @@ public class ItemController : MonoBehaviour
     private float spinspeed = 20.0f;
     Renderer renderer;
 
-    
+    private ItemManager _itemManager;
     
     // Start is called before the first frame update
     void Start()
     {
         renderer = this.GetComponentInChildren<Renderer>();
-        
+        _itemManager = FindObjectOfType<ItemManager>();
     }
 
     // Update is called once per frame
@@ -30,11 +31,17 @@ public class ItemController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.transform.parent.gameObject.GetComponent<MultiCar>().GetActorNumber() != PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            return;
+        }
+        
         if(other.gameObject.tag =="Player")
         {
+            Debug.Log("Local Player "+PhotonNetwork.LocalPlayer.NickName+" item manager owner "+_itemManager.multiCar._photonView.Owner.NickName);
             Instantiate(effect, this.transform);
             //plusItem();
-            GameObject.Find("ItemManager").GetComponent<ItemManager>().plusItem();
+            _itemManager.plusItem();
             StartCoroutine("FadeOut");
          
             Invoke("respawn", respawnTime);
