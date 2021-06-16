@@ -10450,6 +10450,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!64 &90105498
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989097594120938612}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300034, guid: e33c734676d56ca49a5beaa56645a058, type: 3}
 --- !u!54 &90105499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10531,9 +10545,9 @@ MonoBehaviour:
     cameraSwitchView: []
     Spring: 14000
     Damper: 1500
-    Power: 200
-    shiftPower: 100
-    brake_Power: 50000
+    Power: 100
+    shiftPower: 70
+    brake_Power: 60000
     Centre: {x: 0, y: -0.8, z: 0}
     maximumSteerAngle: 50
     shiftDownRPM: 3000
@@ -10557,22 +10571,8 @@ MonoBehaviour:
   speed: 0
   curGear: 0
   NtralGear: 1
-  motorRPM: 0
-  Backward: 0
---- !u!64 &90105498
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6989097594120938612}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300034, guid: e33c734676d56ca49a5beaa56645a058, type: 3}
+  motor_RPM: 0
+  Backmove: 0
 --- !u!1001 &6989097594120839894
 PrefabInstance:
   m_ObjectHideFlags: 0
