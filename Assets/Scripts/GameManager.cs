@@ -156,11 +156,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.Log("Tag objectd " + PhotonNetwork.LocalPlayer.TagObject);
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"indicator", color.ToString()}});
 
-
-            var mode = PhotonNetwork.LocalPlayer.CustomProperties["mode"];
-            var isMode = mode.ToString();
-
-            if (isMode.Equals("Classic"))
+            object map;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("map", out map);
+            
+            
+            if (map == null || map.ToString().Equals("ObstacleMap"))
             {
                 testCar.GetComponent<MultiCar>().SetItemMode(false);
             }
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
                 }
-
+            
                 testCar.GetComponent<MultiCar>().SetItemMode(true);
             }
         }
@@ -219,13 +219,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void CheckGameOver(Hashtable info)
     {
-        if (mode.Equals("Classic"))
+        if (mode.Equals("Solo"))
         {
             SoloMode(info);
         }
         else
         {
-            Debug.Log("Team Mode in");
             TeamMode(info);
         }
     }

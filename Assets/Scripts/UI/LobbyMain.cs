@@ -366,17 +366,15 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
         var mode = modeDropdown.options[modeDropdown.value].text;
-
-        Debug.Log("lobby "+mode);
-        
         var weather = weatherDropdown.options[weatherDropdown.value].text;
-        
-        Debug.Log("Lobby weather "+weather);
-        
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-            {{"weather", weather}});
+        {
+            {"weather", weather},
+            {"mode", mode},
+            {"map", mapName.text}    
+        });
         
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable() {{"mode", mode}});
         
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
