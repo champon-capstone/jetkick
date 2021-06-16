@@ -61,6 +61,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         panelList = new Dictionary<string, GameObject>();
         roomPanel.SetActive(false);
         createPanel.SetActive(false);
+        listPanel.SetActive(true);
         currentPanel = listPanel.name;
     }
 
@@ -474,7 +475,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             mapImage.gameObject.SetActive(true);
             mapName.gameObject.SetActive(true);
             mapDescription.gameObject.SetActive(true);
-            listPanel.gameObject.SetActive(false);
+            listPanel.SetActive(false);
         }
 
         panelList[panelName].SetActive(true);
