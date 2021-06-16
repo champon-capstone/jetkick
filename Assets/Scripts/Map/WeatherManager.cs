@@ -16,7 +16,14 @@ public class WeatherManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if (rainPrefab == null)
+        {
+            rainPrefab = FindObjectOfType(typeof(BaseRainScript)) as BaseRainScript;
+        }
+        if (light == null)
+        {
+            light = FindObjectOfType(typeof(Light)) as Light;
+        }
     }
 
     // Update is called once per frame
