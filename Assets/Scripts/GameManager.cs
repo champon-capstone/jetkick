@@ -228,7 +228,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void TeamMode(Hashtable changedProps)
     {
+        if (!changedProps.ContainsKey("color"))
+        {
+            return;
+        }
         var color = changedProps["color"].ToString();
+       
         if (!teamPlayerCount.ContainsKey(color))
         {
             teamPlayerCount.Add(color, 0);
