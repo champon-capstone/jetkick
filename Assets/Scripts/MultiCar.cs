@@ -11,7 +11,7 @@ public class MultiCar : MonoBehaviour
     public GameObject bananaPosition;
     public GameObject shieldPosition;
     
-    private PhotonView _photonView;
+    public PhotonView _photonView;
     private Rigidbody rbody;
 
     private bool isShield = false;

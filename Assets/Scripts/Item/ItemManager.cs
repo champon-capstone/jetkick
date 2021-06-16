@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 public class ItemManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class ItemManager : MonoBehaviour
     private bool firstitemEmpty = true;
     private bool seconditemEmpty = true;
 
-    private MultiCar multiCar;
+    public MultiCar multiCar;
     
     
     // Start is called before the first frame update
@@ -74,7 +75,6 @@ public class ItemManager : MonoBehaviour
 
     public void plusItem()
     {
-        
         int number = Random.Range(1, 4);//random 1~3
         if (firstitemEmpty)//first item empty
         {

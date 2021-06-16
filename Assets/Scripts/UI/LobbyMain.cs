@@ -269,7 +269,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         var startFlag = propertiesThatChanged["Start"];
         if (startFlag != null)
         {
-            PhotonNetwork.LoadLevel(mapDropdown.options[mapDropdown.value].text);
+            var map = mapDropdown.options[mapDropdown.value].text;
+            PhotonNetwork.LoadLevel(map);
         }
     }
 
@@ -366,16 +367,6 @@ public class LobbyMain : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayer, PlayerTtl = 10000, IsVisible = true};
 
-        var mode = modeDropdown.options[modeDropdown.value].text;
-        var weather = weatherDropdown.options[weatherDropdown.value].text;
-
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-        {
-            {"weather", weather},
-            {"mode", mode},
-            {"map", mapName.text}    
-        });
-        
         
         PhotonNetwork.CreateRoom(roomNameText, options, null);
 
@@ -386,11 +377,20 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            var mode = modeDropdown.options[modeDropdown.value].text;
+            var weather = weatherDropdown.options[weatherDropdown.value].text;
+
             int index = 0;
             var list = PhotonNetwork.PlayerList;
             for (int i = 0; i < list.Length; i++)
             {
-                list[i].SetCustomProperties(new Hashtable() {{"position", index++}});
+                list[i].SetCustomProperties(new Hashtable()
+                {
+                    {"position", index++},
+                    {"weather", weather},
+                    {"mode", mode},
+                    {"map", mapName.text}    
+                });
             }
             
             

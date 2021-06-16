@@ -78,14 +78,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         positionMap.Add(3, position4);
 
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{"init", true}});
-
-            object modeText;
-            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("mode", out modeText);
-            mode = (string) modeText;
-        }
+        
 
         winnerPanel.SetActive(false);
     }
@@ -98,6 +91,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
+            PhotonNetwork.MasterClient.SetCustomProperties(new Hashtable() {{"init", true}});
+
+            object modeText;
+            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("mode", out modeText);
+            mode = (string) modeText;
             object test;
             PhotonNetwork.MasterClient.CustomProperties.TryGetValue("weather", out test);
             if (test != null)
@@ -156,19 +154,21 @@ public class GameManager : MonoBehaviourPunCallbacks
             object map;
             PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("map", out map);
             
+            Debug.Log("Map null? "+map.ToString());
             
-            if (map == null || map.ToString().Equals("ObstacleMap"))
+            if (map == null || !map.ToString().Equals("ObstacleMap"))
             {
                 testCar.GetComponent<MultiCar>().SetItemMode(false);
             }
             else
             {
                 var itemManager = FindObjectOfType<ItemManager>();
-                if (itemManager != null)
+                if (itemManager != null && PhotonNetwork.LocalPlayer.IsLocal)
                 {
+                    Debug.Log("Client Spawn "+PhotonNetwork.LocalPlayer.NickName);
+                    Debug.Log("Is PHoton View Null? "+_photonView);
                     itemManager.SetMultiCat(testCar.GetComponent<MultiCar>());
                 }
-            
                 testCar.GetComponent<MultiCar>().SetItemMode(true);
             }
         }
@@ -197,6 +197,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 if (car.GetActorNumber() == targetPlayer.ActorNumber)
                 {
+                    indicator.transform.SetParent(car.transform);
                     indicatorScript.target = car.transform;
                     break;
                 }
@@ -208,6 +209,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void CheckGameOver(Hashtable info)
     {
+        if (mode == null)
+        {
+            return;
+        }
         if (mode.Equals("Solo"))
         {
             SoloMode(info);
@@ -247,6 +252,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             teamCount[color] += (int) changedProps[requestDelete];
             CheckTeamGameOver(teamCount);
         }
+        
+        Debug.Log("CheckGameOver Team "+totalPlayerCarCount);
     }
 
     private void CheckTeamGameOver(Dictionary<string, int> teamPlayer)
@@ -297,6 +304,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 Debug.Log("GameOver");
             }
         }
+        
+        Debug.Log("CheckGameOver Solo "+totalPlayerCarCount);
     }
 
     [PunRPC]
@@ -346,7 +355,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        Debug.Log("¹öÆ°´©¸§");
+        Debug.Log("ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½");
         if (PlayerManager.LocalPlayerInstance != null)
         {
             RequestCarCountMinus();
