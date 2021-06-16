@@ -11,6 +11,7 @@ public class WeatherManager : MonoBehaviour
     };
 
     public BaseRainScript rainPrefab;
+    public Light light;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class WeatherManager : MonoBehaviour
     {
         ChangeSkyBox(weatherSettings[(int)weather].skybox);
         ChangeRain(weatherSettings[(int)weather].rainIntensity);
+        ChangeLight(weatherSettings[(int)weather].lightIntensity);
     }
 
     void ChangeSkyBox(Material skybox)
@@ -32,15 +34,12 @@ public class WeatherManager : MonoBehaviour
 
     void ChangeRain(float rainIntensity)
     {
-        if (rainIntensity > 1.0f)
-        {
-            rainIntensity = 1.0f;
-        }
-        else if (rainIntensity < 0)
-        {
-            rainIntensity = 0;
-        }
         rainPrefab.gameObject.SetActive(rainIntensity > 0);
         rainPrefab.RainIntensity = rainIntensity;
+    }
+
+    void ChangeLight(float lightIntensity)
+    {
+        light.intensity = lightIntensity;
     }
 }
