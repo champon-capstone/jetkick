@@ -286,6 +286,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2894029304888578203, guid: bd19c6a67bb6b71459c4aea88f734096, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376790343935703333, guid: bd19c6a67bb6b71459c4aea88f734096, type: 3}
+      propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3635350771207679930, guid: bd19c6a67bb6b71459c4aea88f734096, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -559,7 +567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1623538878}
   playerCamera: {fileID: 339821083}
---- !u!1001 &907520058
+--- !u!1001 &947476893
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
