@@ -341,6 +341,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player other)
     {
+        Debug.Log("Player left room "+other.NickName);
         GameObject testObject = (GameObject) other.TagObject;
         if (testObject != null)
         {
